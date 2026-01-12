@@ -1,20 +1,152 @@
-/* Folder setting block styles */
-.folder-setting-block {
-    border: 1px solid var(--background-modifier-border);
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
+/* Sync Script Generator Grid Layout */
+.sync-generator-container {
+    height: 100%;
+    overflow: hidden;
+    padding: 0;
+}
+
+.sync-generator-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr 300px; /* Left: 200px, Middle: Fluid, Right: 300px */
+    height: 100%;
+    width: 100%;
+}
+
+/* Left Column: Platform List */
+.sync-generator-left {
+    border-right: 1px solid var(--background-modifier-border);
+    padding: 20px;
+    overflow-y: auto;
     background-color: var(--background-secondary);
 }
 
-.folder-setting-block h3 {
+.sync-generator-left h3 {
     margin-top: 0;
+    margin-bottom: 15px;
 }
 
-/* Action buttons styling */
-.generator-modal-actions {
+.platform-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.platform-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: background-color 0.2s;
+}
+
+.platform-item:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.platform-item.is-active {
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+    font-weight: bold;
+}
+
+/* Middle Column: Settings Form */
+.sync-generator-middle {
+    padding: 30px;
+    overflow-y: auto;
+    background-color: var(--background-primary);
+}
+
+.sync-generator-middle h2 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.action-bar {
+    margin-bottom: 20px;
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
+}
+
+.settings-form h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+}
+
+/* Folder Settings Styles */
+.folder-setting-block {
+    border: 1px solid var(--background-modifier-border);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: var(--background-secondary-alt);
+}
+
+.folder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-bottom: 10px;
+}
+
+/* Right Column: Help & Description */
+.sync-generator-right {
+    border-left: 1px solid var(--background-modifier-border);
+    padding: 20px;
+    overflow-y: auto;
+    background-color: var(--background-secondary);
+}
+
+.sync-generator-right h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-bottom: 10px;
+}
+
+.help-title {
+    margin-top: 0;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.help-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: var(--text-accent);
+    color: var(--text-on-accent);
+    border-radius: 10px;
+    font-size: 0.7em;
+    margin-bottom: 10px;
+}
+
+.help-desc {
+    margin-bottom: 15px;
+    line-height: 1.5;
+    color: var(--text-normal);
+}
+
+.help-example {
+    background-color: var(--background-primary);
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--background-modifier-border);
+    font-family: var(--font-monospace);
+    font-size: 0.85em;
+    white-space: pre-wrap;
+    color: var(--text-muted);
+}
+
+.help-placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+    margin-top: 50px;
 }

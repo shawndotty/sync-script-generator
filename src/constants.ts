@@ -1,5 +1,7 @@
 import { SyncOption } from "./types";
 
+export const GENERATOR_VIEW_TYPE = "sync-script-generator-view";
+
 export const SYNC_OPTIONS: SyncOption[] = [
     {
         "name": "defaultBaseID",

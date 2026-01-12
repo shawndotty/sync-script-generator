@@ -1,121 +1,157 @@
-import { App, Modal, Setting, Notice, TextAreaComponent } from "obsidian";
+import { App, ItemView, WorkspaceLeaf, Setting, Notice, TextAreaComponent, ButtonComponent } from "obsidian";
 import { Platform, SyncOption, FolderSetting } from "./types";
-import { SYNC_OPTIONS } from "./constants";
+import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
+import { Modal } from "obsidian";
 
-export class GeneratorModal extends Modal {
+export class GeneratorView extends ItemView {
     platform: Platform = "Airtable";
     rootSettings: Record<string, string> = {};
     vaultSettings: Record<string, any> = {};
     folderSettings: FolderSetting[] = [];
+    activeOption: SyncOption | null = null;
     
-    constructor(app: App) {
-        super(app);
+    // UI Elements
+    middleContainer: HTMLElement;
+    rightContainer: HTMLElement;
+
+    constructor(leaf: WorkspaceLeaf) {
+        super(leaf);
     }
 
-    onOpen() {
-        const { contentEl } = this;
-        contentEl.empty();
-        contentEl.createEl("h2", { text: "Sync Script Generator" });
-
-        this.renderPlatformSelector();
-        this.renderSettings();
+    getViewType() {
+        return GENERATOR_VIEW_TYPE;
     }
 
-    renderPlatformSelector() {
-        new Setting(this.contentEl)
-            .setName("Target Platform")
-            .setDesc("Select the platform you want to generate a sync script for.")
-            .addDropdown(dropdown => {
-                const platforms: Platform[] = ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"];
-                platforms.forEach(p => dropdown.addOption(p, p));
-                dropdown.setValue(this.platform);
-                dropdown.onChange(value => {
-                    this.platform = value as Platform;
-                    this.renderSettings();
-                });
-            });
+    getDisplayText() {
+        return "Sync Script Generator";
     }
 
-    renderSettings() {
-        // Clear previous settings except platform selector
-        const settingsContainer = this.contentEl.createDiv();
-        this.renderSettingsInContainer(settingsContainer);
+    getIcon() {
+        return "dice";
     }
 
-    renderSettingsInContainer(container: HTMLDivElement) {
+    async onOpen() {
+        const container = this.contentEl;
         container.empty();
+        container.addClass("sync-generator-container");
 
-        container.createEl("h3", { text: "Root Settings" });
+        const grid = container.createDiv({ cls: "sync-generator-grid" });
+
+        // Left Column: Platform List
+        const leftCol = grid.createDiv({ cls: "sync-generator-left" });
+        this.renderPlatformList(leftCol);
+
+        // Middle Column: Settings Form
+        this.middleContainer = grid.createDiv({ cls: "sync-generator-middle" });
+        
+        // Right Column: Help/Description
+        this.rightContainer = grid.createDiv({ cls: "sync-generator-right" });
+
+        this.renderMiddleColumn();
+        this.renderRightColumn();
+    }
+
+    renderPlatformList(container: HTMLElement) {
+        container.createEl("h3", { text: "Platforms" });
+        const list = container.createEl("ul", { cls: "platform-list" });
+        const platforms: Platform[] = ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"];
+        
+        platforms.forEach(p => {
+            const item = list.createEl("li", { text: p, cls: "platform-item" });
+            if (p === this.platform) item.addClass("is-active");
+            
+            item.onclick = () => {
+                this.platform = p;
+                container.findAll(".platform-item").forEach(el => el.removeClass("is-active"));
+                item.addClass("is-active");
+                this.renderMiddleColumn();
+                this.activeOption = null; // Clear help on platform switch
+                this.renderRightColumn();
+            };
+        });
+    }
+
+    renderMiddleColumn() {
+        this.middleContainer.empty();
+        this.middleContainer.createEl("h2", { text: `${this.platform} Settings` });
+
+        // Action Bar
+        const actionBar = this.middleContainer.createDiv({ cls: "action-bar" });
+        new ButtonComponent(actionBar)
+            .setButtonText("Generate Script")
+            .setCta()
+            .onClick(() => this.generateScript());
+
+        const formContainer = this.middleContainer.createDiv({ cls: "settings-form" });
+
+        // Root Settings
+        formContainer.createEl("h3", { text: "Root Settings" });
         const rootOptions = SYNC_OPTIONS.filter(o => o.level === "Root" && (o.platforms.includes(this.platform) || o.platforms.length === 0));
         rootOptions.forEach(opt => {
-            new Setting(container)
-                .setName(opt.name)
-                .setDesc(opt.description)
-                .addText(text => {
-                    text.setValue(this.rootSettings[opt.name] || opt.defaultValue || "")
-                        .onChange(val => this.rootSettings[opt.name] = val);
-                });
+            this.renderOption(formContainer, opt, this.rootSettings, "Root");
         });
 
-        container.createEl("h3", { text: "Vault Settings" });
+        // Vault Settings
+        formContainer.createEl("h3", { text: "Vault Settings" });
         const vaultOptions = SYNC_OPTIONS.filter(o => o.level === "Vault" && (o.platforms.includes(this.platform) || o.platforms.length === 0));
         vaultOptions.forEach(opt => {
-            this.renderOption(container, opt, this.vaultSettings);
+            this.renderOption(formContainer, opt, this.vaultSettings, "Vault");
         });
 
-        container.createEl("h3", { text: "Folder Settings" });
-        const addButton = container.createEl("button", { text: "Add Folder Setting" });
+        // Folder Settings
+        formContainer.createEl("h3", { text: "Folder Settings" });
+        const addButton = formContainer.createEl("button", { text: "Add Folder Setting", cls: "mod-cta" });
         addButton.onclick = () => {
             this.folderSettings.push({ folderName: "" });
-            this.renderSettingsInContainer(container);
+            this.renderMiddleColumn();
         };
 
         this.folderSettings.forEach((folder, index) => {
-            const folderDiv = container.createDiv({ cls: "folder-setting-block" });
-            folderDiv.style.border = "1px solid var(--background-modifier-border)";
-            folderDiv.style.padding = "10px";
-            folderDiv.style.marginBottom = "10px";
+            const folderDiv = formContainer.createDiv({ cls: "folder-setting-block" });
+            
+            const header = folderDiv.createDiv({ cls: "folder-header" });
+            header.createEl("strong", { text: `Folder ${index + 1}` });
+            const removeBtn = header.createEl("button", { text: "Remove" });
+            removeBtn.onclick = () => {
+                this.folderSettings.splice(index, 1);
+                this.renderMiddleColumn();
+            };
 
             new Setting(folderDiv)
-                .setName(`Folder ${index + 1}`)
+                .setName("Folder Path")
                 .addText(text => {
                     text.setPlaceholder("Folder Path")
                         .setValue(folder.folderName)
                         .onChange(val => folder.folderName = val);
-                })
-                .addButton(btn => {
-                    btn.setButtonText("Remove").setWarning().onClick(() => {
-                        this.folderSettings.splice(index, 1);
-                        this.renderSettingsInContainer(container);
+                    this.addFocusListener(text.inputEl, { 
+                        name: "Folder Path", 
+                        description: "The path to the folder you want to sync.", 
+                        example: "Example: MyVault/Projects/Active",
+                        platforms: [], level: "Folder", required: true, defaultValue: "", valueType: "string"
                     });
                 });
 
             const folderOptions = SYNC_OPTIONS.filter(o => o.level === "Folder" && (o.platforms.includes(this.platform) || o.platforms.length === 0));
             folderOptions.forEach(opt => {
                 if (opt.name === "folderName") return;
-                this.renderOption(folderDiv, opt, folder);
+                this.renderOption(folderDiv, opt, folder, "Folder");
             });
         });
-
-        const actionDiv = container.createDiv();
-        actionDiv.style.marginTop = "20px";
-        new Setting(actionDiv)
-            .addButton(btn => {
-                btn.setButtonText("Generate Script")
-                   .setCta()
-                   .onClick(() => this.generateScript());
-            });
     }
 
-    renderOption(container: HTMLElement, opt: SyncOption, target: any) {
+    renderOption(container: HTMLElement, opt: SyncOption, target: any, section: string) {
         const s = new Setting(container)
-            .setName(opt.name)
-            .setDesc(opt.description);
+            .setName(opt.name);
+
+        const handleFocus = (el: HTMLElement) => {
+            this.addFocusListener(el, opt);
+        };
 
         if (opt.valueType === "boolean") {
             s.addToggle(toggle => {
                 toggle.setValue(target[opt.name] ?? (opt.defaultValue === "true"))
                       .onChange(val => target[opt.name] = val);
+                handleFocus(toggle.toggleEl);
             });
         } else if (opt.valueType === "array" || opt.valueType === "object") {
             s.addTextArea(text => {
@@ -125,15 +161,51 @@ export class GeneratorModal extends Modal {
                         try {
                             target[opt.name] = JSON.parse(val);
                         } catch (e) {
-                            // Silently fail or show error
+                            // Silently fail
                         }
                     });
+                handleFocus(text.inputEl);
             });
         } else {
             s.addText(text => {
                 text.setValue(target[opt.name] || (opt.defaultValue === "无" ? "" : opt.defaultValue) || "")
                     .onChange(val => target[opt.name] = val);
+                handleFocus(text.inputEl);
             });
+        }
+    }
+
+    addFocusListener(el: HTMLElement, opt: SyncOption) {
+        el.addEventListener("focus", () => {
+            this.activeOption = opt;
+            this.renderRightColumn();
+        });
+        // Also trigger on click for elements that might not strictly 'focus' the same way or for better UX
+        el.addEventListener("click", () => {
+            this.activeOption = opt;
+            this.renderRightColumn();
+        });
+    }
+
+    renderRightColumn() {
+        this.rightContainer.empty();
+        this.rightContainer.createEl("h3", { text: "Description" });
+
+        if (this.activeOption) {
+            const wrapper = this.rightContainer.createDiv({ cls: "help-content" });
+            wrapper.createEl("h4", { text: this.activeOption.name, cls: "help-title" });
+            
+            const badge = wrapper.createSpan({ cls: "help-badge" });
+            badge.setText(this.activeOption.level);
+            
+            wrapper.createEl("div", { text: this.activeOption.description, cls: "help-desc" });
+            
+            if (this.activeOption.example) {
+                wrapper.createEl("h5", { text: "Example/Usage:" });
+                wrapper.createEl("pre", { text: this.activeOption.example, cls: "help-example" });
+            }
+        } else {
+            this.rightContainer.createEl("p", { text: "Select a setting field to see its description here.", cls: "help-placeholder" });
         }
     }
 
@@ -153,10 +225,13 @@ export class GeneratorModal extends Modal {
 
         const rootVars = platformRootVars[this.platform] || [];
         if (rootVars.length > 0) {
-            script += `const {${rootVars.join(", ")}} = app.plugins.plugins[\"ioto-settings\"].settings;\n\n`;
+            script += `const {${rootVars.join(", ")}} = app.plugins.plugins["ioto-settings"].settings;
+
+`;
         }
 
-        script += `const ${varName} = {\n`;
+        script += `const ${varName} = {
+`;
 
         // Root Settings in Object
         const rootOptions = SYNC_OPTIONS.filter(o => o.level === "Root" && (o.platforms.includes(this.platform)));
@@ -171,7 +246,6 @@ export class GeneratorModal extends Modal {
             };
             const mappedVar = varMapping[opt.name];
             if (mappedVar) {
-                // Use double quotes for the property value and template literal string inside
                 script += "    " + opt.name + ": `${" + mappedVar + "}`,\n";
             } else {
                 script += "    " + opt.name + ": " + JSON.stringify(this.rootSettings[opt.name] || opt.defaultValue) + ",\n";
@@ -203,7 +277,6 @@ export class GeneratorModal extends Modal {
             });
             script += "    ]\n";
         }
-        
         script += "};\n\n";
 
         const methodName = "ObSync" + this.platform;
@@ -239,10 +312,5 @@ export class GeneratorModal extends Modal {
                 });
         };
         previewModal.open();
-    }
-
-    onClose() {
-        const { contentEl } = this;
-        contentEl.empty();
     }
 }
