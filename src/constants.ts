@@ -614,16 +614,6 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		example: "JsTgbO9xxxxxXJsjtGtceTlBnoG",
 	},
 	{
-		name: "appToken",
-		platforms: ["Feishu", "Lark"],
-		level: "Folder",
-		required: false,
-		defaultValue: "无",
-		valueType: "string",
-		description: "飞书或Lark的 App Token",
-		example: "",
-	},
-	{
 		name: "baseID",
 		platforms: ["Airtable"],
 		level: "Folder",
@@ -633,16 +623,6 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		description:
 			"同步文件夹，在同步时所使用的baseID。\n\n如果你配置了不同于defaultBaseID的值，则可以实现把同一个OB库下的不同文件夹的内容同步到Airtable中不同的Base。",
 		example: "appq2MxxxxBdZc3Sc",
-	},
-	{
-		name: "baseID",
-		platforms: ["Airtable"],
-		level: "Folder",
-		required: false,
-		defaultValue: "无",
-		valueType: "string",
-		description: "Airtable 的BaseID\n",
-		example: "",
 	},
 	{
 		name: "baseID",
@@ -1242,16 +1222,6 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		example: "dstl4fxxxxxWzoh51x",
 	},
 	{
-		name: "tableID",
-		platforms: ["Airtable", "Feishu", "Vika", "Lark"],
-		level: "Folder",
-		required: false,
-		defaultValue: "无",
-		valueType: "string",
-		description: "多维表的数据表ID",
-		example: "",
-	},
-	{
 		name: "targetFolderPath",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1275,7 +1245,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "viewID",
-		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
+		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS"],
 		level: "Folder",
 		required: false,
 		defaultValue: "无",

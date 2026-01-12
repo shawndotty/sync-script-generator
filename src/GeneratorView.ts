@@ -20,6 +20,7 @@ export class GeneratorView extends ItemView {
 	folderSettings: FolderSetting[] = [];
 	activeOption: SyncOption | null = null;
 	importedFile: TFile | null = null;
+	activeTab: "Root" | "Vault" | "Folder" = "Root";
 
 	// UI Elements
 	middleContainer: HTMLElement;
@@ -114,107 +115,148 @@ export class GeneratorView extends ItemView {
 			.setCta()
 			.onClick(() => this.generateScript());
 
+		// Tabs
+		const tabsContainer = this.middleContainer.createDiv({
+			cls: "settings-tabs",
+		});
+		const tabs: ("Root" | "Vault" | "Folder")[] = [
+			"Root",
+			"Vault",
+			"Folder",
+		];
+
+		tabs.forEach((tab) => {
+			const tabBtn = tabsContainer.createEl("button", {
+				text: `${tab} Settings`,
+				cls: "settings-tab-btn",
+			});
+			if (this.activeTab === tab) tabBtn.addClass("is-active");
+
+			tabBtn.onclick = () => {
+				this.activeTab = tab;
+				this.renderMiddleColumn();
+			};
+		});
+
 		const formContainer = this.middleContainer.createDiv({
 			cls: "settings-form",
 		});
 
-		// Root Settings
-		formContainer.createEl("h3", { text: "Root Settings" });
-		const rootOptions = SYNC_OPTIONS.filter(
-			(o) =>
-				o.level === "Root" &&
-				(o.platforms.includes(this.platform) ||
-					o.platforms.length === 0)
-		);
-		rootOptions.forEach((opt) => {
-			this.renderOption(formContainer, opt, this.rootSettings, "Root");
-		});
-
-		// Vault Settings
-		formContainer.createEl("h3", { text: "Vault Settings" });
-		const vaultOptions = SYNC_OPTIONS.filter(
-			(o) =>
-				o.level === "Vault" &&
-				(o.platforms.includes(this.platform) ||
-					o.platforms.length === 0)
-		);
-		vaultOptions.forEach((opt) => {
-			this.renderOption(formContainer, opt, this.vaultSettings, "Vault");
-		});
-
-		// Folder Settings
-		formContainer.createEl("h3", { text: "Folder Settings" });
-		const addButton = formContainer.createEl("button", {
-			text: "Add Folder Setting",
-			cls: "mod-cta",
-		});
-		addButton.onclick = () => {
-			this.folderSettings.push({ folderName: "" });
-			this.renderMiddleColumn();
-		};
-
-		this.folderSettings.forEach((folder, index) => {
-			const folderDiv = formContainer.createDiv({
-				cls: "folder-setting-block",
-			});
-			if (folder.collapsed) folderDiv.addClass("is-collapsed");
-
-			const header = folderDiv.createDiv({ cls: "folder-header" });
-			const titleContainer = header.createDiv({ cls: "folder-title" });
-
-			const iconSpan = titleContainer.createSpan({
-				cls: "folder-toggle-icon",
-			});
-			setIcon(iconSpan, "chevron-down");
-
-			titleContainer.createEl("span", {
-				text:
-					`Folder ${index + 1}` +
-					(folder.folderName ? `: ${folder.folderName}` : ""),
-			});
-
-			header.onclick = (e) => {
-				if ((e.target as HTMLElement).tagName === "BUTTON") return;
-				folder.collapsed = !folder.collapsed;
-				this.renderMiddleColumn();
-			};
-
-			const removeBtn = header.createEl("button", { text: "Remove" });
-			removeBtn.onclick = (e) => {
-				e.stopPropagation();
-				this.folderSettings.splice(index, 1);
-				this.renderMiddleColumn();
-			};
-
-			const contentDiv = folderDiv.createDiv({ cls: "folder-content" });
-
-			new Setting(contentDiv).setName("Folder Path").addText((text) => {
-				text.setPlaceholder("Folder Path")
-					.setValue(folder.folderName)
-					.onChange((val) => (folder.folderName = val));
-				this.addFocusListener(text.inputEl, {
-					name: "Folder Path",
-					description: "The path to the folder you want to sync.",
-					example: "Example: MyVault/Projects/Active",
-					platforms: [],
-					level: "Folder",
-					required: true,
-					defaultValue: "",
-					valueType: "string",
-				});
-			});
-
-			const folderOptions = SYNC_OPTIONS.filter(
+		if (this.activeTab === "Root") {
+			const rootOptions = SYNC_OPTIONS.filter(
 				(o) =>
-					o.level === "Folder" &&
+					o.level === "Root" &&
 					(o.platforms.includes(this.platform) ||
 						o.platforms.length === 0)
 			);
-			folderOptions.forEach((opt) => {
-				if (opt.name === "folderName") return;
-				this.renderOption(contentDiv, opt, folder, "Folder");
+			rootOptions.forEach((opt) => {
+				this.renderOption(
+					formContainer,
+					opt,
+					this.rootSettings,
+					"Root"
+				);
 			});
-		});
+		}
+
+		if (this.activeTab === "Vault") {
+			const vaultOptions = SYNC_OPTIONS.filter(
+				(o) =>
+					o.level === "Vault" &&
+					(o.platforms.includes(this.platform) ||
+						o.platforms.length === 0)
+			);
+			vaultOptions.forEach((opt) => {
+				this.renderOption(
+					formContainer,
+					opt,
+					this.vaultSettings,
+					"Vault"
+				);
+			});
+		}
+
+		if (this.activeTab === "Folder") {
+			const addButton = formContainer.createEl("button", {
+				text: "Add Folder Setting",
+				cls: "mod-cta",
+			});
+			addButton.style.marginBottom = "20px";
+			addButton.onclick = () => {
+				this.folderSettings.push({ folderName: "" });
+				this.renderMiddleColumn();
+			};
+
+			this.folderSettings.forEach((folder, index) => {
+				const folderDiv = formContainer.createDiv({
+					cls: "folder-setting-block",
+				});
+				if (folder.collapsed) folderDiv.addClass("is-collapsed");
+
+				const header = folderDiv.createDiv({ cls: "folder-header" });
+				const titleContainer = header.createDiv({
+					cls: "folder-title",
+				});
+
+				const iconSpan = titleContainer.createSpan({
+					cls: "folder-toggle-icon",
+				});
+				setIcon(iconSpan, "chevron-down");
+
+				titleContainer.createEl("span", {
+					text:
+						`Folder ${index + 1}` +
+						(folder.folderName ? `: ${folder.folderName}` : ""),
+				});
+
+				header.onclick = (e) => {
+					if ((e.target as HTMLElement).tagName === "BUTTON") return;
+					folder.collapsed = !folder.collapsed;
+					this.renderMiddleColumn();
+				};
+
+				const removeBtn = header.createEl("button", { text: "Remove" });
+				removeBtn.onclick = (e) => {
+					e.stopPropagation();
+					this.folderSettings.splice(index, 1);
+					this.renderMiddleColumn();
+				};
+
+				const contentDiv = folderDiv.createDiv({
+					cls: "folder-content",
+				});
+
+				new Setting(contentDiv)
+					.setName("Folder Path")
+					.addText((text) => {
+						text.setPlaceholder("Folder Path")
+							.setValue(folder.folderName)
+							.onChange((val) => (folder.folderName = val));
+						this.addFocusListener(text.inputEl, {
+							name: "Folder Path",
+							description:
+								"The path to the folder you want to sync.",
+							example: "Example: MyVault/Projects/Active",
+							platforms: [],
+							level: "Folder",
+							required: true,
+							defaultValue: "",
+							valueType: "string",
+						});
+					});
+
+				const folderOptions = SYNC_OPTIONS.filter(
+					(o) =>
+						o.level === "Folder" &&
+						(o.platforms.includes(this.platform) ||
+							o.platforms.length === 0)
+				);
+				folderOptions.forEach((opt) => {
+					if (opt.name === "folderName") return;
+					this.renderOption(contentDiv, opt, folder, "Folder");
+				});
+			});
+		}
 	}
 
 	renderOption(

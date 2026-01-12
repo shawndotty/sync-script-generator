@@ -216,3 +216,36 @@
     max-width: 95vw;
     max-height: 95vh;
 }
+
+/* Settings Tabs */
+.settings-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-bottom: 0;
+}
+
+.settings-tab-btn {
+    background: transparent;
+    border: none;
+    border-radius: 4px 4px 0 0;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+}
+
+.settings-tab-btn:hover {
+    color: var(--text-normal);
+    background-color: var(--background-modifier-hover);
+}
+
+.settings-tab-btn.is-active {
+    color: var(--text-normal);
+    background-color: var(--background-primary);
+    border-bottom: 2px solid var(--interactive-accent);
+}
