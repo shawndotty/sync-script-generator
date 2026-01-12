@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
-	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"name": "sync-script-generator",
+	"version": "2.0.0",
+	"description": "A plugin for Obsidian that generates sync scripts for IOTO and OB Sync With MDB",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
