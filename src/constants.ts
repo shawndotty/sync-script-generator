@@ -349,6 +349,28 @@ export const SYNC_OPTIONS: SyncOption[] = [
 			'tips: "提示"\ncode: "代码"\ntable: "表格"\nmath: "数学"\nquote: "引言"',
 	},
 	{
+		name: "extractBlocksAsText",
+		platforms: ["Airtable"],
+		level: "Vault",
+		required: false,
+		defaultValue: "false",
+		valueType: "boolean",
+		description:
+			"从笔记中提取区块时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Airtable中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Airtable中的字段需要是多行文本字段",
+		example: "",
+	},
+	{
+		name: "extractBlocksAsText",
+		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
+		level: "Vault",
+		required: false,
+		defaultValue: "true",
+		valueType: "boolean",
+		description:
+			"从笔记中提取区块时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，多维表的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，多维表中的字段需要是多行文本字段",
+		example: "",
+	},
+	{
 		name: "extractKeyPoints",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -359,6 +381,28 @@ export const SYNC_OPTIONS: SyncOption[] = [
 			'同步文件夹，在同步时想要提取的特殊标记内容。\n\n属性名，为特殊标记的类型名。\n属性值，是对应区块在多维表中想要存储的字段名。\n\n目前支持的特殊标记的类型名如下：\n\n  "highlights" 高亮语法 ==text==\n  "italics" 斜体语法 *text* 或 _text_ \n  "strong" 粗体语法 **text**\n  "bolds" 粗体语法 **text**（和strong一样的效果，二选一使用）\n  "underlines" 下划线语法 <u>text</u>\n  "deletions" 删除线语法 ~~text~~\n  "inlineCodes" 行内代码语法 `text`\n  "singleQuotes" 引用语法 > text\n  "boldItalics" 粗体斜体语法 ***text***\n  "urls" 网址',
 		example:
 			'highlights: "疑点"\nitalics: "疑点"\nstrong: "加粗"\nunderlines: "下划线"\ndeletions: "删除"\ninlineCodes: "行内代码"\nsingleQuotes: "引用"',
+	},
+	{
+		name: "extractKeyPointsAsText",
+		platforms: ["Airtable"],
+		level: "Vault",
+		required: false,
+		defaultValue: "false",
+		valueType: "boolean",
+		description:
+			"从笔记中提取要点时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Airtable中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Airtable中的字段需要是多行文本字段",
+		example: "",
+	},
+	{
+		name: "extractKeyPointsAsText",
+		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
+		level: "Vault",
+		required: false,
+		defaultValue: "true",
+		valueType: "boolean",
+		description:
+			"从笔记中提取要点时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，多维表的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，多维表中的字段需要是多行文本字段",
+		example: "",
 	},
 	{
 		name: "extractSections",
@@ -372,6 +416,28 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		example: '总结: "Summary"',
 	},
 	{
+		name: "extractSectionsAsText",
+		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
+		level: "Vault",
+		required: false,
+		defaultValue: "true",
+		valueType: "boolean",
+		description:
+			"从笔记中提取指定的章节（Sections）时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，多维表的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，多维表中的字段需要是多行文本字段",
+		example: "",
+	},
+	{
+		name: "extractSectionsAsText",
+		platforms: ["Airtable"],
+		level: "Vault",
+		required: false,
+		defaultValue: "true",
+		valueType: "boolean",
+		description:
+			"从笔记中提取指定的章节（Sections）时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Airtable中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Airtable中的字段需要是多行文本字段",
+		example: "",
+	},
+	{
 		name: "extractTagLines",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -381,6 +447,28 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		description:
 			"同步文件夹，在同步时，想要提取的包含指定标签的行。\n\n属性名，标签名（不包含#符号）。\n属性值，是对应标签在多维表中想要存储的字段名。",
 		example: '闪念: "FleetingNotes"',
+	},
+	{
+		name: "extractTagLinesAsText",
+		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
+		level: "Vault",
+		required: false,
+		defaultValue: "true",
+		valueType: "boolean",
+		description:
+			"从笔记中提取包含指定标签的行时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，多维表的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，多维表中的字段需要是多行文本字段",
+		example: "",
+	},
+	{
+		name: "extractTagLinesAsText",
+		platforms: ["Airtable"],
+		level: "Vault",
+		required: false,
+		defaultValue: "false",
+		valueType: "boolean",
+		description:
+			"从笔记中提取包含指定标签的行时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Airtable中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Airtable中的字段需要是多行文本字段",
+		example: "",
 	},
 	{
 		name: "fieldsNames",
