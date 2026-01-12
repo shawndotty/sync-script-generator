@@ -48,7 +48,7 @@ export class ScriptEngine {
             if (userVal && userVal !== (opt.defaultValue === "无" ? "" : opt.defaultValue)) {
                 script += "    " + opt.name + ": " + JSON.stringify(userVal) + ",\n";
             } else if (mappedVar) {
-                script += "    " + opt.name + ": `${" + mappedVar + "}`,\n";
+                script += "    " + opt.name + ": `$" + "{" + mappedVar + "}`,\n";
             } else {
                 let val = opt.defaultValue === "无" ? "" : opt.defaultValue;
                 script += "    " + opt.name + ": " + JSON.stringify(val) + ",\n";
@@ -131,7 +131,7 @@ export class ScriptEngine {
 
         // 2. Extract Main Config Object
         const varName = platform.toLowerCase();
-        const configBlockRegex = new RegExp(`const ${varName}\\s*=\\s*\{`, "m");
+        const configBlockRegex = new RegExp(`const ${varName}\s*=\s*\{`, "m");
         const match = content.match(configBlockRegex);
         
         if (match) {
@@ -139,72 +139,51 @@ export class ScriptEngine {
             const endObj = this.findMatchingBracket(content, startObj);
             
             if (endObj !== -1) {
-                const configBody = content.substring(startObj + 1, endObj);
+                const configStr = content.substring(startObj, endObj + 1);
 
-                // 3. Extract Tables
-                const tablesIndex = configBody.indexOf("tables:");
-                if (tablesIndex !== -1) {
-                    const openBracket = configBody.indexOf("[", tablesIndex);
-                    if (openBracket !== -1) {
-                        const closeBracket = this.findMatchingBracket(configBody, openBracket);
-                        if (closeBracket !== -1) {
-                            const tablesStr = configBody.substring(openBracket, closeBracket + 1);
-                            const sanitizedTables = tablesStr.replace(/`([\s\S]*?)`/g, (match, p1) => {
-                                return '"' + p1.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"';
-                            });
-                            
-                            try {
-                                folderSettings = new Function("return " + sanitizedTables)();
-                            } catch (e) {
-                                console.error("Failed to parse folder settings", e);
-                                new Notice("Warning: Could not parse folder settings.");
-                            }
-                        }
-                    }
-                }
-
-                // 4. Extract Vault Settings
-                const syncIndex = configBody.indexOf("syncSettings:");
-                if (syncIndex !== -1) {
-                    const openBrace = configBody.indexOf("{", syncIndex);
-                    if (openBrace !== -1) {
-                        const closeBrace = this.findMatchingBracket(configBody, openBrace);
-                        if (closeBrace !== -1) {
-                            const syncStr = configBody.substring(openBrace, closeBrace + 1);
-                            const sanitizedSync = syncStr.replace(/`([\s\S]*?)`/g, (match, p1) => {
-                                return '"' + p1.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"';
-                            });
-                            
-                            try {
-                                vaultSettings = new Function("return " + sanitizedSync)();
-                            } catch (e) {
-                                console.error("Failed to parse vault settings", e);
-                                new Notice("Warning: Could not parse vault settings.");
-                            }
-                        }
-                    }
-                }
-
-                // 5. Extract Root Settings
-                const rootLines = configBody.split("\n");
-                const rootKeys = SYNC_OPTIONS.filter(o => o.level === "Root").map(o => o.name);
-
-                rootLines.forEach(line => {
-                    const keyMatch = line.match(/^\s*(\w+):\s*(.*?),?\s*$/);
-                    if (keyMatch && keyMatch[1]) {
-                        const key = keyMatch[1];
-                        if (rootKeys.includes(key)) {
-                            let val = keyMatch[2] || "";
-                            if (val.startsWith('"') && val.endsWith('"')) {
-                                val = val.slice(1, -1);
-                            } else if (val.startsWith("`") && val.endsWith("`")) {
-                                if (val.includes("${ ")) return; 
-                                val = val.slice(1, -1);
-                            }
-                            rootSettings[key] = val;
-                        }
-                    }
+                // Sanitize template literals to strings to avoid ReferenceError
+                // Replace `...` with "..." and escape internal quotes/newlines
+                const sanitizedConfig = configStr.replace(/`([\s\S]*?)`/g, (match, p1) => {
+                    return '"' + p1.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"';
                 });
+
+                try {
+                    // Parse the sanitized object string
+                    const configObj = new Function("return " + sanitizedConfig)();
+
+                    // Extract Folder Settings (tables)
+                    if (Array.isArray(configObj.tables)) {
+                        folderSettings = configObj.tables;
+                    }
+
+                    // Extract Vault Settings (syncSettings)
+                    if (configObj.syncSettings && typeof configObj.syncSettings === 'object') {
+                        vaultSettings = configObj.syncSettings;
+                    }
+
+                    // Extract Root Settings
+                    const rootKeys = SYNC_OPTIONS.filter(o => o.level === "Root").map(o => o.name);
+                    
+                    for (const key in configObj) {
+                        if (key === 'tables' || key === 'syncSettings') continue;
+                        
+                        if (rootKeys.includes(key)) {
+                            const val = configObj[key];
+                            if (typeof val === 'string') {
+                                // If it's a template variable reference (e.g. "${apiKey}"), don't import it as a value
+                                // because the generator will supply the default variable reference if the field is empty.
+                                if (val.includes("${")) continue; 
+                                rootSettings[key] = val;
+                            } else if (val !== undefined && val !== null) {
+                                rootSettings[key] = String(val);
+                            }
+                        }
+                    }
+
+                } catch (e) {
+                    console.error("Failed to parse configuration object", e);
+                    new Notice("Warning: Could not parse configuration from template.");
+                }
             }
         }
 
