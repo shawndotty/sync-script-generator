@@ -38,6 +38,7 @@ class Suggest<T> {
 				this.setSelectedItem(this.selectedItem - 1, true);
 				return false;
 			}
+			return true;
 		});
 
 		scope.register([], "ArrowDown", (event) => {
@@ -45,6 +46,7 @@ class Suggest<T> {
 				this.setSelectedItem(this.selectedItem + 1, true);
 				return false;
 			}
+			return true;
 		});
 
 		scope.register([], "Enter", (event) => {
@@ -52,6 +54,7 @@ class Suggest<T> {
 				this.useSelectedItem(event);
 				return false;
 			}
+			return true;
 		});
 	}
 
@@ -198,5 +201,5 @@ export abstract class TextInputSuggest<T> implements ISuggestOwner<T> {
 
 	abstract getSuggestions(inputStr: string): T[];
 	abstract renderSuggestion(item: T, el: HTMLElement): void;
-	abstract selectSuggestion(item: T): void;
+	abstract selectSuggestion(item: T, evt: MouseEvent | KeyboardEvent): void;
 }
