@@ -6,6 +6,7 @@ import {
 	Notice,
 	TextAreaComponent,
 	ButtonComponent,
+	setIcon,
 } from "obsidian";
 import { Platform, SyncOption, FolderSetting } from "./types";
 import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
@@ -140,46 +141,54 @@ export class GeneratorView extends ItemView {
 			this.renderMiddleColumn();
 		};
 
-		this.folderSettings.forEach((folder, index) => {
-			const folderDiv = formContainer.createDiv({
-				cls: "folder-setting-block",
-			});
+        this.folderSettings.forEach((folder, index) => {
+            const folderDiv = formContainer.createDiv({ cls: "folder-setting-block" });
+            if (folder.collapsed) folderDiv.addClass("is-collapsed");
+            
+            const header = folderDiv.createDiv({ cls: "folder-header" });
+            const titleContainer = header.createDiv({ cls: "folder-title" });
+            
+            const iconSpan = titleContainer.createSpan({ cls: "folder-toggle-icon" });
+            setIcon(iconSpan, "chevron-down");
+            
+            titleContainer.createEl("span", { text: `Folder ${index + 1}` + (folder.folderName ? `: ${folder.folderName}` : "") });
 
-			const header = folderDiv.createDiv({ cls: "folder-header" });
-			header.createEl("strong", { text: `Folder ${index + 1}` });
-			const removeBtn = header.createEl("button", { text: "Remove" });
-			removeBtn.onclick = () => {
-				this.folderSettings.splice(index, 1);
-				this.renderMiddleColumn();
-			};
+            header.onclick = (e) => {
+                // Avoid toggling when clicking remove button
+                if ((e.target as HTMLElement).tagName === "BUTTON") return;
+                folder.collapsed = !folder.collapsed;
+                this.renderMiddleColumn();
+            };
 
-			new Setting(folderDiv).setName("Folder Path").addText((text) => {
-				text.setPlaceholder("Folder Path")
-					.setValue(folder.folderName)
-					.onChange((val) => (folder.folderName = val));
-				this.addFocusListener(text.inputEl, {
-					name: "Folder Path",
-					description: "The path to the folder you want to sync.",
-					example: "Example: MyVault/Projects/Active",
-					platforms: [],
-					level: "Folder",
-					required: true,
-					defaultValue: "",
-					valueType: "string",
-				});
-			});
+            const removeBtn = header.createEl("button", { text: "Remove" });
+            removeBtn.onclick = (e) => {
+                e.stopPropagation();
+                this.folderSettings.splice(index, 1);
+                this.renderMiddleColumn();
+            };
 
-			const folderOptions = SYNC_OPTIONS.filter(
-				(o) =>
-					o.level === "Folder" &&
-					(o.platforms.includes(this.platform) ||
-						o.platforms.length === 0)
-			);
-			folderOptions.forEach((opt) => {
-				if (opt.name === "folderName") return;
-				this.renderOption(folderDiv, opt, folder, "Folder");
-			});
-		});
+            const contentDiv = folderDiv.createDiv({ cls: "folder-content" });
+
+            new Setting(contentDiv)
+                .setName("Folder Path")
+                .addText(text => {
+                    text.setPlaceholder("Folder Path")
+                        .setValue(folder.folderName)
+                        .onChange(val => folder.folderName = val);
+                    this.addFocusListener(text.inputEl, { 
+                        name: "Folder Path", 
+                        description: "The path to the folder you want to sync.", 
+                        example: "Example: MyVault/Projects/Active",
+                        platforms: [], level: "Folder", required: true, defaultValue: "", valueType: "string"
+                    });
+                });
+
+            const folderOptions = SYNC_OPTIONS.filter(o => o.level === "Folder" && (o.platforms.includes(this.platform) || o.platforms.length === 0));
+            folderOptions.forEach(opt => {
+                if (opt.name === "folderName") return;
+                this.renderOption(contentDiv, opt, folder, "Folder");
+            });
+        });
 	}
 
 	renderOption(

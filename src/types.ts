@@ -13,6 +13,7 @@ export interface SyncOption {
 
 export interface FolderSetting {
     folderName: string;
+    collapsed?: boolean;
     [key: string]: any;
 }
 

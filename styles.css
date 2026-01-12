@@ -94,6 +94,34 @@
     margin-bottom: 15px;
     border-bottom: 1px solid var(--background-modifier-border);
     padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.folder-header:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.folder-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.folder-toggle-icon {
+    transition: transform 0.2s ease;
+}
+
+.folder-setting-block.is-collapsed .folder-toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.folder-content {
+    display: block;
+}
+
+.folder-setting-block.is-collapsed .folder-content {
+    display: none;
 }
 
 /* Right Column: Help & Description */
