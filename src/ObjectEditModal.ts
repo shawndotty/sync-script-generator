@@ -155,6 +155,7 @@ export class ObjectEditModal extends Modal {
 			valueContainer.style.flex = "2";
 			valueContainer.style.display = "flex";
 			valueContainer.style.alignItems = "center";
+			valueContainer.style.justifyContent = "flex-end";
 
 			if (item.type === "boolean") {
 				const toggle = new ToggleComponent(valueContainer);
@@ -162,14 +163,28 @@ export class ObjectEditModal extends Modal {
 					.setValue(!!item.value)
 					.onChange((val) => (item.value = val));
 			} else if (item.type === "array") {
-				const editBtn = new ButtonComponent(valueContainer);
-				editBtn
-					.setButtonText(
-						`Edit Array (${
-							Array.isArray(item.value) ? item.value.length : 0
-						} items)`
-					)
+				valueContainer.style.gap = "5px";
+
+				const arrayInput = new TextComponent(valueContainer);
+				arrayInput.inputEl.addClass("object-edit-value");
+				arrayInput.inputEl.style.flex = "1";
+				arrayInput
+					.setPlaceholder("[]")
+					.setValue(JSON.stringify(item.value))
+					.onChange((val) => {
+						try {
+							const parsed = JSON.parse(val);
+							if (Array.isArray(parsed)) {
+								item.value = parsed;
+							}
+						} catch (e) {
+							// Ignore invalid JSON while typing
+						}
+					});
+
+				new ButtonComponent(valueContainer)
 					.setIcon("pencil")
+					.setTooltip("Open Array Editor")
 					.onClick(() => {
 						new ArrayEditModal(
 							this.app,
@@ -177,9 +192,7 @@ export class ObjectEditModal extends Modal {
 							item.value,
 							(newArray) => {
 								item.value = newArray;
-								editBtn.setButtonText(
-									`Edit Array (${newArray.length} items)`
-								);
+								arrayInput.setValue(JSON.stringify(newArray));
 							}
 						).open();
 					});
