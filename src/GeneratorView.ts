@@ -1,4 +1,4 @@
-import { App, ItemView, WorkspaceLeaf, Setting, Notice, ButtonComponent, setIcon, Modal } from "obsidian";
+import { App, ItemView, WorkspaceLeaf, Setting, Notice, ButtonComponent, setIcon, Modal, TFile } from "obsidian";
 import { Platform, SyncOption, FolderSetting } from "./types";
 import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
 import { EditorView, keymap } from "@codemirror/view";
@@ -6,6 +6,7 @@ import { EditorState } from "@codemirror/state";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { defaultKeymap } from "@codemirror/commands";
+import { ImportModal } from "./ImportModal";
 
 export class GeneratorView extends ItemView {
     platform: Platform = "Airtable";
@@ -13,6 +14,7 @@ export class GeneratorView extends ItemView {
     vaultSettings: Record<string, any> = {};
     folderSettings: FolderSetting[] = [];
     activeOption: SyncOption | null = null;
+    importedFile: TFile | null = null;
     
     // UI Elements
     middleContainer: HTMLElement;
@@ -66,10 +68,16 @@ export class GeneratorView extends ItemView {
             
             item.onclick = () => {
                 this.platform = p;
+                // Reset imported file context when switching platforms manually
+                this.importedFile = null;
+                this.rootSettings = {};
+                this.vaultSettings = {};
+                this.folderSettings = [];
+                
                 container.findAll(".platform-item").forEach(el => el.removeClass("is-active"));
                 item.addClass("is-active");
                 this.renderMiddleColumn();
-                this.activeOption = null; // Clear help on platform switch
+                this.activeOption = null; 
                 this.renderRightColumn();
             };
         });
@@ -81,6 +89,10 @@ export class GeneratorView extends ItemView {
 
         // Action Bar
         const actionBar = this.middleContainer.createDiv({ cls: "action-bar" });
+        new ButtonComponent(actionBar)
+            .setButtonText("Import Template")
+            .onClick(() => this.openImportModal());
+
         new ButtonComponent(actionBar)
             .setButtonText("Generate Script")
             .setCta()
@@ -123,7 +135,6 @@ export class GeneratorView extends ItemView {
             titleContainer.createEl("span", { text: `Folder ${index + 1}` + (folder.folderName ? `: ${folder.folderName}` : "") });
 
             header.onclick = (e) => {
-                // Avoid toggling when clicking remove button
                 if ((e.target as HTMLElement).tagName === "BUTTON") return;
                 folder.collapsed = !folder.collapsed;
                 this.renderMiddleColumn();
@@ -229,6 +240,137 @@ export class GeneratorView extends ItemView {
         }
     }
 
+    findMatchingBracket(text: string, start: number): number {
+        let count = 0;
+        const open = text[start];
+        const close = open === '[' ? ']' : '}';
+        
+        for (let i = start; i < text.length; i++) {
+            if (text[i] === open) count++;
+            else if (text[i] === close) count--;
+            
+            if (count === 0) return i;
+        }
+        return -1;
+    }
+
+    openImportModal() {
+        new ImportModal(this.app, (file) => this.importTemplate(file)).open();
+    }
+
+    async importTemplate(file: TFile) {
+        const content = await this.app.vault.read(file);
+        this.importedFile = file;
+        
+        // 1. Detect Platform
+        const platformMatch = content.match(/await tp\.user\.ObSync(\w+)\(/);
+        if (platformMatch && platformMatch[1]) {
+            const parsedPlatform = platformMatch[1] as Platform;
+            if (["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"].includes(parsedPlatform)) {
+                this.platform = parsedPlatform;
+            }
+        }
+
+        // 2. Extract Main Config Object
+        const varName = this.platform.toLowerCase();
+        // Relaxed regex for whitespace
+        const configBlockRegex = new RegExp(`const ${varName}\s*=\s*\{`, "m");
+        const match = content.match(configBlockRegex);
+        
+        if (match) {
+            const startObj = match.index! + match[0].length - 1; // index of '{'
+            const endObj = this.findMatchingBracket(content, startObj);
+            
+            if (endObj !== -1) {
+                const configBody = content.substring(startObj + 1, endObj);
+
+                // 3. Extract Tables
+                const tablesIndex = configBody.indexOf("tables:");
+                if (tablesIndex !== -1) {
+                    const openBracket = configBody.indexOf("[", tablesIndex);
+                    if (openBracket !== -1) {
+                        const closeBracket = this.findMatchingBracket(configBody, openBracket);
+                        if (closeBracket !== -1) {
+                            const tablesStr = configBody.substring(openBracket, closeBracket + 1);
+                            // Sanitize template literals to strings
+                            const sanitizedTables = tablesStr.replace(/`([\s\S]*?)`/g, (match, p1) => {
+                                return '"' + p1.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"';
+                            });
+                            
+                            try {
+                                this.folderSettings = new Function("return " + sanitizedTables)();
+                            } catch (e) {
+                                console.error("Failed to parse folder settings", e);
+                                new Notice("Warning: Could not parse folder settings.");
+                            }
+                        }
+                    }
+                } else {
+                    this.folderSettings = [];
+                }
+
+                // 4. Extract Vault Settings
+                const syncIndex = configBody.indexOf("syncSettings:");
+                if (syncIndex !== -1) {
+                    const openBrace = configBody.indexOf("{", syncIndex);
+                    if (openBrace !== -1) {
+                        const closeBrace = this.findMatchingBracket(configBody, openBrace);
+                        if (closeBrace !== -1) {
+                            const syncStr = configBody.substring(openBrace, closeBrace + 1);
+                            const sanitizedSync = syncStr.replace(/`([\s\S]*?)`/g, (match, p1) => {
+                                return '"' + p1.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"';
+                            });
+                            
+                            try {
+                                this.vaultSettings = new Function("return " + sanitizedSync)();
+                            } catch (e) {
+                                console.error("Failed to parse vault settings", e);
+                                new Notice("Warning: Could not parse vault settings.");
+                            }
+                        }
+                    }
+                } else {
+                    this.vaultSettings = {};
+                }
+
+                // 5. Extract Root Settings
+                const rootLines = configBody.split("\n");
+                this.rootSettings = {};
+                const rootKeys = SYNC_OPTIONS.filter(o => o.level === "Root").map(o => o.name);
+
+                rootLines.forEach(line => {
+                    const keyMatch = line.match(/^\s*(\w+):\s*(.*?),?\s*$/);
+                    if (keyMatch && keyMatch[1]) {
+                        const key = keyMatch[1];
+                        if (rootKeys.includes(key)) {
+                            let val = keyMatch[2] || "";
+                            if (val.startsWith("'") && val.endsWith("'")) {
+                                val = val.slice(1, -1);
+                            } else if (val.startsWith("`") && val.endsWith("`")) {
+                                if (val.includes("${ ")) return; 
+                                val = val.slice(1, -1);
+                            }
+                            this.rootSettings[key] = val;
+                        }
+                    }
+                });
+            }
+        }
+
+        new Notice(`Imported settings from ${file.basename}`);
+        
+        // Update Left Column Active Item
+        const platformList = this.containerEl.querySelector(".platform-list");
+        if (platformList) {
+            platformList.findAll(".platform-item").forEach(el => {
+                el.removeClass("is-active");
+                if (el.textContent === this.platform) el.addClass("is-active");
+            });
+        }
+
+        this.renderMiddleColumn();
+    }
+
     generateScript() {
         let script = "<%%*\n";
         const varName = this.platform.toLowerCase();
@@ -245,10 +387,13 @@ export class GeneratorView extends ItemView {
 
         const rootVars = platformRootVars[this.platform] || [];
         if (rootVars.length > 0) {
-            script += `const {${rootVars.join(", ")}} = app.plugins.plugins["ioto-settings"].settings;\n\n`;
+            script += `const {${rootVars.join(", ")}} = app.plugins.plugins["ioto-settings"].settings;
+
+`;
         }
 
-        script += `const ${varName} = {\n`;
+        script += `const ${varName} = {
+`;
 
         // Root Settings in Object
         const rootOptions = SYNC_OPTIONS.filter(o => o.level === "Root" && (o.platforms.includes(this.platform)));
@@ -267,10 +412,9 @@ export class GeneratorView extends ItemView {
             
             if (userVal && userVal !== (opt.defaultValue === "无" ? "" : opt.defaultValue)) {
                 script += "    " + opt.name + ": " + JSON.stringify(userVal) + ",\n";
-                        } else if (mappedVar) {
-                            script += "    " + opt.name + ": `${" + mappedVar + "}`,\n";
-                        } else {
-            
+            } else if (mappedVar) {
+                script += "    " + opt.name + ": `${" + mappedVar + "}`,\n";
+            } else {
                 let val = opt.defaultValue === "无" ? "" : opt.defaultValue;
                 script += "    " + opt.name + ": " + JSON.stringify(val) + ",\n";
             }
@@ -311,7 +455,7 @@ export class GeneratorView extends ItemView {
                 script += "        {\n";
                 const entries = Object.entries(folder);
                 entries.forEach(([key, val], j) => {
-                    if (key === "collapsed") return; // Skip internal property
+                    if (key === "collapsed") return; 
                     script += "            " + key + ": " + JSON.stringify(val) + (j < entries.length - 1 ? ",\n" : "\n");
                 });
                 script += "        }" + (i < this.folderSettings.length - 1 ? ",\n" : "\n");
@@ -333,7 +477,6 @@ export class GeneratorView extends ItemView {
             previewModal.contentEl.createEl("h2", { text: "Generated Script" });
             
             const editorContainer = previewModal.contentEl.createDiv({ cls: "script-editor-container" });
-            // Style it to look good
             editorContainer.style.height = "400px";
             editorContainer.style.overflow = "hidden"; // CM handles overflow
             editorContainer.style.border = "1px solid var(--background-modifier-border)";
@@ -363,11 +506,17 @@ export class GeneratorView extends ItemView {
                     });
                 })
                 .addButton(btn => {
-                    btn.setButtonText("Save as File").setCta().onClick(async () => {
+                    const label = this.importedFile ? `Update ${this.importedFile.basename}` : "Save as File";
+                    btn.setButtonText(label).setCta().onClick(async () => {
                         const content = view.state.doc.toString();
-                        const fileName = `SyncScript-${this.platform}-${Date.now()}.md`;
-                        await this.app.vault.create(fileName, content);
-                        new Notice(`Saved to vault as ${fileName}`);
+                        if (this.importedFile) {
+                             await this.app.vault.modify(this.importedFile, content);
+                             new Notice(`Updated ${this.importedFile.path}`);
+                        } else {
+                            const fileName = `SyncScript-${this.platform}-${Date.now()}.md`;
+                            await this.app.vault.create(fileName, content);
+                            new Notice(`Saved to vault as ${fileName}`);
+                        }
                         previewModal.close();
                     });
                 });
