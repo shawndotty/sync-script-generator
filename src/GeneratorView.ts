@@ -11,6 +11,8 @@ import { Platform, SyncOption, FolderSetting } from "./types";
 import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
 import { ImportModal } from "./ImportModal";
 import { ScriptPreviewModal } from "./ScriptPreviewModal";
+import { ObjectEditModal } from "./ObjectEditModal";
+import { ArrayEditModal } from "./ArrayEditModal";
 import { ScriptEngine } from "./ScriptEngine";
 import { FolderSuggest } from "./ui/pickers/folder-picker";
 
@@ -281,7 +283,39 @@ export class GeneratorView extends ItemView {
 					.onChange((val) => (target[opt.name] = val));
 				handleFocus(toggle.toggleEl);
 			});
-		} else if (opt.valueType === "array" || opt.valueType === "object") {
+		} else if (opt.valueType === "object") {
+			s.addExtraButton((btn) => {
+				btn.setIcon("pencil")
+					.setTooltip("Edit Object")
+					.onClick(() => {
+						let currentData = target[opt.name];
+						if (typeof currentData === "string") {
+							try {
+								currentData = JSON.parse(currentData);
+							} catch {
+								currentData = {};
+							}
+						}
+						if (
+							!currentData ||
+							typeof currentData !== "object" ||
+							Array.isArray(currentData)
+						) {
+							currentData = {};
+						}
+
+						new ObjectEditModal(
+							this.app,
+							opt.title || opt.name,
+							currentData,
+							(result) => {
+								target[opt.name] = result;
+								this.renderMiddleColumn();
+							}
+						).open();
+					});
+			});
+
 			s.addTextArea((text) => {
 				text.setPlaceholder(opt.example || "")
 					.setValue(
@@ -293,7 +327,52 @@ export class GeneratorView extends ItemView {
 						try {
 							target[opt.name] = JSON.parse(val);
 						} catch (e) {
-							new Notice(`Invalid JSON for ${opt.name}`);
+							// Silent failure for partial JSON input
+						}
+					});
+				handleFocus(text.inputEl);
+			});
+		} else if (opt.valueType === "array") {
+			s.addExtraButton((btn) => {
+				btn.setIcon("pencil")
+					.setTooltip("Edit Array")
+					.onClick(() => {
+						let currentData = target[opt.name];
+						if (typeof currentData === "string") {
+							try {
+								currentData = JSON.parse(currentData);
+							} catch {
+								currentData = [];
+							}
+						}
+						if (!Array.isArray(currentData)) {
+							currentData = [];
+						}
+
+						new ArrayEditModal(
+							this.app,
+							opt.title || opt.name,
+							currentData,
+							(result) => {
+								target[opt.name] = result;
+								this.renderMiddleColumn();
+							}
+						).open();
+					});
+			});
+
+			s.addTextArea((text) => {
+				text.setPlaceholder(opt.example || "")
+					.setValue(
+						target[opt.name]
+							? JSON.stringify(target[opt.name], null, 2)
+							: ""
+					)
+					.onChange((val) => {
+						try {
+							target[opt.name] = JSON.parse(val);
+						} catch (e) {
+							// Silent failure
 						}
 					});
 				handleFocus(text.inputEl);
