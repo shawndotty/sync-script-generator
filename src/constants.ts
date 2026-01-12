@@ -1,0 +1,1283 @@
+import { SyncOption } from "./types";
+
+export const SYNC_OPTIONS: SyncOption[] = [
+    {
+        "name": "defaultBaseID",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到Airtable时，默认使用的Base ID。",
+        "example": "同步设置时使用：\n${airtableBaseIDForSync}\n\nFetch设置时使用：\n${airtableBaseIDForFetch}"
+    },
+    {
+        "name": "defaultTableID",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到Airtable时，默认使用的Table ID。",
+        "example": "同步设置时使用：\n${airtableTableIDForSync}\n\nFetch设置时使用：\n${airtableTableIDForFetch}"
+    },
+    {
+        "name": "apiKey",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到Airtable或者Vika时，必须提供一个相应的API Key。\n\n其中，Airtable的API Key，已经升级为Personal Access Token。",
+        "example": "同步设置时使用：\n${airtableAPIKeyForSync}\n\nFetch设置时使用：\n${airtableAPIKeyForFetch}"
+    },
+    {
+        "name": "apiKey",
+        "platforms": [
+            "Vika"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到Vika时，使用的API Key。",
+        "example": "同步设置时使用：\n${vikaAPIKeyForSync}\n\nFetch设置时使用：\n${vikaAPIKeyForFetch}"
+    },
+    {
+        "name": "appID",
+        "platforms": [
+            "Feishu"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到飞书时，需要提供自建应用的APP ID",
+        "example": "同步设置时使用：\n${feishuAppIDForSync}\n\nFetch设置时使用：\n${feishuAppIDForFetch}"
+    },
+    {
+        "name": "appSecret",
+        "platforms": [
+            "Feishu"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到飞书时，需要提供自建应用的APP Secret",
+        "example": "同步设置时使用：\n${feishuAppSecretForSync}\n\nFetch设置时使用：\n${feishuAppSecretForFetch}"
+    },
+    {
+        "name": "defaultAppToken",
+        "platforms": [
+            "Feishu"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到飞书时，默认使用的多维表的App Token。\n\n多维表的App Token，相当于Airtable中的Base ID。",
+        "example": "同步设置时使用：\n${feishuBaseIDForSync}\n\nFetch设置时使用：\n${feishuBaseIDForFetch}"
+    },
+    {
+        "name": "defaultTableID",
+        "platforms": [
+            "Feishu"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到飞书时，默认使用的Table ID。",
+        "example": "同步设置时使用：\n${feishuTableIDForSync}\n\nFetch设置时使用：\n${feishuTableIDForFetch}"
+    },
+    {
+        "name": "defaultTableID",
+        "platforms": [
+            "Vika"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到Vika时，默认使用的Table ID。",
+        "example": "同步设置时使用：\n${vikaTableIDForSync}\n\nFetch设置时使用：\n${vikaTableIDForFetch}"
+    },
+    {
+        "name": "folderName",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": true,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹的完整路径。\n",
+        "example": ""
+    },
+    {
+        "name": "separateMode",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "是否使用分离模式进行同步。\n\ntrue 使用分离模式\nfalse 不使用分离模式\n\n如果你选择使用分离模式，还需要去设置分离模式使用的同步数据表的downloadTableID。\n\n如果你使用的是Airtable同步，那你还可以设置downloadBaseID。\n\n如果你使用的是Feishu同步，那你还可以设置downloadAppToken。\n\n如果你使用的Vika同步，你只需要设置downloadTableID就可以了。",
+        "example": ""
+    },
+    {
+        "name": "tableID",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Folder",
+        "required": true,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在同步时使用的Airtable的tableID。\n\n不使用分离模式时，上传和下载都会使用tableID。\n\n如果使用分离模式，只有在上传时使用tableID。",
+        "example": "tblWIExxxxxQSDUz4"
+    },
+    {
+        "name": "tableID",
+        "platforms": [
+            "Feishu",
+            "Lark"
+        ],
+        "level": "Folder",
+        "required": true,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在同步时使用的Feishu多维表的tableID。\n\n不使用分离模式时，上传和下载都会使用tableID。\n\n如果使用分离模式，只有在上传时使用tableID。",
+        "example": "tblor4xxxxx54AZD"
+    },
+    {
+        "name": "tableID",
+        "platforms": [
+            "Vika"
+        ],
+        "level": "Folder",
+        "required": true,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在同步时使用的Vika的tableID。\n\n不使用分离模式时，上传和下载都会使用tableID。\n\n如果使用分离模式，只有在上传时使用tableID。",
+        "example": "dstl4fxxxxxWzoh51x"
+    },
+    {
+        "name": "baseID",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在同步时所使用的baseID。\n\n如果你配置了不同于defaultBaseID的值，则可以实现把同一个OB库下的不同文件夹的内容同步到Airtable中不同的Base。",
+        "example": "appq2MxxxxBdZc3Sc"
+    },
+    {
+        "name": "appToken",
+        "platforms": [
+            "Feishu",
+            "Lark"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在同步时所使用的appToken。\n\n如果你配置了不同于defaultppToken的值，则可以实现把同一个OB库下的不同文件夹的内容同步到Feishu中不同的多维表。",
+        "example": "JsTgbO9xxxxxXJsjtGtceTlBnoG"
+    },
+    {
+        "name": "downloadAppToken",
+        "platforms": [
+            "Feishu",
+            "Lark"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在分离模式下，从Feishu下载数据时，所使用的appToken。",
+        "example": "JsTgbO9xxxxxXJsjtGtceTlBnoG"
+    },
+    {
+        "name": "downloadBaseID",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在分离模式下，从Airtable下载数据时，所使用的BaseID。",
+        "example": "appq2MxxxxBdZc3Sc"
+    },
+    {
+        "name": "downloadTableID",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在分离模式下，从Airtable下载数据时，所使用的tableID。",
+        "example": "tblWIExxxxxQSDUz4"
+    },
+    {
+        "name": "downloadTableID",
+        "platforms": [
+            "Feishu",
+            "Lark"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在分离模式下，从Feishu多维表下载数据时，所使用的tableID。",
+        "example": "tblor4xxxxx54AZD"
+    },
+    {
+        "name": "downloadTableID",
+        "platforms": [
+            "Vika"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步文件夹，在分离模式下，从Vika多维表下载数据时，所使用的tableID。",
+        "example": "dstl4fxxxxxWzoh51x"
+    },
+    {
+        "name": "enableDateFilterForBatchSync",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "在批量上传或者下载的同步模式下，是否使用笔记或者记录的更新日期对笔记或记录进行筛选。\n\ntrue 为使用更新日期进行筛选；\nfalse 为不使用更新日期进行筛选。",
+        "example": "false"
+    },
+    {
+        "name": "syncOptions",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "[]",
+        "valueType": "array",
+        "description": "触发同步时，显示的同步选项。\n1: 上传当前笔记到多维表\n2: 上传当前笔记中的出链到多维表\n3: 上传当前笔记及其笔记中的出链到多维表\n4: 上传当前文件夹下的笔记到多维表\n5: 上传当前文件夹及子文件夹下的笔记到多维表\n6: 上传包含指定标签的笔记到多维表\n7: 上传包含指定属性值的笔记到多维表\n8: 上传搜索结果到多维表\n9: 上传所有IOO笔记到多维表(可能需要等待较长时间)\n11: 下载多维表中的内容到当前笔记\n12: 下载多维表中的内容到当前笔记中的出链\n13: 下载多维表中的内容到当前笔记及其笔记中的出链\n14: 下载多维表中的内容到当前文件夹下的笔记\n15: 下载多维表中的内容到当前文件夹及子文件夹下的笔记\n21: 删除当前笔记和多维表中的记录",
+        "example": "1\n2\n3\n4\n5\n6"
+    },
+    {
+        "name": "syncMode",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "id",
+        "valueType": "string",
+        "description": "设置在同步时，是按照笔记的标题去数据库中查找对应记录，还是按照笔记中的记录ID去进行查找。\n\n\"id\" 使用id进行查找\n\"title\" 使用笔记标题进行查找\n\n在分离模式下，如果设置为“id”：\n如果是上传模式，将使用笔记中的{多维表}RecordID，在上传Table中进行查询，比如airtableRecordID。\n\n如果是下载模式，将使用笔记中的{多维表}DownloadRecordID，在上传Table中进行查询，比如airtableDownloadRecordID。",
+        "example": "title"
+    },
+    {
+        "name": "showDeleteOption",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "是否在同步的选项中显示删除选项。\n\ntrue 为显示；\nfalse 为不显示。",
+        "example": "false"
+    },
+    {
+        "name": "enableUpdateFromDB",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "在同步完成时，是否使用多维表中的数据来更新笔记的自定义属性、标签、别名、以及笔记的内容。\n\nture 为使用多维表数据进行更新；\nfalse 为不使用多维表数据进行更新。",
+        "example": "false"
+    },
+    {
+        "name": "syncContent",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "在同步笔记时，是否把笔记的内容同步到多维表中。\n\ntrue 为同步；\nfalse 为不同步。",
+        "example": "false"
+    },
+    {
+        "name": "sortFrontMatterProperties",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "在同步完成后，是否对笔记的属性区进行排序。（排序是按照属性名称的音序来进行正序排序）\n\ntrue 为排序；\nfalse 为不排序。",
+        "example": "false"
+    },
+    {
+        "name": "syncFullContent",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "是否把包含属性区（Frontmatter）在内的内容，同步到多维表中。\n\ntrue 为同步；\nfalse 为不同步。\n\n如果设置为true，那在你的多维表中，需要有一个名为FullContent的的字段来接收对应的内容。",
+        "example": "true"
+    },
+    {
+        "name": "contentFetchField",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "Content",
+        "valueType": "string",
+        "description": "在同步完成后，使用多维表中的哪个字段来更新笔记中的内容。\n\n默认使用\"Content\"字段。\n你可以根据自己的需求，设置为其他任何文本字段，如果你设置的字段在多维表中不存在，将使用默认字段。",
+        "example": "AI Content"
+    },
+    {
+        "name": "contentAppendFields",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "[]",
+        "valueType": "array",
+        "description": "在同步完成时，在笔记中内容后面附加多维表中的指定字段的内容。\n\n如果指定了多个字段，这些字段的内容，将按照数组中的元素顺序通过换行进行合并。\n\n你可以设置任意能返回文本值的字段的名称。\n当你指定的字段在数据库中不存在时，将返回空文本。",
+        "example": "要点提取\n问题补充\n背景信息"
+    },
+    {
+        "name": "justUpdateFromDB",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "是否在同步选项中仅显示下载项。\n\ntrue 为仅显示下载项；\nfalse 为显示下载和其他项。",
+        "example": "true"
+    },
+    {
+        "name": "includesTagsInContent",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "当更新笔记的tags属性时，是否在其中包含笔记内容中的标签。\n\ntrue 为包含；\nfalse 为不包含。",
+        "example": "true"
+    },
+    {
+        "name": "customFields",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "{}",
+        "valueType": "object",
+        "description": "同步文件夹，在同步时所使用使用的自定义字段。",
+        "example": "Project: [\"日常工作\"],\nStatus: \"Published\",\nCourse: \"Johnny学OB\",\nVideoURL: \"\",\n内容概览: \"\",\nAuthor: \"Johnny\"\n"
+    },
+    {
+        "name": "extractKeyPoints",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "{}",
+        "valueType": "object",
+        "description": "同步文件夹，在同步时想要提取的特殊标记内容。\n\n属性名，为特殊标记的类型名。\n属性值，是对应区块在多维表中想要存储的字段名。\n\n目前支持的特殊标记的类型名如下：\n\n  \"highlights\" 高亮语法 ==text==\n  \"italics\" 斜体语法 *text* 或 _text_ \n  \"strong\" 粗体语法 **text**\n  \"bolds\" 粗体语法 **text**（和strong一样的效果，二选一使用）\n  \"underlines\" 下划线语法 <u>text</u>\n  \"deletions\" 删除线语法 ~~text~~\n  \"inlineCodes\" 行内代码语法 `text`\n  \"singleQuotes\" 引用语法 > text\n  \"boldItalics\" 粗体斜体语法 ***text***\n  \"urls\" 网址",
+        "example": "highlights: \"疑点\"\nitalics: \"疑点\"\nstrong: \"加粗\"\nunderlines: \"下划线\"\ndeletions: \"删除\"\ninlineCodes: \"行内代码\"\nsingleQuotes: \"引用\""
+    },
+    {
+        "name": "extractBlocks",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "{}",
+        "valueType": "object",
+        "description": "同步文件夹，在同步时，想要提取的特殊区块内容。\n\n属性名，为区块中第一个连字符之前的内容。\n属性值，是对应区块在多维表中想要存储的字段名。",
+        "example": "tips: \"提示\"\ncode: \"代码\"\ntable: \"表格\"\nmath: \"数学\"\nquote: \"引言\""
+    },
+    {
+        "name": "enableUpdatePropertiesFromDowloadTable",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "在分离模式下，当从配置的DownloadTable中下载数据到笔记时，是否使用DownloadTable中的数据，去更新当前同步文件夹所设置的笔记的自定义属性。\n\ntrue 为更新；\nfalse 为不更新。\n",
+        "example": "false"
+    },
+    {
+        "name": "fmFetchFields",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "[]",
+        "valueType": "array",
+        "description": "在同步完成时，根据指定值从多维表中获取对应字段的值，并存储在笔记的属性区。\n",
+        "example": "要点提取\n问题补充\n背景信息"
+    },
+    {
+        "name": "fmFetchFieldsOverrideMode",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "是否使用同步文件夹下的fmFetchFields覆盖valut syncSettings中的fmFetchFields设置",
+        "example": "true"
+    },
+    {
+        "name": "customFieldsOverrideMode",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "是否使用同步文件夹下的customFields覆盖vault syncSettings中的customFields设置",
+        "example": "true"
+    },
+    {
+        "name": "extractKeyPointsOverrideMode",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "是否使用同步文件夹下的extractKeyPoints覆盖vault syncSettings中的extractKeyPoints设置",
+        "example": "true"
+    },
+    {
+        "name": "extractBlocksOverrideMode",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "是否使用同步文件夹下的extractBlocks覆盖vault syncSettings中的extractBlocks设置",
+        "example": "true"
+    },
+    {
+        "name": "pullContentOnly",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "在从数据库获取内容到笔记时，是否只获取笔记内容，而不获取笔记属性",
+        "example": "false"
+    },
+    {
+        "name": "extractKeyPointsAsText",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "从笔记中提取要点时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Airtable中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Airtable中的字段需要是多行文本字段",
+        "example": ""
+    },
+    {
+        "name": "extractBlocksAsText",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "从笔记中提取区块时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Airtable中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Airtable中的字段需要是多行文本字段",
+        "example": ""
+    },
+    {
+        "name": "extractKeyPointsAsText",
+        "platforms": [
+            "Vika",
+            "Feishu",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "从笔记中提取要点时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，多维表的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，多维表中的字段需要是多行文本字段",
+        "example": ""
+    },
+    {
+        "name": "extractBlocksAsText",
+        "platforms": [
+            "Vika",
+            "Feishu",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "从笔记中提取区块时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，多维表的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，多维表中的字段需要是多行文本字段",
+        "example": ""
+    },
+    {
+        "name": "fieldsNames",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Vault",
+        "required": false,
+        "defaultValue": "{}",
+        "valueType": "object",
+        "description": "使用改字段去配置多维表中使用的默认同步字段的字段名。\n\n可以配置的默认字段及其默认值，如下\ntitle: \"Title\",\ncontent: \"Content\",\ntags: \"Tags\",\naliases: \"Aliases\",\ncreatedTime: \"CreatedTime\",\nupdatedTime: \"UpdatedTime\",\npath: \"Folder\",\nvault: \"Vault\",\nfullContent: \"FullContent\",\nobsidianURI: \"OBURI\",",
+        "example": "title: \"标题\",\npath: \"路径\",\ncontent: \"内容\""
+    },
+    {
+        "name": "extractTagLines",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "{}",
+        "valueType": "object",
+        "description": "同步文件夹，在同步时，想要提取的包含指定标签的行。\n\n属性名，标签名（不包含#符号）。\n属性值，是对应标签在多维表中想要存储的字段名。",
+        "example": "闪念: \"FleetingNotes\""
+    },
+    {
+        "name": "extractTagLinesOverrideMode",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "是否使用同步文件夹下的extractTags覆盖vault syncSettings中的extractTags设置",
+        "example": "true"
+    },
+    {
+        "name": "extractTagLinesAsText",
+        "platforms": [
+            "Vika",
+            "Feishu",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "从笔记中提取包含指定标签的行时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，多维表的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，多维表中的字段需要是多行文本字段",
+        "example": ""
+    },
+    {
+        "name": "extractTagLinesAsText",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "从笔记中提取包含指定标签的行时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Airtable中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Airtable中的字段需要是多行文本字段",
+        "example": ""
+    },
+    {
+        "name": "extractSections",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "{}",
+        "valueType": "object",
+        "description": "同步文件夹，在同步时，想要提取的指定章节内容。\n\n属性名，为章节的标题名。\n属性值，对应章节想要在多维表中存储的字段名。",
+        "example": "总结: \"Summary\""
+    },
+    {
+        "name": "extractSectionsOverrideMode",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "是否使用同步文件夹下的extractSections覆盖vault syncSettings中的extractSections设置",
+        "example": "true"
+    },
+    {
+        "name": "extractSectionsAsText",
+        "platforms": [
+            "Vika",
+            "Feishu",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "从笔记中提取指定的章节（Sections）时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，多维表的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，多维表中的字段需要是多行文本字段",
+        "example": ""
+    },
+    {
+        "name": "extractSectionsAsText",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "true",
+        "valueType": "boolean",
+        "description": "从笔记中提取指定的章节（Sections）时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Airtable中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Airtable中的字段需要是多行文本字段",
+        "example": ""
+    },
+    {
+        "name": "sectionHeadingWholeMatch",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "从笔记中提取指定的章节时，是否使用指定标题的完全匹配模式\n\nfalse 不使用完全匹配，只要笔记标题中包含指定的标题内容，就会被提取\ntrue 使用完全匹配，只有笔记标题和指定的标题内容一模一样时，才会被提取",
+        "example": "true"
+    },
+    {
+        "name": "fieldsNames",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Vault",
+        "required": false,
+        "defaultValue": "{}",
+        "valueType": "object",
+        "description": "使用改字段去配置多维表中使用的默认同步字段的字段名。\n\n可以配置的默认字段及其默认值，如下\n\nextension: \"Extension\",\nsubFolder: \"SubFolder\",\nfetchContentFrom: \"MD\",\nfetchTitleFrom: \"Title\",\nupdatedTime: \"UpdatedTime\",",
+        "example": "title: \"标题\",\npath: \"路径\",\ncontent: \"内容\""
+    },
+    {
+        "name": "sourceName",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "在Fetch面板中显示的选项名字。\n你可以根据自己的喜好去定义一个容易理解的名字。",
+        "example": ""
+    },
+    {
+        "name": "targetFolderPath",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "目标文件夹的路径\n\n这里设置的路径，就是从多维表获取笔记数据后，将要把笔记存储的位置。\n\n这里需要写出完整的路径。",
+        "example": ""
+    },
+    {
+        "name": "tableID",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "多维表的数据表ID",
+        "example": ""
+    },
+    {
+        "name": "baseID",
+        "platforms": [
+            "Airtable"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "Airtable 的BaseID\n",
+        "example": ""
+    },
+    {
+        "name": "appToken",
+        "platforms": [
+            "Feishu",
+            "Lark"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "飞书或Lark的 App Token",
+        "example": ""
+    },
+    {
+        "name": "viewID",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "多维表的试图 ID",
+        "example": ""
+    },
+    {
+        "name": "useTitleInDb",
+        "platforms": [
+            "Airtable",
+            "Feishu",
+            "Vika",
+            "Lark",
+            "WPS",
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "false",
+        "valueType": "boolean",
+        "description": "在同步时，是否始终使用同步数据库中的标题作为笔记标题。如果这个属性设置为True，OB中的笔记标题将不再同步到数据库",
+        "example": "true"
+    },
+    {
+        "name": "appID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "钉钉自建应用的App ID",
+        "example": "同步设置时使用：\n${dingAppIDForSync}\n\nFetch设置时使用：\n${dingAppIDForFetch}"
+    },
+    {
+        "name": "appSecret",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "钉钉自建应用的App Secrect",
+        "example": "同步设置时使用：\n${dingAppSecretForSync}\n\nFetch设置时使用：\n${dingAppSecretForFetch}"
+    },
+    {
+        "name": "userID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "钉钉通讯录中的用户ID",
+        "example": "同步设置时使用：\n${dingUserIDForSync}\n\nFetch设置时使用：\n${dingUserIDForFetch}"
+    },
+    {
+        "name": "defaultBaseID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "默认的钉钉AI表格的Base ID",
+        "example": "同步设置时使用：\n${dingBaseIDForSync}\n\nFetch设置时使用：\n${dingBaseIDForFetch}"
+    },
+    {
+        "name": "defaultSheetID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "默认的钉钉AI表格的Sheet ID",
+        "example": "同步设置时使用：\n${dingTableIDForSync}\n\nFetch设置时使用：\n${dingTableIDForFetch}"
+    },
+    {
+        "name": "defaultViewID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "默认的钉钉AI表格的View ID",
+        "example": "同步设置时使用：\n${dingViewIDForSync}\n\nFetch设置时使用：\n${dingViewIDForFetch}"
+    },
+    {
+        "name": "sheetID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "钉钉AI表格的Sheet ID",
+        "example": ""
+    },
+    {
+        "name": "downloadSheetID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "用来下载数据的钉钉AI表格的Sheet ID",
+        "example": ""
+    },
+    {
+        "name": "viewID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "钉钉AI表格的View ID",
+        "example": ""
+    },
+    {
+        "name": "baseID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "钉钉AI表格的Base ID",
+        "example": ""
+    },
+    {
+        "name": "downladBaseID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "用来下载数据的钉钉AI表格的Base ID",
+        "example": ""
+    },
+    {
+        "name": "downloadViewID",
+        "platforms": [
+            "Ding"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "用来下载数据的钉钉AI表格的View ID",
+        "example": ""
+    },
+    {
+        "name": "appID",
+        "platforms": [
+            "WPS"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "WPS自建应用的App ID",
+        "example": "同步设置时使用：\n${wpsAppIDForSync}\n\nFetch设置时使用：\n${wpsAppIDForFetch}"
+    },
+    {
+        "name": "appKey",
+        "platforms": [
+            "WPS"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "WPS自建应用的APP Key",
+        "example": "同步设置时使用：\n${wpsAppSecretForSync}\n\nFetch设置时使用：\n${wpsAppSecretForFetch}"
+    },
+    {
+        "name": "accessToken",
+        "platforms": [
+            "WPS"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "WPS的用户Access Token",
+        "example": "同步设置时使用：\n${wpsUserTokenForSync}\n\nFetch设置时使用：\n${wpsUserTokenForFetch}"
+    },
+    {
+        "name": "defaultFileID",
+        "platforms": [
+            "WPS"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "默认的WPS多维表文件ID",
+        "example": "同步设置时使用：\n${wpsBaseIDForSync}\n\nFetch设置时使用：\n${wpsBaseIDForFetch}"
+    },
+    {
+        "name": "defaultSheetID",
+        "platforms": [
+            "WPS"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "默认的WPS多维表Sheet ID",
+        "example": "同步设置时使用：\n${wpsTableIDForSync}\n\nFetch设置时使用：\n${wpsTableIDForFetch}"
+    },
+    {
+        "name": "fileID",
+        "platforms": [
+            "WPS"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "WPS多维表文件ID",
+        "example": ""
+    },
+    {
+        "name": "sheetID",
+        "platforms": [
+            "WPS"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "WPS多维表Sheet ID",
+        "example": ""
+    },
+    {
+        "name": "downloadFileID",
+        "platforms": [
+            "WPS"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "用来下载数据的WPS多维表文件ID",
+        "example": ""
+    },
+    {
+        "name": "downloadSheetID",
+        "platforms": [
+            "WPS"
+        ],
+        "level": "Folder",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "用来下载数据的WPS多维表Sheet ID",
+        "example": ""
+    },
+    {
+        "name": "appID",
+        "platforms": [
+            "Lark"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到Lark时，需要提供自建应用的APP ID",
+        "example": "同步设置时使用：\n${larkAppIDForSync}\n\nFetch设置时使用：\n${larkAppIDForFetch}"
+    },
+    {
+        "name": "appSecret",
+        "platforms": [
+            "Lark"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到Lark时，需要提供自建应用的APP Secret",
+        "example": "同步设置时使用：\n${larkAppSecretForSync}\n\nFetch设置时使用：\n${larkAppSecretForFetch}"
+    },
+    {
+        "name": "defaultAppToken",
+        "platforms": [
+            "Lark"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到Lark时，默认使用的多维表的App Token。\n\n多维表的App Token，相当于Airtable中的Base ID。",
+        "example": "同步设置时使用：\n${larkBaseIDForSync}\n\nFetch设置时使用：\n${larkBaseIDForFetch}"
+    },
+    {
+        "name": "defaultTableID",
+        "platforms": [
+            "Lark"
+        ],
+        "level": "Root",
+        "required": false,
+        "defaultValue": "无",
+        "valueType": "string",
+        "description": "同步到Lark时，默认使用的Table ID。",
+        "example": "同步设置时使用：\n${larkTableIDForSync}\n\nFetch设置时使用：\n${larkTableIDForFetch}"
+    }
+];

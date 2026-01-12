@@ -1,8 +1,20 @@
-/*
+/* Folder setting block styles */
+.folder-setting-block {
+    border: 1px solid var(--background-modifier-border);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: var(--background-secondary);
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.folder-setting-block h3 {
+    margin-top: 0;
+}
 
-If your plugin does not need CSS, delete this file.
-
-*/
+/* Action buttons styling */
+.generator-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
