@@ -1,4 +1,12 @@
-import { ItemView, WorkspaceLeaf, Setting, Notice, ButtonComponent, setIcon, TFile } from "obsidian";
+import {
+	ItemView,
+	WorkspaceLeaf,
+	Setting,
+	Notice,
+	ButtonComponent,
+	setIcon,
+	TFile,
+} from "obsidian";
 import { Platform, SyncOption, FolderSetting } from "./types";
 import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
 import { ImportModal } from "./ImportModal";
@@ -6,272 +14,351 @@ import { ScriptPreviewModal } from "./ScriptPreviewModal";
 import { ScriptEngine } from "./ScriptEngine";
 
 export class GeneratorView extends ItemView {
-    platform: Platform = "Airtable";
-    rootSettings: Record<string, string> = {};
-    vaultSettings: Record<string, any> = {};
-    folderSettings: FolderSetting[] = [];
-    activeOption: SyncOption | null = null;
-    importedFile: TFile | null = null;
-    
-    // UI Elements
-    middleContainer: HTMLElement;
-    rightContainer: HTMLElement;
+	platform: Platform = "Airtable";
+	rootSettings: Record<string, string> = {};
+	vaultSettings: Record<string, any> = {};
+	folderSettings: FolderSetting[] = [];
+	activeOption: SyncOption | null = null;
+	importedFile: TFile | null = null;
 
-    constructor(leaf: WorkspaceLeaf) {
-        super(leaf);
-    }
+	// UI Elements
+	middleContainer: HTMLElement;
+	rightContainer: HTMLElement;
 
-    getViewType() {
-        return GENERATOR_VIEW_TYPE;
-    }
+	constructor(leaf: WorkspaceLeaf) {
+		super(leaf);
+	}
 
-    getDisplayText() {
-        return "Sync Script Generator";
-    }
+	getViewType() {
+		return GENERATOR_VIEW_TYPE;
+	}
 
-    getIcon() {
-        return "dice";
-    }
+	getDisplayText() {
+		return "Sync Script Generator";
+	}
 
-    async onOpen() {
-        const container = this.contentEl;
-        container.empty();
-        container.addClass("sync-generator-container");
+	getIcon() {
+		return "dice";
+	}
 
-        const grid = container.createDiv({ cls: "sync-generator-grid" });
+	async onOpen() {
+		const container = this.contentEl;
+		container.empty();
+		container.addClass("sync-generator-container");
 
-        // Left Column: Platform List
-        const leftCol = grid.createDiv({ cls: "sync-generator-left" });
-        this.renderPlatformList(leftCol);
+		const grid = container.createDiv({ cls: "sync-generator-grid" });
 
-        // Middle Column: Settings Form
-        this.middleContainer = grid.createDiv({ cls: "sync-generator-middle" });
-        
-        // Right Column: Help/Description
-        this.rightContainer = grid.createDiv({ cls: "sync-generator-right" });
+		// Left Column: Platform List
+		const leftCol = grid.createDiv({ cls: "sync-generator-left" });
+		this.renderPlatformList(leftCol);
 
-        this.renderMiddleColumn();
-        this.renderRightColumn();
-    }
+		// Middle Column: Settings Form
+		this.middleContainer = grid.createDiv({ cls: "sync-generator-middle" });
 
-    renderPlatformList(container: HTMLElement) {
-        container.createEl("h3", { text: "Platforms" });
-        const list = container.createEl("ul", { cls: "platform-list" });
-        const platforms: Platform[] = ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"];
-        
-        platforms.forEach(p => {
-            const item = list.createEl("li", { text: p, cls: "platform-item" });
-            if (p === this.platform) item.addClass("is-active");
-            
-            item.onclick = () => {
-                this.platform = p;
-                // Reset imported file context when switching platforms manually
-                this.importedFile = null;
-                this.rootSettings = {};
-                this.vaultSettings = {};
-                this.folderSettings = [];
-                
-                container.findAll(".platform-item").forEach(el => el.removeClass("is-active"));
-                item.addClass("is-active");
-                this.renderMiddleColumn();
-                this.activeOption = null; 
-                this.renderRightColumn();
-            };
-        });
-    }
+		// Right Column: Help/Description
+		this.rightContainer = grid.createDiv({ cls: "sync-generator-right" });
 
-    renderMiddleColumn() {
-        this.middleContainer.empty();
-        this.middleContainer.createEl("h2", { text: `${this.platform} Settings` });
+		this.renderMiddleColumn();
+		this.renderRightColumn();
+	}
 
-        // Action Bar
-        const actionBar = this.middleContainer.createDiv({ cls: "action-bar" });
-        new ButtonComponent(actionBar)
-            .setButtonText("Import Template")
-            .onClick(() => this.openImportModal());
+	renderPlatformList(container: HTMLElement) {
+		container.createEl("h3", { text: "Platforms" });
+		const list = container.createEl("ul", { cls: "platform-list" });
+		const platforms: Platform[] = [
+			"Airtable",
+			"Feishu",
+			"Vika",
+			"Lark",
+			"WPS",
+			"Ding",
+		];
 
-        new ButtonComponent(actionBar)
-            .setButtonText("Generate Script")
-            .setCta()
-            .onClick(() => this.generateScript());
+		platforms.forEach((p) => {
+			const item = list.createEl("li", { text: p, cls: "platform-item" });
+			if (p === this.platform) item.addClass("is-active");
 
-        const formContainer = this.middleContainer.createDiv({ cls: "settings-form" });
+			item.onclick = () => {
+				this.platform = p;
+				// Reset imported file context when switching platforms manually
+				this.importedFile = null;
+				this.rootSettings = {};
+				this.vaultSettings = {};
+				this.folderSettings = [];
 
-        // Root Settings
-        formContainer.createEl("h3", { text: "Root Settings" });
-        const rootOptions = SYNC_OPTIONS.filter(o => o.level === "Root" && (o.platforms.includes(this.platform) || o.platforms.length === 0));
-        rootOptions.forEach(opt => {
-            this.renderOption(formContainer, opt, this.rootSettings, "Root");
-        });
+				container
+					.findAll(".platform-item")
+					.forEach((el) => el.removeClass("is-active"));
+				item.addClass("is-active");
+				this.renderMiddleColumn();
+				this.activeOption = null;
+				this.renderRightColumn();
+			};
+		});
+	}
 
-        // Vault Settings
-        formContainer.createEl("h3", { text: "Vault Settings" });
-        const vaultOptions = SYNC_OPTIONS.filter(o => o.level === "Vault" && (o.platforms.includes(this.platform) || o.platforms.length === 0));
-        vaultOptions.forEach(opt => {
-            this.renderOption(formContainer, opt, this.vaultSettings, "Vault");
-        });
+	renderMiddleColumn() {
+		this.middleContainer.empty();
+		this.middleContainer.createEl("h2", {
+			text: `${this.platform} Settings`,
+		});
 
-        // Folder Settings
-        formContainer.createEl("h3", { text: "Folder Settings" });
-        const addButton = formContainer.createEl("button", { text: "Add Folder Setting", cls: "mod-cta" });
-        addButton.onclick = () => {
-            this.folderSettings.push({ folderName: "" });
-            this.renderMiddleColumn();
-        };
+		// Action Bar
+		const actionBar = this.middleContainer.createDiv({ cls: "action-bar" });
+		new ButtonComponent(actionBar)
+			.setButtonText("Import Template")
+			.onClick(() => this.openImportModal());
 
-        this.folderSettings.forEach((folder, index) => {
-            const folderDiv = formContainer.createDiv({ cls: "folder-setting-block" });
-            if (folder.collapsed) folderDiv.addClass("is-collapsed");
-            
-            const header = folderDiv.createDiv({ cls: "folder-header" });
-            const titleContainer = header.createDiv({ cls: "folder-title" });
-            
-            const iconSpan = titleContainer.createSpan({ cls: "folder-toggle-icon" });
-            setIcon(iconSpan, "chevron-down");
-            
-            titleContainer.createEl("span", { text: `Folder ${index + 1}` + (folder.folderName ? `: ${folder.folderName}` : "") });
+		new ButtonComponent(actionBar)
+			.setButtonText("Generate Script")
+			.setCta()
+			.onClick(() => this.generateScript());
 
-            header.onclick = (e) => {
-                if ((e.target as HTMLElement).tagName === "BUTTON") return;
-                folder.collapsed = !folder.collapsed;
-                this.renderMiddleColumn();
-            };
+		const formContainer = this.middleContainer.createDiv({
+			cls: "settings-form",
+		});
 
-            const removeBtn = header.createEl("button", { text: "Remove" });
-            removeBtn.onclick = (e) => {
-                e.stopPropagation();
-                this.folderSettings.splice(index, 1);
-                this.renderMiddleColumn();
-            };
+		// Root Settings
+		formContainer.createEl("h3", { text: "Root Settings" });
+		const rootOptions = SYNC_OPTIONS.filter(
+			(o) =>
+				o.level === "Root" &&
+				(o.platforms.includes(this.platform) ||
+					o.platforms.length === 0)
+		);
+		rootOptions.forEach((opt) => {
+			this.renderOption(formContainer, opt, this.rootSettings, "Root");
+		});
 
-            const contentDiv = folderDiv.createDiv({ cls: "folder-content" });
+		// Vault Settings
+		formContainer.createEl("h3", { text: "Vault Settings" });
+		const vaultOptions = SYNC_OPTIONS.filter(
+			(o) =>
+				o.level === "Vault" &&
+				(o.platforms.includes(this.platform) ||
+					o.platforms.length === 0)
+		);
+		vaultOptions.forEach((opt) => {
+			this.renderOption(formContainer, opt, this.vaultSettings, "Vault");
+		});
 
-            new Setting(contentDiv)
-                .setName("Folder Path")
-                .addText(text => {
-                    text.setPlaceholder("Folder Path")
-                        .setValue(folder.folderName)
-                        .onChange(val => folder.folderName = val);
-                    this.addFocusListener(text.inputEl, { 
-                        name: "Folder Path", 
-                        description: "The path to the folder you want to sync.", 
-                        example: "Example: MyVault/Projects/Active",
-                        platforms: [], level: "Folder", required: true, defaultValue: "", valueType: "string"
-                    });
-                });
+		// Folder Settings
+		formContainer.createEl("h3", { text: "Folder Settings" });
+		const addButton = formContainer.createEl("button", {
+			text: "Add Folder Setting",
+			cls: "mod-cta",
+		});
+		addButton.onclick = () => {
+			this.folderSettings.push({ folderName: "" });
+			this.renderMiddleColumn();
+		};
 
-            const folderOptions = SYNC_OPTIONS.filter(o => o.level === "Folder" && (o.platforms.includes(this.platform) || o.platforms.length === 0));
-            folderOptions.forEach(opt => {
-                if (opt.name === "folderName") return;
-                this.renderOption(contentDiv, opt, folder, "Folder");
-            });
-        });
-    }
+		this.folderSettings.forEach((folder, index) => {
+			const folderDiv = formContainer.createDiv({
+				cls: "folder-setting-block",
+			});
+			if (folder.collapsed) folderDiv.addClass("is-collapsed");
 
-    renderOption(container: HTMLElement, opt: SyncOption, target: any, section: string) {
-        const s = new Setting(container)
-            .setName(opt.name);
+			const header = folderDiv.createDiv({ cls: "folder-header" });
+			const titleContainer = header.createDiv({ cls: "folder-title" });
 
-        const handleFocus = (el: HTMLElement) => {
-            this.addFocusListener(el, opt);
-        };
+			const iconSpan = titleContainer.createSpan({
+				cls: "folder-toggle-icon",
+			});
+			setIcon(iconSpan, "chevron-down");
 
-        if (opt.valueType === "boolean") {
-            s.addToggle(toggle => {
-                toggle.setValue(target[opt.name] ?? (opt.defaultValue === "true"))
-                      .onChange(val => target[opt.name] = val);
-                handleFocus(toggle.toggleEl);
-            });
-        } else if (opt.valueType === "array" || opt.valueType === "object") {
-            s.addTextArea(text => {
-                text.setPlaceholder(opt.example || "")
-                    .setValue(target[opt.name] ? JSON.stringify(target[opt.name], null, 2) : "")
-                    .onChange(val => {
-                        try {
-                            target[opt.name] = JSON.parse(val);
-                        } catch (e) {
-                            new Notice(`Invalid JSON for ${opt.name}`);
-                        }
-                    });
-                handleFocus(text.inputEl);
-            });
-        } else {
-            s.addText(text => {
-                text.setValue(target[opt.name] || (opt.defaultValue === "无" ? "" : opt.defaultValue) || "")
-                    .onChange(val => target[opt.name] = val);
-                handleFocus(text.inputEl);
-            });
-        }
-    }
+			titleContainer.createEl("span", {
+				text:
+					`Folder ${index + 1}` +
+					(folder.folderName ? `: ${folder.folderName}` : ""),
+			});
 
-    addFocusListener(el: HTMLElement, opt: SyncOption) {
-        el.addEventListener("focus", () => {
-            this.activeOption = opt;
-            this.renderRightColumn();
-        });
-        el.addEventListener("click", () => {
-            this.activeOption = opt;
-            this.renderRightColumn();
-        });
-    }
+			header.onclick = (e) => {
+				if ((e.target as HTMLElement).tagName === "BUTTON") return;
+				folder.collapsed = !folder.collapsed;
+				this.renderMiddleColumn();
+			};
 
-    renderRightColumn() {
-        this.rightContainer.empty();
-        this.rightContainer.createEl("h3", { text: "Description" });
+			const removeBtn = header.createEl("button", { text: "Remove" });
+			removeBtn.onclick = (e) => {
+				e.stopPropagation();
+				this.folderSettings.splice(index, 1);
+				this.renderMiddleColumn();
+			};
 
-        if (this.activeOption) {
-            const wrapper = this.rightContainer.createDiv({ cls: "help-content" });
-            wrapper.createEl("h4", { text: this.activeOption.name, cls: "help-title" });
-            
-            const badge = wrapper.createSpan({ cls: "help-badge" });
-            badge.setText(this.activeOption.level);
-            
-            wrapper.createEl("div", { text: this.activeOption.description, cls: "help-desc" });
-            
-            if (this.activeOption.example) {
-                wrapper.createEl("h5", { text: "Example/Usage:" });
-                wrapper.createEl("pre", { text: this.activeOption.example, cls: "help-example" });
-            }
-        } else {
-            this.rightContainer.createEl("p", { text: "Select a setting field to see its description here.", cls: "help-placeholder" });
-        }
-    }
+			const contentDiv = folderDiv.createDiv({ cls: "folder-content" });
 
-    openImportModal() {
-        new ImportModal(this.app, (file) => this.importTemplate(file)).open();
-    }
+			new Setting(contentDiv).setName("Folder Path").addText((text) => {
+				text.setPlaceholder("Folder Path")
+					.setValue(folder.folderName)
+					.onChange((val) => (folder.folderName = val));
+				this.addFocusListener(text.inputEl, {
+					name: "Folder Path",
+					description: "The path to the folder you want to sync.",
+					example: "Example: MyVault/Projects/Active",
+					platforms: [],
+					level: "Folder",
+					required: true,
+					defaultValue: "",
+					valueType: "string",
+				});
+			});
 
-    async importTemplate(file: TFile) {
-        const content = await this.app.vault.read(file);
-        this.importedFile = file;
-        
-        const result = ScriptEngine.parse(content);
-        
-        if (result.platform) {
-            this.platform = result.platform;
-            this.rootSettings = result.rootSettings;
-            this.vaultSettings = result.vaultSettings;
-            this.folderSettings = result.folderSettings;
-            
-            new Notice(`Imported settings from ${file.basename}`);
-            
-            // Update UI list active state
-            const platformList = this.containerEl.querySelector(".platform-list");
-            if (platformList) {
-                platformList.findAll(".platform-item").forEach(el => {
-                    el.removeClass("is-active");
-                    if (el.textContent === this.platform) el.addClass("is-active");
-                });
-            }
-            
-            this.renderMiddleColumn();
-        } else {
-            new Notice("Could not detect platform in template.");
-        }
-    }
+			const folderOptions = SYNC_OPTIONS.filter(
+				(o) =>
+					o.level === "Folder" &&
+					(o.platforms.includes(this.platform) ||
+						o.platforms.length === 0)
+			);
+			folderOptions.forEach((opt) => {
+				if (opt.name === "folderName") return;
+				this.renderOption(contentDiv, opt, folder, "Folder");
+			});
+		});
+	}
 
-    generateScript() {
-        const script = ScriptEngine.generate(this.platform, this.rootSettings, this.vaultSettings, this.folderSettings);
-        new ScriptPreviewModal(this.app, script, this.platform, this.importedFile).open();
-    }
+	renderOption(
+		container: HTMLElement,
+		opt: SyncOption,
+		target: any,
+		section: string
+	) {
+		const s = new Setting(container).setName(opt.name);
+
+		const handleFocus = (el: HTMLElement) => {
+			this.addFocusListener(el, opt);
+		};
+
+		if (opt.valueType === "boolean") {
+			s.addToggle((toggle) => {
+				toggle
+					.setValue(target[opt.name] ?? opt.defaultValue === "true")
+					.onChange((val) => (target[opt.name] = val));
+				handleFocus(toggle.toggleEl);
+			});
+		} else if (opt.valueType === "array" || opt.valueType === "object") {
+			s.addTextArea((text) => {
+				text.setPlaceholder(opt.example || "")
+					.setValue(
+						target[opt.name]
+							? JSON.stringify(target[opt.name], null, 2)
+							: ""
+					)
+					.onChange((val) => {
+						try {
+							target[opt.name] = JSON.parse(val);
+						} catch (e) {
+							new Notice(`Invalid JSON for ${opt.name}`);
+						}
+					});
+				handleFocus(text.inputEl);
+			});
+		} else {
+			s.addText((text) => {
+				text.setValue(
+					target[opt.name] ||
+						(opt.defaultValue === "无" ? "" : opt.defaultValue) ||
+						""
+				).onChange((val) => (target[opt.name] = val));
+				handleFocus(text.inputEl);
+			});
+		}
+	}
+
+	addFocusListener(el: HTMLElement, opt: SyncOption) {
+		el.addEventListener("focus", () => {
+			this.activeOption = opt;
+			this.renderRightColumn();
+		});
+		el.addEventListener("click", () => {
+			this.activeOption = opt;
+			this.renderRightColumn();
+		});
+	}
+
+	renderRightColumn() {
+		this.rightContainer.empty();
+		this.rightContainer.createEl("h3", { text: "Description" });
+
+		if (this.activeOption) {
+			const wrapper = this.rightContainer.createDiv({
+				cls: "help-content",
+			});
+			wrapper.createEl("h4", {
+				text: this.activeOption.name,
+				cls: "help-title",
+			});
+
+			const badge = wrapper.createSpan({ cls: "help-badge" });
+			badge.setText(this.activeOption.level);
+
+			wrapper.createEl("div", {
+				text: this.activeOption.description,
+				cls: "help-desc",
+			});
+
+			if (this.activeOption.example) {
+				wrapper.createEl("h5", { text: "Example/Usage:" });
+				wrapper.createEl("pre", {
+					text: this.activeOption.example,
+					cls: "help-example",
+				});
+			}
+		} else {
+			this.rightContainer.createEl("p", {
+				text: "Select a setting field to see its description here.",
+				cls: "help-placeholder",
+			});
+		}
+	}
+
+	openImportModal() {
+		new ImportModal(this.app, (file) => this.importTemplate(file)).open();
+	}
+
+	async importTemplate(file: TFile) {
+		const content = await this.app.vault.read(file);
+		this.importedFile = file;
+
+		const result = ScriptEngine.parse(content);
+
+		if (result.platform) {
+			this.platform = result.platform;
+			this.rootSettings = result.rootSettings;
+			this.vaultSettings = result.vaultSettings;
+			this.folderSettings = result.folderSettings;
+
+			new Notice(`Imported settings from ${file.basename}`);
+
+			// Update UI list active state
+			const platformList =
+				this.containerEl.querySelector(".platform-list");
+			if (platformList) {
+				platformList.findAll(".platform-item").forEach((el) => {
+					el.removeClass("is-active");
+					if (el.textContent === this.platform)
+						el.addClass("is-active");
+				});
+			}
+
+			this.renderMiddleColumn();
+		} else {
+			new Notice("Could not detect platform in template.");
+		}
+	}
+
+	generateScript() {
+		const script = ScriptEngine.generate(
+			this.platform,
+			this.rootSettings,
+			this.vaultSettings,
+			this.folderSettings
+		);
+		new ScriptPreviewModal(
+			this.app,
+			script,
+			this.platform,
+			this.importedFile
+		).open();
+	}
 }

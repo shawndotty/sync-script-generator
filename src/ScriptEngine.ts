@@ -9,7 +9,7 @@ export class ScriptEngine {
 		vaultSettings: Record<string, any>,
 		folderSettings: FolderSetting[]
 	): string {
-		let script = "<%*\n";
+		let script = "";
 		const varName = platform.toLowerCase();
 
 		// Root variables mapping
@@ -166,7 +166,10 @@ export class ScriptEngine {
 						"        " +
 						opt.name +
 						": " +
-						JSON.stringify(val, null, 4) +
+						this.indentMultiline(
+							JSON.stringify(val, null, 4),
+							"        "
+						) +
 						",\n";
 				}
 			});
@@ -186,7 +189,10 @@ export class ScriptEngine {
 						"            " +
 						key +
 						": " +
-						JSON.stringify(val) +
+						this.indentMultiline(
+							JSON.stringify(val, null, 4),
+							"            "
+						) +
 						(j < entries.length - 1 ? ",\n" : "\n");
 				});
 				script +=
@@ -205,9 +211,14 @@ export class ScriptEngine {
 			"(tp, this.app, " +
 			varName +
 			");\n";
-		script += "_%>\n";
 
-		return script;
+		// 格式化缩进：保留原有缩进结构，整体向右缩进 4 格
+		const formatted = script
+			.trim()
+			.split("\n")
+			.map((line) => (line ? "    " + line : ""))
+			.join("\n");
+		return "<%*\n" + formatted + "\n_%>";
 	}
 
 	static parse(content: string): {
@@ -333,5 +344,12 @@ export class ScriptEngine {
 			if (count === 0) return i;
 		}
 		return -1;
+	}
+
+	private static indentMultiline(str: string, spaces: string): string {
+		return str
+			.split("\n")
+			.map((line, i) => (i === 0 ? line : spaces + line))
+			.join("\n");
 	}
 }
