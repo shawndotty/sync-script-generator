@@ -12,6 +12,7 @@ import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
 import { ImportModal } from "./ImportModal";
 import { ScriptPreviewModal } from "./ScriptPreviewModal";
 import { ScriptEngine } from "./ScriptEngine";
+import { FolderSuggest } from "./ui/pickers/folder-picker";
 
 export class GeneratorView extends ItemView {
 	platform: Platform = "Airtable";
@@ -228,7 +229,8 @@ export class GeneratorView extends ItemView {
 
 				new Setting(contentDiv)
 					.setName("Folder Path")
-					.addText((text) => {
+					.addSearch((text) => {
+						new FolderSuggest(this.app, text.inputEl);
 						text.setPlaceholder("Folder Path")
 							.setValue(folder.folderName)
 							.onChange((val) => (folder.folderName = val));

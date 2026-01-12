@@ -1,26 +1,42 @@
+declare module "obsidian" {
+	interface App {
+		commands: {
+			executeCommandById(id: string): void;
+		};
+		plugins: {
+			plugins: {
+				[key: string]: any;
+			};
+		};
+		dom: {
+			appContainerEl: HTMLElement;
+		};
+	}
+}
+
 export type Platform = "Airtable" | "Feishu" | "Vika" | "Lark" | "WPS" | "Ding";
 
 export interface SyncOption {
-    name: string;
-    title: string;
-    platforms: Platform[];
-    level: "Root" | "Vault" | "Folder" | "Note";
-    required: boolean;
-    defaultValue: any;
-    valueType: "string" | "boolean" | "array" | "object" | "number";
-    description: string;
-    example?: string;
+	name: string;
+	title: string;
+	platforms: Platform[];
+	level: "Root" | "Vault" | "Folder" | "Note";
+	required: boolean;
+	defaultValue: any;
+	valueType: "string" | "boolean" | "array" | "object" | "number";
+	description: string;
+	example?: string;
 }
 
 export interface FolderSetting {
-    folderName: string;
-    collapsed?: boolean;
-    [key: string]: any;
+	folderName: string;
+	collapsed?: boolean;
+	[key: string]: any;
 }
 
 export interface SyncScriptSettings {
-    platform: Platform;
-    rootSettings: Record<string, string>;
-    vaultSettings: Record<string, any>;
-    folderSettings: FolderSetting[];
+	platform: Platform;
+	rootSettings: Record<string, string>;
+	vaultSettings: Record<string, any>;
+	folderSettings: FolderSetting[];
 }
