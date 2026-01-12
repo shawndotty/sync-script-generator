@@ -233,7 +233,8 @@ export class GeneratorView extends ItemView {
 							.setValue(folder.folderName)
 							.onChange((val) => (folder.folderName = val));
 						this.addFocusListener(text.inputEl, {
-							name: "Folder Path",
+							name: "folderName",
+							title: "Folder Path",
 							description:
 								"The path to the folder you want to sync.",
 							example: "Example: MyVault/Projects/Active",
@@ -265,7 +266,7 @@ export class GeneratorView extends ItemView {
 		target: any,
 		section: string
 	) {
-		const s = new Setting(container).setName(opt.name);
+		const s = new Setting(container).setName(opt.title || opt.name);
 
 		const handleFocus = (el: HTMLElement) => {
 			this.addFocusListener(el, opt);

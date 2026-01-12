@@ -2,6 +2,7 @@ export type Platform = "Airtable" | "Feishu" | "Vika" | "Lark" | "WPS" | "Ding";
 
 export interface SyncOption {
     name: string;
+    title: string;
     platforms: Platform[];
     level: "Root" | "Vault" | "Folder" | "Note";
     required: boolean;
