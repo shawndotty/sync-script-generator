@@ -1,12 +1,9 @@
-import { App, ItemView, WorkspaceLeaf, Setting, Notice, ButtonComponent, setIcon, Modal, TFile } from "obsidian";
+import { ItemView, WorkspaceLeaf, Setting, Notice, ButtonComponent, setIcon, TFile } from "obsidian";
 import { Platform, SyncOption, FolderSetting } from "./types";
 import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
-import { EditorView, keymap } from "@codemirror/view";
-import { EditorState } from "@codemirror/state";
-import { javascript } from "@codemirror/lang-javascript";
-import { oneDark } from "@codemirror/theme-one-dark";
-import { defaultKeymap } from "@codemirror/commands";
 import { ImportModal } from "./ImportModal";
+import { ScriptPreviewModal } from "./ScriptPreviewModal";
+import { ScriptEngine } from "./ScriptEngine";
 
 export class GeneratorView extends ItemView {
     platform: Platform = "Airtable";
@@ -240,20 +237,6 @@ export class GeneratorView extends ItemView {
         }
     }
 
-    findMatchingBracket(text: string, start: number): number {
-        let count = 0;
-        const open = text[start];
-        const close = open === '[' ? ']' : '}';
-        
-        for (let i = start; i < text.length; i++) {
-            if (text[i] === open) count++;
-            else if (text[i] === close) count--;
-            
-            if (count === 0) return i;
-        }
-        return -1;
-    }
-
     openImportModal() {
         new ImportModal(this.app, (file) => this.importTemplate(file)).open();
     }
@@ -262,268 +245,33 @@ export class GeneratorView extends ItemView {
         const content = await this.app.vault.read(file);
         this.importedFile = file;
         
-        // 1. Detect Platform
-        const platformMatch = content.match(/await tp\.user\.ObSync(\w+)\(/);
-        if (platformMatch && platformMatch[1]) {
-            const parsedPlatform = platformMatch[1] as Platform;
-            if (["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"].includes(parsedPlatform)) {
-                this.platform = parsedPlatform;
-            }
-        }
-
-        // 2. Extract Main Config Object
-        const varName = this.platform.toLowerCase();
-        // Relaxed regex for whitespace
-        const configBlockRegex = new RegExp(`const ${varName}\s*=\s*\{`, "m");
-        const match = content.match(configBlockRegex);
+        const result = ScriptEngine.parse(content);
         
-        if (match) {
-            const startObj = match.index! + match[0].length - 1; // index of '{'
-            const endObj = this.findMatchingBracket(content, startObj);
+        if (result.platform) {
+            this.platform = result.platform;
+            this.rootSettings = result.rootSettings;
+            this.vaultSettings = result.vaultSettings;
+            this.folderSettings = result.folderSettings;
             
-            if (endObj !== -1) {
-                const configBody = content.substring(startObj + 1, endObj);
-
-                // 3. Extract Tables
-                const tablesIndex = configBody.indexOf("tables:");
-                if (tablesIndex !== -1) {
-                    const openBracket = configBody.indexOf("[", tablesIndex);
-                    if (openBracket !== -1) {
-                        const closeBracket = this.findMatchingBracket(configBody, openBracket);
-                        if (closeBracket !== -1) {
-                            const tablesStr = configBody.substring(openBracket, closeBracket + 1);
-                            // Sanitize template literals to strings
-                            const sanitizedTables = tablesStr.replace(/`([\s\S]*?)`/g, (match, p1) => {
-                                return '"' + p1.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"';
-                            });
-                            
-                            try {
-                                this.folderSettings = new Function("return " + sanitizedTables)();
-                            } catch (e) {
-                                console.error("Failed to parse folder settings", e);
-                                new Notice("Warning: Could not parse folder settings.");
-                            }
-                        }
-                    }
-                } else {
-                    this.folderSettings = [];
-                }
-
-                // 4. Extract Vault Settings
-                const syncIndex = configBody.indexOf("syncSettings:");
-                if (syncIndex !== -1) {
-                    const openBrace = configBody.indexOf("{", syncIndex);
-                    if (openBrace !== -1) {
-                        const closeBrace = this.findMatchingBracket(configBody, openBrace);
-                        if (closeBrace !== -1) {
-                            const syncStr = configBody.substring(openBrace, closeBrace + 1);
-                            const sanitizedSync = syncStr.replace(/`([\s\S]*?)`/g, (match, p1) => {
-                                return '"' + p1.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"';
-                            });
-                            
-                            try {
-                                this.vaultSettings = new Function("return " + sanitizedSync)();
-                            } catch (e) {
-                                console.error("Failed to parse vault settings", e);
-                                new Notice("Warning: Could not parse vault settings.");
-                            }
-                        }
-                    }
-                } else {
-                    this.vaultSettings = {};
-                }
-
-                // 5. Extract Root Settings
-                const rootLines = configBody.split("\n");
-                this.rootSettings = {};
-                const rootKeys = SYNC_OPTIONS.filter(o => o.level === "Root").map(o => o.name);
-
-                rootLines.forEach(line => {
-                    const keyMatch = line.match(/^\s*(\w+):\s*(.*?),?\s*$/);
-                    if (keyMatch && keyMatch[1]) {
-                        const key = keyMatch[1];
-                        if (rootKeys.includes(key)) {
-                            let val = keyMatch[2] || "";
-                            if (val.startsWith("'") && val.endsWith("'")) {
-                                val = val.slice(1, -1);
-                            } else if (val.startsWith("`") && val.endsWith("`")) {
-                                if (val.includes("${ ")) return; 
-                                val = val.slice(1, -1);
-                            }
-                            this.rootSettings[key] = val;
-                        }
-                    }
+            new Notice(`Imported settings from ${file.basename}`);
+            
+            // Update UI list active state
+            const platformList = this.containerEl.querySelector(".platform-list");
+            if (platformList) {
+                platformList.findAll(".platform-item").forEach(el => {
+                    el.removeClass("is-active");
+                    if (el.textContent === this.platform) el.addClass("is-active");
                 });
             }
+            
+            this.renderMiddleColumn();
+        } else {
+            new Notice("Could not detect platform in template.");
         }
-
-        new Notice(`Imported settings from ${file.basename}`);
-        
-        // Update Left Column Active Item
-        const platformList = this.containerEl.querySelector(".platform-list");
-        if (platformList) {
-            platformList.findAll(".platform-item").forEach(el => {
-                el.removeClass("is-active");
-                if (el.textContent === this.platform) el.addClass("is-active");
-            });
-        }
-
-        this.renderMiddleColumn();
     }
 
     generateScript() {
-        let script = "<%%*\n";
-        const varName = this.platform.toLowerCase();
-        
-        // Root variables mapping
-        const platformRootVars: Record<Platform, string[]> = {
-            "Airtable": ["airtableAPIKeyForSync", "airtableBaseIDForSync", "airtableTableIDForSync"],
-            "Feishu": ["feishuAppIDForSync", "feishuAppSecretForSync", "feishuBaseIDForSync", "feishuTableIDForSync"],
-            "Vika": ["vikaAPIKeyForSync", "vikaTableIDForSync"],
-            "Lark": ["larkAppIDForSync", "larkAppSecretForSync", "larkBaseIDForSync", "larkTableIDForSync"],
-            "WPS": ["wpsAppIDForSync", "wpsAppSecretForSync", "wpsBaseIDForSync", "wpsTableIDForSync"],
-            "Ding": ["dingAppIDForSync", "dingAppSecretForSync", "dingBaseIDForSync", "dingTableIDForSync", "dingViewIDForSync"]
-        };
-
-        const rootVars = platformRootVars[this.platform] || [];
-        if (rootVars.length > 0) {
-            script += `const {${rootVars.join(", ")}} = app.plugins.plugins["ioto-settings"].settings;
-
-`;
-        }
-
-        script += `const ${varName} = {
-`;
-
-        // Root Settings in Object
-        const rootOptions = SYNC_OPTIONS.filter(o => o.level === "Root" && (o.platforms.includes(this.platform)));
-        rootOptions.forEach(opt => {
-            const varMapping: Record<string, string> = {
-                "apiKey": this.platform === "Airtable" ? "airtableAPIKeyForSync" : "vikaAPIKeyForSync",
-                "defaultBaseID": this.platform === "Airtable" ? "airtableBaseIDForSync" : "dingBaseIDForSync",
-                "defaultTableID": this.platform === "Airtable" ? "airtableTableIDForSync" : (this.platform === "Feishu" ? "feishuTableIDForSync" : (this.platform === "Lark" ? "larkTableIDForSync" : (this.platform === "WPS" ? "wpsTableIDForSync" : (this.platform === "Ding" ? "dingTableIDForSync" : "vikaTableIDForSync")))),
-                "appID": this.platform === "Feishu" ? "feishuAppIDForSync" : (this.platform === "Lark" ? "larkAppIDForSync" : (this.platform === "WPS" ? "wpsAppIDForSync" : "dingAppIDForSync")),
-                "appSecret": this.platform === "Feishu" ? "feishuAppSecretForSync" : (this.platform === "Lark" ? "larkAppSecretForSync" : "dingAppSecretForSync"),
-                "defaultAppToken": this.platform === "Feishu" ? "feishuBaseIDForSync" : "larkBaseIDForSync",
-            };
-            const mappedVar = varMapping[opt.name];
-            
-            const userVal = this.rootSettings[opt.name];
-            
-            if (userVal && userVal !== (opt.defaultValue === "无" ? "" : opt.defaultValue)) {
-                script += "    " + opt.name + ": " + JSON.stringify(userVal) + ",\n";
-            } else if (mappedVar) {
-                script += "    " + opt.name + ": `${" + mappedVar + "}`,\n";
-            } else {
-                let val = opt.defaultValue === "无" ? "" : opt.defaultValue;
-                script += "    " + opt.name + ": " + JSON.stringify(val) + ",\n";
-            }
-        });
-
-        // Vault Settings
-        const vaultOptions = SYNC_OPTIONS.filter(o => o.level === "Vault" && (o.platforms.includes(this.platform) || o.platforms.length === 0));
-        if (vaultOptions.length > 0) {
-            script += "\n    // Vault Settings\n";
-            script += "    syncSettings: {\n";
-            vaultOptions.forEach((opt) => {
-                 let val = this.vaultSettings[opt.name];
-                 if (val === undefined) {
-                     // Parse default value if necessary
-                     if (opt.valueType === "array" && typeof opt.defaultValue === "string" && opt.defaultValue.startsWith("[")) {
-                        try { val = JSON.parse(opt.defaultValue); } catch(e) { val = []; }
-                     } else if (opt.valueType === "object" && typeof opt.defaultValue === "string" && opt.defaultValue.startsWith("{")) {
-                        try { val = JSON.parse(opt.defaultValue); } catch(e) { val = {}; }
-                     } else if (opt.valueType === "boolean") {
-                        val = opt.defaultValue === "true";
-                     } else {
-                        val = opt.defaultValue === "无" ? "" : opt.defaultValue;
-                     }
-                 }
-                 
-                 if (val !== undefined) {
-                     script += "        " + opt.name + ": " + JSON.stringify(val, null, 4) + ",\n";
-                 }
-            });
-            script += "    },\n";
-        }
-
-        // Folder Settings
-        if (this.folderSettings.length > 0) {
-            script += "\n    // Folders Settings\n";
-            script += "    tables: [\n";
-            this.folderSettings.forEach((folder, i) => {
-                script += "        {\n";
-                const entries = Object.entries(folder);
-                entries.forEach(([key, val], j) => {
-                    if (key === "collapsed") return; 
-                    script += "            " + key + ": " + JSON.stringify(val) + (j < entries.length - 1 ? ",\n" : "\n");
-                });
-                script += "        }" + (i < this.folderSettings.length - 1 ? ",\n" : "\n");
-            });
-            script += "    ]\n";
-        }
-        script += "};\n\n";
-
-        const methodName = "ObSync" + this.platform;
-        script += "await tp.user." + methodName + "(tp, this.app, " + varName + ");\n";
-        script += "_%>\n";
-
-        this.showPreview(script);
-    }
-
-    showPreview(script: string) {
-        const previewModal = new Modal(this.app);
-        previewModal.onOpen = () => {
-            previewModal.contentEl.createEl("h2", { text: "Generated Script" });
-            
-            const editorContainer = previewModal.contentEl.createDiv({ cls: "script-editor-container" });
-            editorContainer.style.height = "400px";
-            editorContainer.style.overflow = "hidden"; // CM handles overflow
-            editorContainer.style.border = "1px solid var(--background-modifier-border)";
-            editorContainer.style.borderRadius = "4px";
-
-            const state = EditorState.create({
-                doc: script,
-                extensions: [
-                    keymap.of(defaultKeymap),
-                    javascript(),
-                    oneDark,
-                    EditorView.lineWrapping
-                ]
-            });
-
-            const view = new EditorView({
-                state,
-                parent: editorContainer
-            });
-
-            new Setting(previewModal.contentEl)
-                .addButton(btn => {
-                    btn.setButtonText("Copy to Clipboard").onClick(() => {
-                        const content = view.state.doc.toString();
-                        navigator.clipboard.writeText(content);
-                        new Notice("Copied to clipboard");
-                    });
-                })
-                .addButton(btn => {
-                    const label = this.importedFile ? `Update ${this.importedFile.basename}` : "Save as File";
-                    btn.setButtonText(label).setCta().onClick(async () => {
-                        const content = view.state.doc.toString();
-                        if (this.importedFile) {
-                             await this.app.vault.modify(this.importedFile, content);
-                             new Notice(`Updated ${this.importedFile.path}`);
-                        } else {
-                            const fileName = `SyncScript-${this.platform}-${Date.now()}.md`;
-                            await this.app.vault.create(fileName, content);
-                            new Notice(`Saved to vault as ${fileName}`);
-                        }
-                        previewModal.close();
-                    });
-                });
-        };
-        previewModal.onClose = () => {
-            previewModal.contentEl.empty();
-        }
-        previewModal.open();
+        const script = ScriptEngine.generate(this.platform, this.rootSettings, this.vaultSettings, this.folderSettings);
+        new ScriptPreviewModal(this.app, script, this.platform, this.importedFile).open();
     }
 }
