@@ -117,6 +117,15 @@ export class GeneratorView extends ItemView {
 			.setButtonText("Import Template")
 			.onClick(() => this.openImportModal());
 
+		// Load Default Template button (only show if default template is set)
+		const defaultTemplatePath = this.getDefaultTemplatePath();
+		if (defaultTemplatePath) {
+			new ButtonComponent(actionBar)
+				.setButtonText("Load Default Template")
+				.setIcon("file-down")
+				.onClick(() => this.loadDefaultTemplate());
+		}
+
 		new ButtonComponent(actionBar)
 			.setButtonText("Presets")
 			.setIcon("bookmark")
@@ -625,9 +634,7 @@ export class GeneratorView extends ItemView {
 		this.platform = preset.platform;
 		this.rootSettings = { ...preset.rootSettings };
 		this.vaultSettings = { ...preset.vaultSettings };
-		this.folderSettings = JSON.parse(
-			JSON.stringify(preset.folderSettings)
-		); // Deep copy
+		this.folderSettings = JSON.parse(JSON.stringify(preset.folderSettings)); // Deep copy
 		this.importedFile = null; // Clear imported file context
 
 		// Update UI
@@ -650,5 +657,43 @@ export class GeneratorView extends ItemView {
 			(p) => p.id !== presetId
 		);
 		await this.plugin.saveSettings();
+	}
+
+	private getDefaultTemplatePath(): string {
+		const platformSettingsMap: Record<
+			Platform,
+			keyof typeof this.plugin.settings
+		> = {
+			Airtable: "defaultSyncTemplateAirtable",
+			Feishu: "defaultSyncTemplateFeishu",
+			Vika: "defaultSyncTemplateVika",
+			Lark: "defaultSyncTemplateLark",
+			WPS: "defaultSyncTemplateWPS",
+			Ding: "defaultSyncTemplateDing",
+		};
+
+		const key = platformSettingsMap[this.platform];
+		const path = (this.plugin.settings[key] as string) || "";
+		return path.trim();
+	}
+
+	async loadDefaultTemplate() {
+		const templatePath = this.getDefaultTemplatePath();
+		if (!templatePath) {
+			new Notice("No default template configured for this platform.");
+			return;
+		}
+
+		try {
+			const file = this.app.vault.getAbstractFileByPath(templatePath);
+			if (!file || !(file instanceof TFile)) {
+				new Notice(`Template file not found: ${templatePath}`);
+				return;
+			}
+
+			await this.importTemplate(file);
+		} catch (error) {
+			new Notice(`Failed to load default template: ${error}`);
+		}
 	}
 }
