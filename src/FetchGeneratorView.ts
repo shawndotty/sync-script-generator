@@ -231,18 +231,18 @@ export class FetchGeneratorView extends ItemView {
 				});
 
 				const folderPathSetting = new Setting(contentDiv)
-					.setName("Folder Path")
+					.setName("Target Folder")
 					.addText((text) => {
-						text.setPlaceholder("Folder Path")
+						text.setPlaceholder("Target Folder Path")
 							.setValue(folder.folderName)
 							.onChange((val) => (folder.folderName = val));
 						this.addFocusListener(text.inputEl, {
-							name: "folderName",
-							title: "Folder Path",
+							name: "targetFolder",
+							title: "Target Folder",
 							description:
-								"The path to the folder you want to fetch from.",
+								"The path to the folder you want to fetch datas to.",
 							example: "Example: MyVault/Projects/Active",
-							platforms: [],
+							platforms: [this.platform],
 							level: "Folder",
 							required: true,
 							defaultValue: "",
@@ -257,7 +257,8 @@ export class FetchGeneratorView extends ItemView {
 								new FolderPickerModal(
 									this.app,
 									(selectedFolder) => {
-										folder.folderName = selectedFolder.path;
+										folder.targetFolder =
+											selectedFolder.path;
 										this.renderMiddleColumn();
 									}
 								).open();
@@ -272,7 +273,7 @@ export class FetchGeneratorView extends ItemView {
 				);
 
 				folderOptions.forEach((opt) => {
-					if (opt.name === "folderName") return;
+					if (opt.name === "targetFolder") return;
 					this.renderOption(contentDiv, opt, folder, "Folder");
 				});
 			});
