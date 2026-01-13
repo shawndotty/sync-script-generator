@@ -7,7 +7,7 @@ import {
 	setIcon,
 	TFile,
 } from "obsidian";
-import { Platform, SyncOption, FolderSetting } from "./types";
+import { Platform, SyncOption, FolderSetting, ConfigPreset } from "./types";
 import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
 import { ImportModal } from "./ImportModal";
 import { ScriptPreviewModal } from "./ScriptPreviewModal";
@@ -15,6 +15,8 @@ import { ObjectEditModal } from "./ObjectEditModal";
 import { ArrayEditModal } from "./ArrayEditModal";
 import { ScriptEngine } from "./ScriptEngine";
 import { FolderSuggest } from "./ui/pickers/folder-picker";
+import { PresetManagerModal } from "./PresetManagerModal";
+import MyPlugin from "./main";
 
 export class GeneratorView extends ItemView {
 	platform: Platform = "Airtable";
@@ -24,13 +26,15 @@ export class GeneratorView extends ItemView {
 	activeOption: SyncOption | null = null;
 	importedFile: TFile | null = null;
 	activeTab: "Root" | "Vault" | "Folder" = "Root";
+	plugin: MyPlugin;
 
 	// UI Elements
 	middleContainer: HTMLElement;
 	rightContainer: HTMLElement;
 
-	constructor(leaf: WorkspaceLeaf) {
+	constructor(leaf: WorkspaceLeaf, plugin: MyPlugin) {
 		super(leaf);
+		this.plugin = plugin;
 	}
 
 	getViewType() {
@@ -112,6 +116,11 @@ export class GeneratorView extends ItemView {
 		new ButtonComponent(actionBar)
 			.setButtonText("Import Template")
 			.onClick(() => this.openImportModal());
+
+		new ButtonComponent(actionBar)
+			.setButtonText("Presets")
+			.setIcon("bookmark")
+			.onClick(() => this.openPresetManager());
 
 		new ButtonComponent(actionBar)
 			.setButtonText("Generate Script")
@@ -584,5 +593,62 @@ export class GeneratorView extends ItemView {
 			this.platform,
 			this.importedFile
 		).open();
+	}
+
+	openPresetManager() {
+		const currentSettings = {
+			platform: this.platform,
+			rootSettings: this.rootSettings,
+			vaultSettings: this.vaultSettings,
+			folderSettings: this.folderSettings,
+		};
+
+		new PresetManagerModal(
+			this.app,
+			this.plugin.settings.presets || [],
+			currentSettings,
+			(preset) => this.savePreset(preset),
+			(preset) => this.loadPreset(preset),
+			(presetId) => this.deletePreset(presetId)
+		).open();
+	}
+
+	async savePreset(preset: ConfigPreset) {
+		if (!this.plugin.settings.presets) {
+			this.plugin.settings.presets = [];
+		}
+		this.plugin.settings.presets.push(preset);
+		await this.plugin.saveSettings();
+	}
+
+	async loadPreset(preset: ConfigPreset) {
+		this.platform = preset.platform;
+		this.rootSettings = { ...preset.rootSettings };
+		this.vaultSettings = { ...preset.vaultSettings };
+		this.folderSettings = JSON.parse(
+			JSON.stringify(preset.folderSettings)
+		); // Deep copy
+		this.importedFile = null; // Clear imported file context
+
+		// Update UI
+		const platformList = this.containerEl.querySelector(".platform-list");
+		if (platformList) {
+			platformList.findAll(".platform-item").forEach((el) => {
+				el.removeClass("is-active");
+				if (el.textContent === this.platform) el.addClass("is-active");
+			});
+		}
+
+		this.renderMiddleColumn();
+		this.activeOption = null;
+		this.renderRightColumn();
+	}
+
+	async deletePreset(presetId: string) {
+		if (!this.plugin.settings.presets) return;
+		this.plugin.settings.presets = this.plugin.settings.presets.filter(
+			(p) => p.id !== presetId
+		);
+		await this.plugin.saveSettings();
 	}
 }

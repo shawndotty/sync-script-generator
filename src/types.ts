@@ -42,3 +42,14 @@ export interface SyncScriptSettings {
 	vaultSettings: Record<string, any>;
 	folderSettings: FolderSetting[];
 }
+
+export interface ConfigPreset {
+	id: string;
+	name: string;
+	platform: Platform;
+	rootSettings: Record<string, string>;
+	vaultSettings: Record<string, any>;
+	folderSettings: FolderSetting[];
+	createdAt: number;
+	updatedAt: number;
+}

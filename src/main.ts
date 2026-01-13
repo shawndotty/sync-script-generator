@@ -1,4 +1,12 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, WorkspaceLeaf } from "obsidian";
+import {
+	App,
+	Editor,
+	MarkdownView,
+	Modal,
+	Notice,
+	Plugin,
+	WorkspaceLeaf,
+} from "obsidian";
 import {
 	DEFAULT_SETTINGS,
 	SyncScriptGeneratorSettings,
@@ -15,13 +23,17 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 
 		this.registerView(
 			GENERATOR_VIEW_TYPE,
-			(leaf) => new GeneratorView(leaf)
+			(leaf) => new GeneratorView(leaf, this)
 		);
 
 		// This creates an icon in the left ribbon.
-		this.addRibbonIcon("dice", "Sync Script Generator", (evt: MouseEvent) => {
-			this.activateView();
-		});
+		this.addRibbonIcon(
+			"dice",
+			"Sync Script Generator",
+			(evt: MouseEvent) => {
+				this.activateView();
+			}
+		);
 
 		// This adds a simple command that can be triggered anywhere
 		this.addCommand({
@@ -49,14 +61,17 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 			// Our view could not be found in the workspace, create a new leaf
 			// in the right sidebar for default, or main area if preferred.
 			// The user requested a main workspace leaf item view.
-			leaf = workspace.getLeaf('tab');
-			await leaf.setViewState({ type: GENERATOR_VIEW_TYPE, active: true });
+			leaf = workspace.getLeaf("tab");
+			await leaf.setViewState({
+				type: GENERATOR_VIEW_TYPE,
+				active: true,
+			});
 		}
 
 		// "Reveal" the leaf in case it is in a collapsed sidebar
-        if (leaf) {
-		    workspace.revealLeaf(leaf);
-        }
+		if (leaf) {
+			workspace.revealLeaf(leaf);
+		}
 	}
 
 	onunload() {}
