@@ -1343,15 +1343,4 @@ export const SYNC_OPTIONS: SyncOption[] = [
 			"在同步时，是否始终使用同步数据库中的标题作为笔记标题。如果这个属性设置为True，OB中的笔记标题将不再同步到数据库",
 		example: "true",
 	},
-	{
-		name: "viewID",
-		title: "View ID",
-		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS"],
-		level: "Folder",
-		required: false,
-		defaultValue: "无",
-		valueType: "string",
-		description: "多维表的试图 ID",
-		example: "",
-	},
 ];
