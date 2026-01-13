@@ -477,4 +477,144 @@ export default {
 	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_EXAMPLE: "",
 	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_AIRTABLE_EXAMPLE: "",
 	SEPARATE_MODE_FOLDER_EXAMPLE: "",
+	FETCH_ACCESS_TOKEN_ROOT_WPS_TITLE: "Access Token",
+	FETCH_ACCESS_TOKEN_ROOT_WPS_DESC: "WPS User Access Token",
+	FETCH_ACCESS_TOKEN_ROOT_WPS_EXAMPLE:
+		"Default used in Fetch settings:\n${wpsUserTokenForFetch}",
+	FETCH_API_KEY_ROOT_AIRTABLE_TITLE: "Api Key",
+	FETCH_API_KEY_ROOT_AIRTABLE_DESC:
+		"When fetching data from Airtable, a corresponding API Key must be provided.\n\nNote: Airtable's API Key has been upgraded to Personal Access Token.",
+	FETCH_API_KEY_ROOT_AIRTABLE_EXAMPLE:
+		"Use for Fetch settings:\n${airtableAPIKeyForFetch}",
+	FETCH_API_KEY_ROOT_VIKA_TITLE: "Api Key",
+	FETCH_API_KEY_ROOT_VIKA_DESC:
+		"When fetching data from Vika, a corresponding API Key must be provided.",
+	FETCH_API_KEY_ROOT_VIKA_EXAMPLE:
+		"Default used in Fetch settings:\n${vikaAPIKeyForFetch}",
+	FETCH_APP_ID_ROOT_FEISHU_TITLE: "App ID",
+	FETCH_APP_ID_ROOT_FEISHU_DESC:
+		"App ID of the self-built app is required when fetching data from Feishu",
+	FETCH_APP_ID_ROOT_FEISHU_EXAMPLE:
+		"Default used in Fetch settings:\n${feishuAppIDForFetch}",
+	FETCH_APP_ID_ROOT_DING_TITLE: "App ID",
+	FETCH_APP_ID_ROOT_DING_DESC:
+		"App ID of the DingTalk self-built app is required when fetching data from DingTalk",
+	FETCH_APP_ID_ROOT_DING_EXAMPLE:
+		"Default used in Fetch settings:\n${dingAppIDForFetch}",
+	FETCH_APP_ID_ROOT_WPS_TITLE: "App ID",
+	FETCH_APP_ID_ROOT_WPS_DESC:
+		"App ID of the self-built app is required when fetching data from WPS",
+	FETCH_APP_ID_ROOT_WPS_EXAMPLE:
+		"Default used in Fetch settings:\n${wpsAppIDForFetch}",
+	FETCH_APP_ID_ROOT_LARK_TITLE: "App ID",
+	FETCH_APP_ID_ROOT_LARK_DESC:
+		"App ID of the self-built app is required when fetching data from Lark",
+	FETCH_APP_ID_ROOT_LARK_EXAMPLE:
+		"Default used in Fetch settings:\n${larkAppIDForFetch}",
+	FETCH_APP_KEY_ROOT_WPS_TITLE: "App Key",
+	FETCH_APP_KEY_ROOT_WPS_DESC:
+		"App Key of the self-built app is required when fetching data from WPS",
+	FETCH_APP_KEY_ROOT_WPS_EXAMPLE:
+		"Default used in Fetch settings:\n${wpsAppSecretForFetch}",
+	FETCH_APP_SECRET_ROOT_FEISHU_TITLE: "App Secret",
+	FETCH_APP_SECRET_ROOT_FEISHU_DESC:
+		"App Secret of the self-built app is required when fetching data from Feishu",
+	FETCH_APP_SECRET_ROOT_FEISHU_EXAMPLE:
+		"Default used in Fetch settings:\n${feishuAppSecretForFetch}",
+	FETCH_APP_SECRET_ROOT_DING_TITLE: "App Secret",
+	FETCH_APP_SECRET_ROOT_DING_DESC:
+		"App Secret of the DingTalk self-built app is required when fetching data from DingTalk",
+	FETCH_APP_SECRET_ROOT_DING_EXAMPLE:
+		"Default used in Fetch settings:\n${dingAppSecretForFetch}",
+	FETCH_APP_SECRET_ROOT_LARK_TITLE: "App Secret",
+	FETCH_APP_SECRET_ROOT_LARK_DESC:
+		"App Secret of the self-built app is required when fetching data from Lark",
+	FETCH_APP_SECRET_ROOT_LARK_EXAMPLE:
+		"Default used in Fetch settings:\n${larkAppSecretForFetch}",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_FEISHU_TITLE: "Default App Token",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_FEISHU_DESC:
+		"Default App Token of the Base used when fetching data from Feishu.\n\nThe App Token of a Base is equivalent to the Base ID in Airtable.",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_FEISHU_EXAMPLE:
+		"Default used in Fetch settings:\n${feishuBaseIDForFetch}",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_LARK_TITLE: "Default App Token",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_LARK_DESC:
+		"Default App Token of the Base used when fetching data from Lark.\n\nThe App Token of a Base is equivalent to the Base ID in Airtable.",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_LARK_EXAMPLE:
+		"Default used in Fetch settings:\n${larkBaseIDForFetch}",
+	FETCH_DEFAULT_BASE_ID_ROOT_AIRTABLE_TITLE: "Default Base ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_AIRTABLE_DESC:
+		"Default Base ID used when fetching data from Airtable.",
+	FETCH_DEFAULT_BASE_ID_ROOT_AIRTABLE_EXAMPLE:
+		"Default used in Fetch settings:\n${airtableBaseIDForFetch}",
+	FETCH_DEFAULT_BASE_ID_ROOT_DING_TITLE: "Default Base ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_DING_DESC:
+		"Default Base ID of DingTalk AI Table used when fetching data.",
+	FETCH_DEFAULT_BASE_ID_ROOT_DING_EXAMPLE:
+		"Default used in Fetch settings:\n${dingBaseIDForFetch}",
+	FETCH_DEFAULT_FILE_ID_ROOT_WPS_TITLE: "Default File ID",
+	FETCH_DEFAULT_FILE_ID_ROOT_WPS_DESC:
+		"Default File ID of WPS Multidimensional Table used when fetching data.",
+	FETCH_DEFAULT_FILE_ID_ROOT_WPS_EXAMPLE:
+		"Default used in Fetch settings:\n${wpsBaseIDForFetch}",
+	FETCH_DEFAULT_SHEET_ID_ROOT_DING_TITLE: "Default Sheet ID",
+	FETCH_DEFAULT_SHEET_ID_ROOT_DING_DESC:
+		"Default Sheet ID of DingTalk AI Table used when fetching data.",
+	FETCH_DEFAULT_SHEET_ID_ROOT_DING_EXAMPLE:
+		"Default used in Fetch settings:\n${dingTableIDForFetch}",
+	FETCH_DEFAULT_SHEET_ID_ROOT_WPS_TITLE: "Default Sheet ID",
+	FETCH_DEFAULT_SHEET_ID_ROOT_WPS_DESC:
+		"Default Sheet ID of WPS Multidimensional Table used when fetching data.",
+	FETCH_DEFAULT_SHEET_ID_ROOT_WPS_EXAMPLE:
+		"Default used in Fetch settings:\n${wpsTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_AIRTABLE_TITLE: "Default Table ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_AIRTABLE_DESC:
+		"Default Table ID used when fetching data from Airtable.",
+	FETCH_DEFAULT_TABLE_ID_ROOT_AIRTABLE_EXAMPLE:
+		"Default used in Fetch settings:\n${airtableTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_FEISHU_TITLE: "Default Table ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_FEISHU_DESC:
+		"Default Table ID used when fetching data from Feishu.",
+	FETCH_DEFAULT_TABLE_ID_ROOT_FEISHU_EXAMPLE:
+		"Default used in Fetch settings:\n${feishuTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_VIKA_TITLE: "Default Table ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_VIKA_DESC:
+		"Default Table ID used when fetching data from Vika.",
+	FETCH_DEFAULT_TABLE_ID_ROOT_VIKA_EXAMPLE:
+		"Default used in Fetch settings:\n${vikaTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_LARK_TITLE: "Default Table ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_LARK_DESC:
+		"Default Table ID used when fetching data from Lark.",
+	FETCH_DEFAULT_TABLE_ID_ROOT_LARK_EXAMPLE:
+		"Default used in Fetch settings:\n${larkTableIDForFetch}",
+	FETCH_DEFAULT_VIEW_ID_ROOT_DING_TITLE: "Default View ID",
+	FETCH_DEFAULT_VIEW_ID_ROOT_DING_DESC:
+		"Default View ID of DingTalk AI Table used when fetching data.",
+	FETCH_DEFAULT_VIEW_ID_ROOT_DING_EXAMPLE:
+		"Default used in Fetch settings:\n${dingViewIDForFetch}",
+	FETCH_USER_ID_ROOT_DING_TITLE: "User ID",
+	FETCH_USER_ID_ROOT_DING_DESC:
+		"User ID in DingTalk Contacts used when fetching data.",
+	FETCH_USER_ID_ROOT_DING_EXAMPLE:
+		"Default used in Fetch settings:\n${dingUserIDForFetch}",
+	FETCH_SOURCE_NAME_FOLDER_TITLE: "Source Name",
+	FETCH_SOURCE_NAME_FOLDER_DESC: "User defined data source name",
+	FETCH_SOURCE_NAME_FOLDER_EXAMPLE: "My Idea",
+	FETCH_TARGET_FOLDER_FOLDER_TITLE: "Target Folder",
+	FETCH_TARGET_FOLDER_FOLDER_DESC: "Path to store fetched data",
+	FETCH_TARGET_FOLDER_FOLDER_EXAMPLE: "2-Output/Idea",
+	FETCH_BASE_ID_FOLDER_AIRTABLE_TITLE: "Base ID",
+	FETCH_BASE_ID_FOLDER_AIRTABLE_DESC:
+		"Base ID of the data source. If empty, use default Base ID.",
+	FETCH_BASE_ID_FOLDER_AIRTABLE_EXAMPLE: "appxxxxxx",
+	FETCH_APP_TOKEN_FOLDER_TITLE: "App Token",
+	FETCH_APP_TOKEN_FOLDER_DESC:
+		"App Token of the data source. If empty, use default App Token.",
+	FETCH_APP_TOKEN_FOLDER_EXAMPLE: "appxxxxxx",
+	FETCH_TABLE_ID_FOLDER_TITLE: "Table ID",
+	FETCH_TABLE_ID_FOLDER_DESC:
+		"Table ID of the data source. If empty, use default Table ID.",
+	FETCH_TABLE_ID_FOLDER_EXAMPLE: "tblxxxxxx",
+	FETCH_VIEW_ID_FOLDER_TITLE: "View ID",
+	FETCH_VIEW_ID_FOLDER_DESC: "View ID of the data source",
+	FETCH_VIEW_ID_FOLDER_EXAMPLE: "vwxxxxxx",
 };

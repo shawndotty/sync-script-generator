@@ -448,4 +448,131 @@ export default {
 	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_EXAMPLE: "",
 	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_AIRTABLE_EXAMPLE: "",
 	SEPARATE_MODE_FOLDER_EXAMPLE: "",
+	FETCH_ACCESS_TOKEN_ROOT_WPS_TITLE: "访问令牌",
+	FETCH_ACCESS_TOKEN_ROOT_WPS_DESC: "WPS的用户Access Token",
+	FETCH_ACCESS_TOKEN_ROOT_WPS_EXAMPLE:
+		"Fetch设置时使用：\n${wpsUserTokenForFetch}",
+	FETCH_API_KEY_ROOT_AIRTABLE_TITLE: "Api Key",
+	FETCH_API_KEY_ROOT_AIRTABLE_DESC:
+		"从Airtable获取数据时，必须提供一个相应的API Key。\n\n其中，Airtable的API Key，已经升级为Personal Access Token。",
+	FETCH_API_KEY_ROOT_AIRTABLE_EXAMPLE:
+		"Fetch设置时使用：\n${airtableAPIKeyForFetch}",
+	FETCH_API_KEY_ROOT_VIKA_TITLE: "Api Key",
+	FETCH_API_KEY_ROOT_VIKA_DESC: "从Vika获取数据时，必须提供一个相应的API Key。",
+	FETCH_API_KEY_ROOT_VIKA_EXAMPLE:
+		"Fetch设置时默认使用：\n${vikaAPIKeyForFetch}",
+	FETCH_APP_ID_ROOT_FEISHU_TITLE: "App ID",
+	FETCH_APP_ID_ROOT_FEISHU_DESC: "从飞书获取数据时，需要提供自建应用的APP ID",
+	FETCH_APP_ID_ROOT_FEISHU_EXAMPLE:
+		"Fetch设置时默认使用：\n${feishuAppIDForFetch}",
+	FETCH_APP_ID_ROOT_DING_TITLE: "App ID",
+	FETCH_APP_ID_ROOT_DING_DESC: "从钉钉获取数据时，需要提供自建应用的App ID",
+	FETCH_APP_ID_ROOT_DING_EXAMPLE:
+		"Fetch设置时默认使用：\n${dingAppIDForFetch}",
+	FETCH_APP_ID_ROOT_WPS_TITLE: "App ID",
+	FETCH_APP_ID_ROOT_WPS_DESC: "从WPS获取数据时，需要提供自建应用的App ID",
+	FETCH_APP_ID_ROOT_WPS_EXAMPLE:
+		"Fetch设置时默认使用：\n${wpsAppIDForFetch}",
+	FETCH_APP_ID_ROOT_LARK_TITLE: "App ID",
+	FETCH_APP_ID_ROOT_LARK_DESC: "从Lark获取数据时，需要提供自建应用的APP ID",
+	FETCH_APP_ID_ROOT_LARK_EXAMPLE:
+		"Fetch设置时默认使用：\n${larkAppIDForFetch}",
+	FETCH_APP_KEY_ROOT_WPS_TITLE: "App Key",
+	FETCH_APP_KEY_ROOT_WPS_DESC: "从WPS获取数据时，需要提供自建应用的APP Key",
+	FETCH_APP_KEY_ROOT_WPS_EXAMPLE:
+		"Fetch设置时默认使用：\n${wpsAppSecretForFetch}",
+	FETCH_APP_SECRET_ROOT_FEISHU_TITLE: "App Secret",
+	FETCH_APP_SECRET_ROOT_FEISHU_DESC:
+		"从飞书获取数据时，需要提供自建应用的APP Secret",
+	FETCH_APP_SECRET_ROOT_FEISHU_EXAMPLE:
+		"Fetch设置时默认使用：\n${feishuAppSecretForFetch}",
+	FETCH_APP_SECRET_ROOT_DING_TITLE: "App Secret",
+	FETCH_APP_SECRET_ROOT_DING_DESC: "从钉钉获取数据时，需要提供自建应用的App Secret",
+	FETCH_APP_SECRET_ROOT_DING_EXAMPLE:
+		"Fetch设置时默认使用：\n${dingAppSecretForFetch}",
+	FETCH_APP_SECRET_ROOT_LARK_TITLE: "App Secret",
+	FETCH_APP_SECRET_ROOT_LARK_DESC:
+		"从Lark获取数据时，需要提供自建应用的APP Secret",
+	FETCH_APP_SECRET_ROOT_LARK_EXAMPLE:
+		"Fetch设置时默认使用：\n${larkAppSecretForFetch}",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_FEISHU_TITLE: "默认应用 Token",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_FEISHU_DESC:
+		"从飞书获取数据时，默认使用的多维表的App Token。\n\n多维表的App Token，相当于Airtable中的Base ID。",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_FEISHU_EXAMPLE:
+		"Fetch设置时默认使用：\n${feishuBaseIDForFetch}",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_LARK_TITLE: "默认应用 Token",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_LARK_DESC:
+		"从Lark获取数据时，默认使用的多维表的App Token。\n\n多维表的App Token，相当于Airtable中的Base ID。",
+	FETCH_DEFAULT_APP_TOKEN_ROOT_LARK_EXAMPLE:
+		"Fetch设置时默认使用：\n${larkBaseIDForFetch}",
+	FETCH_DEFAULT_BASE_ID_ROOT_AIRTABLE_TITLE: "默认 Base ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_AIRTABLE_DESC:
+		"从Airtable获取数据时，默认使用的Base ID。",
+	FETCH_DEFAULT_BASE_ID_ROOT_AIRTABLE_EXAMPLE:
+		"Fetch设置时默认使用：\n${airtableBaseIDForFetch}",
+	FETCH_DEFAULT_BASE_ID_ROOT_DING_TITLE: "默认 Base ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_DING_DESC: "从钉钉获取数据时，默认使用的AI表格的Base ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_DING_EXAMPLE:
+		"Fetch设置时默认使用：\n${dingBaseIDForFetch}",
+	FETCH_DEFAULT_FILE_ID_ROOT_WPS_TITLE: "默认文件 ID",
+	FETCH_DEFAULT_FILE_ID_ROOT_WPS_DESC: "从WPS获取数据时，默认使用的多维表文件ID",
+	FETCH_DEFAULT_FILE_ID_ROOT_WPS_EXAMPLE:
+		"Fetch设置时默认使用：\n${wpsBaseIDForFetch}",
+	FETCH_DEFAULT_SHEET_ID_ROOT_DING_TITLE: "默认 Sheet ID",
+	FETCH_DEFAULT_SHEET_ID_ROOT_DING_DESC: "从钉钉获取数据时，默认使用的AI表格的Sheet ID",
+	FETCH_DEFAULT_SHEET_ID_ROOT_DING_EXAMPLE:
+		"Fetch设置时默认使用：\n${dingTableIDForFetch}",
+	FETCH_DEFAULT_SHEET_ID_ROOT_WPS_TITLE: "默认 Sheet ID",
+	FETCH_DEFAULT_SHEET_ID_ROOT_WPS_DESC: "从WPS获取数据时，默认使用的多维表Sheet ID",
+	FETCH_DEFAULT_SHEET_ID_ROOT_WPS_EXAMPLE:
+		"Fetch设置时默认使用：\n${wpsTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_AIRTABLE_TITLE: "默认 Table ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_AIRTABLE_DESC:
+		"从Airtable获取数据时，默认使用的Table ID。",
+	FETCH_DEFAULT_TABLE_ID_ROOT_AIRTABLE_EXAMPLE:
+		"Fetch设置时默认使用：\n${airtableTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_FEISHU_TITLE: "默认 Table ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_FEISHU_DESC:
+		"从飞书获取数据时，默认使用的Table ID。",
+	FETCH_DEFAULT_TABLE_ID_ROOT_FEISHU_EXAMPLE:
+		"Fetch设置时默认使用：\n${feishuTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_VIKA_TITLE: "默认 Table ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_VIKA_DESC:
+		"从Vika获取数据时，默认使用的Table ID。",
+	FETCH_DEFAULT_TABLE_ID_ROOT_VIKA_EXAMPLE:
+		"Fetch设置时默认使用：\n${vikaTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_LARK_TITLE: "默认 Table ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_LARK_DESC:
+		"从Lark获取数据时，默认使用的Table ID。",
+	FETCH_DEFAULT_TABLE_ID_ROOT_LARK_EXAMPLE:
+		"Fetch设置时默认使用：\n${larkTableIDForFetch}",
+	FETCH_DEFAULT_VIEW_ID_ROOT_DING_TITLE: "默认 View ID",
+	FETCH_DEFAULT_VIEW_ID_ROOT_DING_DESC: "从钉钉获取数据时，默认使用的AI表格的View ID",
+	FETCH_DEFAULT_VIEW_ID_ROOT_DING_EXAMPLE:
+		"Fetch设置时默认使用：\n${dingViewIDForFetch}",
+	FETCH_USER_ID_ROOT_DING_TITLE: "用户 ID",
+	FETCH_USER_ID_ROOT_DING_DESC: "从钉钉获取数据时，默认使用的通讯录中的用户ID",
+	FETCH_USER_ID_ROOT_DING_EXAMPLE:
+		"Fetch设置时默认使用：\n${dingUserIDForFetch}",
+	FETCH_SOURCE_NAME_FOLDER_TITLE: "数据源名称",
+	FETCH_SOURCE_NAME_FOLDER_DESC: "用户定义的数据源名称",
+	FETCH_SOURCE_NAME_FOLDER_EXAMPLE: "My Idea",
+	FETCH_TARGET_FOLDER_FOLDER_TITLE: "目标文件夹",
+	FETCH_TARGET_FOLDER_FOLDER_DESC: "获取数据的存放路径",
+	FETCH_TARGET_FOLDER_FOLDER_EXAMPLE: "2-Output/Idea",
+	FETCH_BASE_ID_FOLDER_AIRTABLE_TITLE: "Base ID",
+	FETCH_BASE_ID_FOLDER_AIRTABLE_DESC:
+		"数据源的Base ID，如果为空，使用默认的Base ID。",
+	FETCH_BASE_ID_FOLDER_AIRTABLE_EXAMPLE: "appxxxxxx",
+	FETCH_APP_TOKEN_FOLDER_TITLE: "App Token",
+	FETCH_APP_TOKEN_FOLDER_DESC:
+		"数据源的App Token，如果为空，使用默认的App Token。",
+	FETCH_APP_TOKEN_FOLDER_EXAMPLE: "appxxxxxx",
+	FETCH_TABLE_ID_FOLDER_TITLE: "Table ID",
+	FETCH_TABLE_ID_FOLDER_DESC:
+		"数据源的Table ID，如果为空，使用默认的Table ID。",
+	FETCH_TABLE_ID_FOLDER_EXAMPLE: "tblxxxxxx",
+	FETCH_VIEW_ID_FOLDER_TITLE: "View ID",
+	FETCH_VIEW_ID_FOLDER_DESC: "数据源的View ID",
+	FETCH_VIEW_ID_FOLDER_EXAMPLE: "vwxxxxxx",
 };
