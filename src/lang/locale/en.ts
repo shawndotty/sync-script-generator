@@ -617,4 +617,41 @@ export default {
 	FETCH_VIEW_ID_FOLDER_TITLE: "View ID",
 	FETCH_VIEW_ID_FOLDER_DESC: "View ID of the data source",
 	FETCH_VIEW_ID_FOLDER_EXAMPLE: "vwxxxxxx",
+
+	// Generator View
+	GENERATOR_VIEW_TITLE: "Sync Script Generator",
+	GENERATOR_VIEW_PLATFORMS_TITLE: "Platforms",
+	GENERATOR_VIEW_BTN_IMPORT_TEMPLATE: "Import Template",
+	GENERATOR_VIEW_BTN_LOAD_DEFAULT: "Load Default Template",
+	GENERATOR_VIEW_BTN_PRESETS: "Presets",
+	GENERATOR_VIEW_BTN_GENERATE: "Generate Script",
+	GENERATOR_VIEW_BTN_ADD_FOLDER: "Add Folder Setting",
+	GENERATOR_VIEW_FOLDER_PATH_NAME: "Folder Path",
+	GENERATOR_VIEW_FOLDER_PATH_DESC: "The path to the folder you want to sync.",
+	GENERATOR_VIEW_FOLDER_PATH_EXAMPLE: "Example: MyVault/Projects/Active",
+	GENERATOR_VIEW_BTN_BROWSE: "Browse",
+	GENERATOR_VIEW_TOOLTIP_EDIT_OBJECT: "Edit Object",
+	GENERATOR_VIEW_TOOLTIP_EDIT_ARRAY: "Edit Array",
+	GENERATOR_VIEW_DESC_TITLE: "Description",
+	GENERATOR_VIEW_EXAMPLE_USAGE_TITLE: "Example/Usage:",
+	GENERATOR_VIEW_DESC_PLACEHOLDER:
+		"Select a setting field to see its description here.",
+	GENERATOR_VIEW_NOTICE_IMPORTED: "Imported settings from ${file}",
+	GENERATOR_VIEW_NOTICE_NO_PLATFORM: "Could not detect platform in template.",
+	GENERATOR_VIEW_NOTICE_NO_DEFAULT:
+		"No default template configured for this platform.",
+	GENERATOR_VIEW_NOTICE_TEMPLATE_NOT_FOUND:
+		"Template file not found: ${path}",
+	GENERATOR_VIEW_NOTICE_LOAD_FAILED:
+		"Failed to load default template: ${error}",
+	GENERATOR_VIEW_FOLDER_LABEL: "Folder",
+	GENERATOR_VIEW_BTN_REMOVE: "Remove",
+	GENERATOR_VIEW_SETTINGS_SUFFIX: "Settings",
+	GENERATOR_VIEW_GROUP_BASIC: "Basic",
+	GENERATOR_VIEW_GROUP_ADVANCED: "Advanced",
+	GENERATOR_VIEW_GROUP_EXTRACT: "Extract",
+	GENERATOR_VIEW_GROUP_OTHER: "Other",
+	GENERATOR_VIEW_TAB_ROOT: "Root",
+	GENERATOR_VIEW_TAB_VAULT: "Vault",
+	GENERATOR_VIEW_TAB_FOLDER: "Folder",
 };

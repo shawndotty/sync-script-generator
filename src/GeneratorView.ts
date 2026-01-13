@@ -17,6 +17,7 @@ import { ScriptEngine } from "./ScriptEngine";
 import { FolderPickerModal } from "./ui/pickers/folder-picker";
 import { PresetManagerModal } from "./PresetManagerModal";
 import MyPlugin from "./main";
+import { t } from "./lang/helpers";
 
 export class GeneratorView extends ItemView {
 	platform: Platform = "Airtable";
@@ -42,7 +43,7 @@ export class GeneratorView extends ItemView {
 	}
 
 	getDisplayText() {
-		return "Sync Script Generator";
+		return t("GENERATOR_VIEW_TITLE");
 	}
 
 	getIcon() {
@@ -71,7 +72,7 @@ export class GeneratorView extends ItemView {
 	}
 
 	renderPlatformList(container: HTMLElement) {
-		container.createEl("h3", { text: "Platforms" });
+		container.createEl("h3", { text: t("GENERATOR_VIEW_PLATFORMS_TITLE") });
 		const list = container.createEl("ul", { cls: "platform-list" });
 		const platforms: Platform[] = [
 			"Airtable",
@@ -108,31 +109,31 @@ export class GeneratorView extends ItemView {
 	renderMiddleColumn() {
 		this.middleContainer.empty();
 		this.middleContainer.createEl("h2", {
-			text: `${this.platform} Settings`,
+			text: `${this.platform} ${t("GENERATOR_VIEW_SETTINGS_SUFFIX")}`,
 		});
 
 		// Action Bar
 		const actionBar = this.middleContainer.createDiv({ cls: "action-bar" });
 		new ButtonComponent(actionBar)
-			.setButtonText("Import Template")
+			.setButtonText(t("GENERATOR_VIEW_BTN_IMPORT_TEMPLATE"))
 			.onClick(() => this.openImportModal());
 
 		// Load Default Template button (only show if default template is set)
 		const defaultTemplatePath = this.getDefaultTemplatePath();
 		if (defaultTemplatePath) {
 			new ButtonComponent(actionBar)
-				.setButtonText("Load Default Template")
+				.setButtonText(t("GENERATOR_VIEW_BTN_LOAD_DEFAULT"))
 				.setIcon("file-down")
 				.onClick(() => this.loadDefaultTemplate());
 		}
 
 		new ButtonComponent(actionBar)
-			.setButtonText("Presets")
+			.setButtonText(t("GENERATOR_VIEW_BTN_PRESETS"))
 			.setIcon("bookmark")
 			.onClick(() => this.openPresetManager());
 
 		new ButtonComponent(actionBar)
-			.setButtonText("Generate Script")
+			.setButtonText(t("GENERATOR_VIEW_BTN_GENERATE"))
 			.setCta()
 			.onClick(() => this.generateScript());
 
@@ -146,9 +147,15 @@ export class GeneratorView extends ItemView {
 			"Folder",
 		];
 
+		const tabNames: Record<string, string> = {
+			Root: t("GENERATOR_VIEW_TAB_ROOT"),
+			Vault: t("GENERATOR_VIEW_TAB_VAULT"),
+			Folder: t("GENERATOR_VIEW_TAB_FOLDER"),
+		};
+
 		tabs.forEach((tab) => {
 			const tabBtn = tabsContainer.createEl("button", {
-				text: `${tab} Settings`,
+				text: `${tabNames[tab]} ${t("GENERATOR_VIEW_SETTINGS_SUFFIX")}`,
 				cls: "settings-tab-btn",
 			});
 			if (this.activeTab === tab) tabBtn.addClass("is-active");
@@ -191,11 +198,20 @@ export class GeneratorView extends ItemView {
 			// Group options by group
 			const groupedOptions: Record<string, SyncOption[]> = {};
 			vaultOptions.forEach((opt) => {
-				const groupName = opt.group || "Other";
+				let groupName = opt.group || "Other";
+				if (groupName === "Basic")
+					groupName = t("GENERATOR_VIEW_GROUP_BASIC");
+				else if (groupName === "Advanced")
+					groupName = t("GENERATOR_VIEW_GROUP_ADVANCED");
+				else if (groupName === "Extract")
+					groupName = t("GENERATOR_VIEW_GROUP_EXTRACT");
+				else if (groupName === "Other")
+					groupName = t("GENERATOR_VIEW_GROUP_OTHER");
+
 				if (!groupedOptions[groupName]) {
 					groupedOptions[groupName] = [];
 				}
-				groupedOptions[groupName].push(opt);
+				groupedOptions[groupName]?.push(opt);
 			});
 
 			// Render groups
@@ -246,7 +262,7 @@ export class GeneratorView extends ItemView {
 
 		if (this.activeTab === "Folder") {
 			const addButton = formContainer.createEl("button", {
-				text: "Add Folder Setting",
+				text: t("GENERATOR_VIEW_BTN_ADD_FOLDER"),
 				cls: "mod-cta",
 			});
 			addButton.style.marginBottom = "20px";
@@ -273,7 +289,7 @@ export class GeneratorView extends ItemView {
 
 				titleContainer.createEl("span", {
 					text:
-						`Folder ${index + 1}` +
+						`${t("GENERATOR_VIEW_FOLDER_LABEL")} ${index + 1}` +
 						(folder.folderName ? `: ${folder.folderName}` : ""),
 				});
 
@@ -283,7 +299,9 @@ export class GeneratorView extends ItemView {
 					this.renderMiddleColumn();
 				};
 
-				const removeBtn = header.createEl("button", { text: "Remove" });
+				const removeBtn = header.createEl("button", {
+					text: t("GENERATOR_VIEW_BTN_REMOVE"),
+				});
 				removeBtn.onclick = (e) => {
 					e.stopPropagation();
 					this.folderSettings.splice(index, 1);
@@ -295,17 +313,18 @@ export class GeneratorView extends ItemView {
 				});
 
 				const folderPathSetting = new Setting(contentDiv)
-					.setName("Folder Path")
+					.setName(t("GENERATOR_VIEW_FOLDER_PATH_NAME"))
 					.addText((text) => {
-						text.setPlaceholder("Folder Path")
+						text.setPlaceholder(
+							t("GENERATOR_VIEW_FOLDER_PATH_NAME")
+						)
 							.setValue(folder.folderName)
 							.onChange((val) => (folder.folderName = val));
 						this.addFocusListener(text.inputEl, {
 							name: "folderName",
-							title: "Folder Path",
-							description:
-								"The path to the folder you want to sync.",
-							example: "Example: MyVault/Projects/Active",
+							title: t("GENERATOR_VIEW_FOLDER_PATH_NAME"),
+							description: t("GENERATOR_VIEW_FOLDER_PATH_DESC"),
+							example: t("GENERATOR_VIEW_FOLDER_PATH_EXAMPLE"),
 							platforms: [],
 							level: "Folder",
 							required: true,
@@ -315,7 +334,7 @@ export class GeneratorView extends ItemView {
 					})
 					.addButton((button) => {
 						button
-							.setButtonText("Browse")
+							.setButtonText(t("GENERATOR_VIEW_BTN_BROWSE"))
 							.setIcon("folder")
 							.onClick(() => {
 								new FolderPickerModal(
@@ -339,11 +358,20 @@ export class GeneratorView extends ItemView {
 				const groupedOptions: Record<string, SyncOption[]> = {};
 				folderOptions.forEach((opt) => {
 					if (opt.name === "folderName") return;
-					const groupName = opt.group || "Other";
+					let groupName = opt.group || "Other";
+					if (groupName === "Basic")
+						groupName = t("GENERATOR_VIEW_GROUP_BASIC");
+					else if (groupName === "Advanced")
+						groupName = t("GENERATOR_VIEW_GROUP_ADVANCED");
+					else if (groupName === "Extract")
+						groupName = t("GENERATOR_VIEW_GROUP_EXTRACT");
+					else if (groupName === "Other")
+						groupName = t("GENERATOR_VIEW_GROUP_OTHER");
+
 					if (!groupedOptions[groupName]) {
 						groupedOptions[groupName] = [];
 					}
-					groupedOptions[groupName].push(opt);
+					groupedOptions[groupName]?.push(opt);
 				});
 
 				// Render groups
@@ -417,7 +445,7 @@ export class GeneratorView extends ItemView {
 		} else if (opt.valueType === "object") {
 			s.addExtraButton((btn) => {
 				btn.setIcon("pencil")
-					.setTooltip("Edit Object")
+					.setTooltip(t("GENERATOR_VIEW_TOOLTIP_EDIT_OBJECT"))
 					.onClick(() => {
 						let currentData = target[opt.name];
 						if (typeof currentData === "string") {
@@ -466,7 +494,7 @@ export class GeneratorView extends ItemView {
 		} else if (opt.valueType === "array") {
 			s.addExtraButton((btn) => {
 				btn.setIcon("pencil")
-					.setTooltip("Edit Array")
+					.setTooltip(t("GENERATOR_VIEW_TOOLTIP_EDIT_ARRAY"))
 					.onClick(() => {
 						let currentData = target[opt.name];
 						if (typeof currentData === "string") {
@@ -533,7 +561,9 @@ export class GeneratorView extends ItemView {
 
 	renderRightColumn() {
 		this.rightContainer.empty();
-		this.rightContainer.createEl("h3", { text: "Description" });
+		this.rightContainer.createEl("h3", {
+			text: t("GENERATOR_VIEW_DESC_TITLE"),
+		});
 
 		if (this.activeOption) {
 			const wrapper = this.rightContainer.createDiv({
@@ -545,7 +575,14 @@ export class GeneratorView extends ItemView {
 			});
 
 			const badge = wrapper.createSpan({ cls: "help-badge" });
-			badge.setText(this.activeOption.level);
+			const levelMap: Record<string, string> = {
+				Root: t("GENERATOR_VIEW_TAB_ROOT"),
+				Vault: t("GENERATOR_VIEW_TAB_VAULT"),
+				Folder: t("GENERATOR_VIEW_TAB_FOLDER"),
+			};
+			badge.setText(
+				levelMap[this.activeOption.level] || this.activeOption.level
+			);
 
 			wrapper.createEl("div", {
 				text: this.activeOption.description,
@@ -553,7 +590,9 @@ export class GeneratorView extends ItemView {
 			});
 
 			if (this.activeOption.example) {
-				wrapper.createEl("h5", { text: "Example/Usage:" });
+				wrapper.createEl("h5", {
+					text: t("GENERATOR_VIEW_EXAMPLE_USAGE_TITLE"),
+				});
 				wrapper.createEl("pre", {
 					text: this.activeOption.example,
 					cls: "help-example",
@@ -561,7 +600,7 @@ export class GeneratorView extends ItemView {
 			}
 		} else {
 			this.rightContainer.createEl("p", {
-				text: "Select a setting field to see its description here.",
+				text: t("GENERATOR_VIEW_DESC_PLACEHOLDER"),
 				cls: "help-placeholder",
 			});
 		}
@@ -583,7 +622,12 @@ export class GeneratorView extends ItemView {
 			this.vaultSettings = result.vaultSettings;
 			this.folderSettings = result.folderSettings;
 
-			new Notice(`Imported settings from ${file.basename}`);
+			new Notice(
+				t("GENERATOR_VIEW_NOTICE_IMPORTED").replace(
+					"${file}",
+					file.basename
+				)
+			);
 
 			// Update UI list active state
 			const platformList =
@@ -598,7 +642,7 @@ export class GeneratorView extends ItemView {
 
 			this.renderMiddleColumn();
 		} else {
-			new Notice("Could not detect platform in template.");
+			new Notice(t("GENERATOR_VIEW_NOTICE_NO_PLATFORM"));
 		}
 	}
 
@@ -694,20 +738,30 @@ export class GeneratorView extends ItemView {
 	async loadDefaultTemplate() {
 		const templatePath = this.getDefaultTemplatePath();
 		if (!templatePath) {
-			new Notice("No default template configured for this platform.");
+			new Notice(t("GENERATOR_VIEW_NOTICE_NO_DEFAULT"));
 			return;
 		}
 
 		try {
 			const file = this.app.vault.getAbstractFileByPath(templatePath);
 			if (!file || !(file instanceof TFile)) {
-				new Notice(`Template file not found: ${templatePath}`);
+				new Notice(
+					t("GENERATOR_VIEW_NOTICE_TEMPLATE_NOT_FOUND").replace(
+						"${path}",
+						templatePath
+					)
+				);
 				return;
 			}
 
 			await this.importTemplate(file);
 		} catch (error) {
-			new Notice(`Failed to load default template: ${error}`);
+			new Notice(
+				t("GENERATOR_VIEW_NOTICE_LOAD_FAILED").replace(
+					"${error}",
+					String(error)
+				)
+			);
 		}
 	}
 }
