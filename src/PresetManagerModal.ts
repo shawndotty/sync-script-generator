@@ -35,6 +35,7 @@ export class PresetManagerModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
+		this.modalEl.addClass("mod-preset-manager");
 		contentEl.empty();
 		contentEl.addClass("preset-manager-modal");
 
@@ -68,12 +69,6 @@ export class PresetManagerModal extends Modal {
 		// Initial render
 		this.renderTabs(tabsContainer);
 		this.renderTabContent();
-
-		// Footer
-		const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
-		new ButtonComponent(footer)
-			.setButtonText("Close")
-			.onClick(() => this.close());
 	}
 
 	private renderTabs(tabsContainer: HTMLElement) {

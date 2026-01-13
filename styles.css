@@ -82,7 +82,7 @@
 /* Folder Settings Styles */
 .folder-setting-block {
     border: 1px solid var(--background-modifier-border);
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 20px;
     border-radius: 8px;
     background-color: var(--background-secondary-alt);
@@ -94,7 +94,7 @@
     align-items: center;
     margin-bottom: 15px;
     border-bottom: 1px solid var(--background-modifier-border);
-    padding-bottom: 10px;
+    padding: 10px;
     cursor: pointer;
 }
 
@@ -388,4 +388,103 @@
 
 .folder-group-block.is-collapsed .folder-group-content {
     display: none;
+}
+
+/* Preset Manager Modal */
+.modal.mod-preset-manager {
+    display: flex;
+    flex-direction: column;
+    max-width: 840px;
+    width: 640px;
+    max-height: 80vh;
+}
+
+.modal.mod-preset-manager .modal-content {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.preset-manager-modal h2 {
+    margin-bottom: 16px;
+}
+
+.preset-manager-modal .settings-tabs {
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.preset-manager-modal .settings-tab-btn {
+    padding: 10px 14px;
+    border-radius: 8px 8px 0 0;
+}
+
+.preset-manager-modal .preset-tab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.preset-manager-modal .preset-save-section,
+.preset-manager-modal .preset-load-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.preset-manager-modal .preset-save-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.preset-manager-modal .presets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.preset-manager-modal .preset-platform-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.preset-manager-modal .preset-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 10px;
+    background-color: var(--background-primary);
+}
+
+.preset-manager-modal .preset-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.preset-manager-modal .preset-name {
+    font-weight: 600;
+}
+
+.preset-manager-modal .preset-date {
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+
+.preset-manager-modal .preset-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.preset-manager-modal .preset-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
 }

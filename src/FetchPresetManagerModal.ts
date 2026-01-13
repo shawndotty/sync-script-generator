@@ -35,6 +35,7 @@ export class FetchPresetManagerModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
+		this.modalEl.addClass("mod-preset-manager");
 		contentEl.empty();
 		contentEl.addClass("preset-manager-modal");
 
