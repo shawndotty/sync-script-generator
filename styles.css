@@ -343,3 +343,49 @@
     font-style: italic;
     padding: 20px;
 }
+
+/* Folder Group Styles */
+.folder-group-block {
+    margin-bottom: 10px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.folder-group-header {
+    padding: 8px 12px;
+    background-color: var(--background-secondary-alt);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.9em;
+}
+
+.folder-group-header:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.folder-group-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.folder-group-toggle-icon {
+    transition: transform 0.2s ease;
+}
+
+.folder-group-block.is-collapsed .folder-group-toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.folder-group-content {
+    padding: 10px;
+    background-color: var(--background-primary);
+}
+
+.folder-group-block.is-collapsed .folder-group-content {
+    display: none;
+}

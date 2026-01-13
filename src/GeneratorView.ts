@@ -255,11 +255,64 @@ export class GeneratorView extends ItemView {
 						o.level === "Folder" &&
 						(o.platforms.includes(this.platform) ||
 							o.platforms.length === 0)
-				);
+				).sort((a, b) => (a.groupOrder || 0) - (b.groupOrder || 0));
+
+				// Group options by group
+				const groupedOptions: Record<string, SyncOption[]> = {};
 				folderOptions.forEach((opt) => {
 					if (opt.name === "folderName") return;
-					this.renderOption(contentDiv, opt, folder, "Folder");
+					const groupName = opt.group || "Other";
+					if (!groupedOptions[groupName]) {
+						groupedOptions[groupName] = [];
+					}
+					groupedOptions[groupName].push(opt);
 				});
+
+				// Render groups
+				Object.entries(groupedOptions).forEach(
+					([groupName, options]) => {
+						const groupDiv = contentDiv.createDiv({
+							cls: "folder-group-block",
+						});
+						const collapsedKey = `_group_collapsed_${groupName}`;
+						if (folder[collapsedKey]) {
+							groupDiv.addClass("is-collapsed");
+						}
+
+						const groupHeader = groupDiv.createDiv({
+							cls: "folder-group-header",
+						});
+
+						const titleContainer = groupHeader.createDiv({
+							cls: "folder-group-title",
+						});
+
+						const iconSpan = titleContainer.createSpan({
+							cls: "folder-group-toggle-icon",
+						});
+						setIcon(iconSpan, "chevron-down");
+
+						titleContainer.createEl("span", { text: groupName });
+
+						groupHeader.onclick = () => {
+							folder[collapsedKey] = !folder[collapsedKey];
+							this.renderMiddleColumn();
+						};
+
+						const groupContent = groupDiv.createDiv({
+							cls: "folder-group-content",
+						});
+
+						options.forEach((opt) => {
+							this.renderOption(
+								groupContent,
+								opt,
+								folder,
+								"Folder"
+							);
+						});
+					}
+				);
 			});
 		}
 	}
