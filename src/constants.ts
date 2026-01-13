@@ -5,6 +5,7 @@ export const GENERATOR_VIEW_TYPE = "sync-script-generator-view";
 export const SYNC_OPTIONS: SyncOption[] = [
 	{
 		name: "accessToken",
+		group: "",
 		title: "Access Token",
 		platforms: ["WPS"],
 		level: "Root",
@@ -17,6 +18,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "apiKey",
+		group: "",
 		title: "Api Key",
 		platforms: ["Airtable"],
 		level: "Root",
@@ -30,6 +32,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "apiKey",
+		group: "",
 		title: "Api Key",
 		platforms: ["Vika"],
 		level: "Root",
@@ -42,6 +45,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "appID",
+		group: "",
 		title: "App ID",
 		platforms: ["Feishu"],
 		level: "Root",
@@ -54,6 +58,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "appID",
+		group: "",
 		title: "App ID",
 		platforms: ["Ding"],
 		level: "Root",
@@ -66,6 +71,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "appID",
+		group: "",
 		title: "App ID",
 		platforms: ["WPS"],
 		level: "Root",
@@ -78,6 +84,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "appID",
+		group: "",
 		title: "App ID",
 		platforms: ["Lark"],
 		level: "Root",
@@ -90,6 +97,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "appKey",
+		group: "",
 		title: "App Key",
 		platforms: ["WPS"],
 		level: "Root",
@@ -102,6 +110,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "appSecret",
+		group: "",
 		title: "App Secret",
 		platforms: ["Feishu"],
 		level: "Root",
@@ -114,6 +123,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "appSecret",
+		group: "",
 		title: "App Secret",
 		platforms: ["Ding"],
 		level: "Root",
@@ -126,6 +136,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "appSecret",
+		group: "",
 		title: "App Secret",
 		platforms: ["Lark"],
 		level: "Root",
@@ -138,6 +149,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultAppToken",
+		group: "",
 		title: "Default App Token",
 		platforms: ["Feishu"],
 		level: "Root",
@@ -151,6 +163,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultAppToken",
+		group: "",
 		title: "Default App Token",
 		platforms: ["Lark"],
 		level: "Root",
@@ -164,6 +177,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultBaseID",
+		group: "",
 		title: "Default Base ID",
 		platforms: ["Airtable"],
 		level: "Root",
@@ -176,6 +190,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultBaseID",
+		group: "",
 		title: "Default Base ID",
 		platforms: ["Ding"],
 		level: "Root",
@@ -188,6 +203,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultFileID",
+		group: "",
 		title: "Default File ID",
 		platforms: ["WPS"],
 		level: "Root",
@@ -200,6 +216,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultSheetID",
+		group: "",
 		title: "Default Sheet ID",
 		platforms: ["Ding"],
 		level: "Root",
@@ -212,6 +229,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultSheetID",
+		group: "",
 		title: "Default Sheet ID",
 		platforms: ["WPS"],
 		level: "Root",
@@ -224,6 +242,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultTableID",
+		group: "",
 		title: "Default Table ID",
 		platforms: ["Airtable"],
 		level: "Root",
@@ -236,6 +255,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultTableID",
+		group: "",
 		title: "Default Table ID",
 		platforms: ["Feishu"],
 		level: "Root",
@@ -248,6 +268,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultTableID",
+		group: "",
 		title: "Default Table ID",
 		platforms: ["Vika"],
 		level: "Root",
@@ -260,6 +281,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultTableID",
+		group: "",
 		title: "Default Table ID",
 		platforms: ["Lark"],
 		level: "Root",
@@ -272,6 +294,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "defaultViewID",
+		group: "",
 		title: "Default View ID",
 		platforms: ["Ding"],
 		level: "Root",
@@ -284,6 +307,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "userID",
+		group: "",
 		title: "User ID",
 		platforms: ["Ding"],
 		level: "Root",
@@ -296,6 +320,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "contentAppendFields",
+		group: "",
 		title: "Content Append Fields",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -308,6 +333,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "contentFetchField",
+		group: "",
 		title: "Content Fetch Field",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -320,6 +346,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "customFields",
+		group: "",
 		title: "Custom Fields",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -332,6 +359,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "enableDateFilterForBatchSync",
+		group: "",
 		title: "Enable Date Filter For Batch Sync",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -344,6 +372,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "enableUpdateFromDB",
+		group: "",
 		title: "Enable Update From Db",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -356,6 +385,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "enableUpdatePropertiesFromDowloadTable",
+		group: "",
 		title: "Enable Update Properties From Dowload Table",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -368,6 +398,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractBlocks",
+		group: "",
 		title: "Extract Blocks",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -381,6 +412,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractBlocksAsText",
+		group: "",
 		title: "Extract Blocks As Text",
 		platforms: ["Airtable"],
 		level: "Vault",
@@ -393,6 +425,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractBlocksAsText",
+		group: "",
 		title: "Extract Blocks As Text",
 		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -405,6 +438,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractKeyPoints",
+		group: "",
 		title: "Extract Key Points",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -418,6 +452,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractKeyPointsAsText",
+		group: "",
 		title: "Extract Key Points As Text",
 		platforms: ["Airtable"],
 		level: "Vault",
@@ -430,6 +465,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractKeyPointsAsText",
+		group: "",
 		title: "Extract Key Points As Text",
 		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -442,6 +478,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractSections",
+		group: "",
 		title: "Extract Sections",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -454,6 +491,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractSectionsAsText",
+		group: "",
 		title: "Extract Sections As Text",
 		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -466,6 +504,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractSectionsAsText",
+		group: "",
 		title: "Extract Sections As Text",
 		platforms: ["Airtable"],
 		level: "Vault",
@@ -478,6 +517,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractTagLines",
+		group: "",
 		title: "Extract Tag Lines",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -490,6 +530,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractTagLinesAsText",
+		group: "",
 		title: "Extract Tag Lines As Text",
 		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -502,6 +543,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractTagLinesAsText",
+		group: "",
 		title: "Extract Tag Lines As Text",
 		platforms: ["Airtable"],
 		level: "Vault",
@@ -514,6 +556,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "fieldsNames",
+		group: "",
 		title: "Fields Names",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -526,6 +569,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "fmFetchFields",
+		group: "",
 		title: "Fm Fetch Fields",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -538,6 +582,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "includesTagsInContent",
+		group: "",
 		title: "Includes Tags In Content",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -550,6 +595,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "justUpdateFromDB",
+		group: "",
 		title: "Just Update From Db",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -562,6 +608,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "sectionHeadingWholeMatch",
+		group: "",
 		title: "Section Heading Whole Match",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -574,6 +621,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "showDeleteOption",
+		group: "",
 		title: "Show Delete Option",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -586,6 +634,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "sortFrontMatterProperties",
+		group: "",
 		title: "Sort Front Matter Properties",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -598,6 +647,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "syncContent",
+		group: "",
 		title: "Sync Content",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -610,6 +660,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "syncFullContent",
+		group: "",
 		title: "Sync Full Content",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -622,6 +673,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "syncMode",
+		group: "",
 		title: "Sync Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -634,6 +686,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "syncOptions",
+		group: "",
 		title: "Sync Options",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -646,6 +699,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "useTitleInDb",
+		group: "",
 		title: "Use Title In Db",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -658,6 +712,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "baseID",
+		group: "",
 		title: "Base ID",
 		platforms: ["Ding"],
 		level: "Folder",
@@ -669,6 +724,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "fileID",
+		group: "",
 		title: "File ID",
 		platforms: ["WPS"],
 		level: "Folder",
@@ -680,6 +736,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "folderName",
+		group: "",
 		title: "Folder Name",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -691,6 +748,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "sheetID",
+		group: "",
 		title: "Sheet ID",
 		platforms: ["Ding"],
 		level: "Folder",
@@ -702,6 +760,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "sheetID",
+		group: "",
 		title: "Sheet ID",
 		platforms: ["WPS"],
 		level: "Folder",
@@ -713,6 +772,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "tableID",
+		group: "",
 		title: "Table ID",
 		platforms: ["Airtable"],
 		level: "Folder",
@@ -725,6 +785,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "tableID",
+		group: "",
 		title: "Table ID",
 		platforms: ["Feishu", "Lark"],
 		level: "Folder",
@@ -737,6 +798,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "tableID",
+		group: "",
 		title: "Table ID",
 		platforms: ["Vika"],
 		level: "Folder",
@@ -749,6 +811,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "viewID",
+		group: "",
 		title: "View ID",
 		platforms: ["Ding"],
 		level: "Folder",
@@ -760,6 +823,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "appToken",
+		group: "",
 		title: "App Token",
 		platforms: ["Feishu", "Lark"],
 		level: "Folder",
@@ -772,6 +836,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "baseID",
+		group: "",
 		title: "Base ID",
 		platforms: ["Airtable"],
 		level: "Folder",
@@ -784,6 +849,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "contentAppendFields",
+		group: "",
 		title: "Content Append Fields",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -796,6 +862,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "contentFetchField",
+		group: "",
 		title: "Content Fetch Field",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -808,6 +875,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "customFields",
+		group: "",
 		title: "Custom Fields",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -820,6 +888,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "customFieldsOverrideMode",
+		group: "",
 		title: "Custom Fields Override Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -832,6 +901,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadAppToken",
+		group: "",
 		title: "Download App Token",
 		platforms: ["Feishu", "Lark"],
 		level: "Folder",
@@ -844,6 +914,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadBaseID",
+		group: "",
 		title: "Download Base ID",
 		platforms: ["Airtable"],
 		level: "Folder",
@@ -856,6 +927,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadBaseID",
+		group: "",
 		title: "Download Base ID",
 		platforms: ["Ding"],
 		level: "Folder",
@@ -867,6 +939,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadFileID",
+		group: "",
 		title: "Download File ID",
 		platforms: ["WPS"],
 		level: "Folder",
@@ -878,6 +951,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadSheetID",
+		group: "",
 		title: "Download Sheet ID",
 		platforms: ["Ding"],
 		level: "Folder",
@@ -889,6 +963,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadSheetID",
+		group: "",
 		title: "Download Sheet ID",
 		platforms: ["WPS"],
 		level: "Folder",
@@ -900,6 +975,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadTableID",
+		group: "",
 		title: "Download Table ID",
 		platforms: ["Airtable"],
 		level: "Folder",
@@ -912,6 +988,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadTableID",
+		group: "",
 		title: "Download Table ID",
 		platforms: ["Feishu", "Lark"],
 		level: "Folder",
@@ -924,6 +1001,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadTableID",
+		group: "",
 		title: "Download Table ID",
 		platforms: ["Vika"],
 		level: "Folder",
@@ -936,6 +1014,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "downloadViewID",
+		group: "",
 		title: "Download View ID",
 		platforms: ["Ding"],
 		level: "Folder",
@@ -947,6 +1026,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "enableDateFilterForBatchSync",
+		group: "",
 		title: "Enable Date Filter For Batch Sync",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -959,6 +1039,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "enableUpdateFromDB",
+		group: "",
 		title: "Enable Update From Db",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -971,6 +1052,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "enableUpdatePropertiesFromDowloadTable",
+		group: "",
 		title: "Enable Update Properties From Dowload Table",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -983,6 +1065,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractBlocks",
+		group: "",
 		title: "Extract Blocks",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -996,6 +1079,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractBlocksAsText",
+		group: "",
 		title: "Extract Blocks As Text",
 		platforms: ["Airtable"],
 		level: "Folder",
@@ -1008,6 +1092,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractBlocksAsText",
+		group: "",
 		title: "Extract Blocks As Text",
 		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1020,6 +1105,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractBlocksOverrideMode",
+		group: "",
 		title: "Extract Blocks Override Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1032,6 +1118,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractKeyPoints",
+		group: "",
 		title: "Extract Key Points",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1045,6 +1132,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractKeyPointsAsText",
+		group: "",
 		title: "Extract Key Points As Text",
 		platforms: ["Airtable"],
 		level: "Folder",
@@ -1057,6 +1145,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractKeyPointsAsText",
+		group: "",
 		title: "Extract Key Points As Text",
 		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1069,6 +1158,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractKeyPointsOverrideMode",
+		group: "",
 		title: "Extract Key Points Override Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1081,6 +1171,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractSections",
+		group: "",
 		title: "Extract Sections",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1093,6 +1184,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractSectionsAsText",
+		group: "",
 		title: "Extract Sections As Text",
 		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1105,6 +1197,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractSectionsAsText",
+		group: "",
 		title: "Extract Sections As Text",
 		platforms: ["Airtable"],
 		level: "Folder",
@@ -1117,6 +1210,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractSectionsOverrideMode",
+		group: "",
 		title: "Extract Sections Override Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1129,6 +1223,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractTagLines",
+		group: "",
 		title: "Extract Tag Lines",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1141,6 +1236,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractTagLinesAsText",
+		group: "",
 		title: "Extract Tag Lines As Text",
 		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1153,6 +1249,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractTagLinesAsText",
+		group: "",
 		title: "Extract Tag Lines As Text",
 		platforms: ["Airtable"],
 		level: "Folder",
@@ -1165,6 +1262,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "extractTagLinesOverrideMode",
+		group: "",
 		title: "Extract Tag Lines Override Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1177,6 +1275,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "fmFetchFields",
+		group: "",
 		title: "Fm Fetch Fields",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1189,6 +1288,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "fmFetchFieldsOverrideMode",
+		group: "",
 		title: "Fm Fetch Fields Override Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1201,6 +1301,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "includesTagsInContent",
+		group: "",
 		title: "Includes Tags In Content",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1213,6 +1314,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "justUpdateFromDB",
+		group: "",
 		title: "Just Update From Db",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1225,6 +1327,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "pullContentOnly",
+		group: "",
 		title: "Pull Content Only",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1237,6 +1340,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "sectionHeadingWholeMatch",
+		group: "",
 		title: "Section Heading Whole Match",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1249,6 +1353,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "separateMode",
+		group: "",
 		title: "Separate Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1261,6 +1366,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "showDeleteOption",
+		group: "",
 		title: "Show Delete Option",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1273,6 +1379,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "sortFrontMatterProperties",
+		group: "",
 		title: "Sort Front Matter Properties",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1285,6 +1392,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "syncContent",
+		group: "",
 		title: "Sync Content",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1297,6 +1405,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "syncFullContent",
+		group: "",
 		title: "Sync Full Content",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1309,6 +1418,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "syncMode",
+		group: "",
 		title: "Sync Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1321,6 +1431,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "syncOptions",
+		group: "",
 		title: "Sync Options",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1333,6 +1444,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "useTitleInDb",
+		group: "",
 		title: "Use Title In Db",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
