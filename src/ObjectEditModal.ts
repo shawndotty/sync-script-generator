@@ -8,6 +8,7 @@ import {
 	setIcon,
 } from "obsidian";
 import { ArrayEditModal } from "./ArrayEditModal";
+import { t } from "./lang/helpers";
 
 interface ObjectItem {
 	id: string;
@@ -56,7 +57,9 @@ export class ObjectEditModal extends Modal {
 		contentEl.empty();
 		contentEl.addClass("object-edit-modal");
 
-		contentEl.createEl("h2", { text: `Edit ${this.title}` });
+		contentEl.createEl("h2", {
+			text: t("OBJECT_EDIT_TITLE").replace("${title}", this.title),
+		});
 
 		const itemsContainer = contentEl.createDiv({
 			cls: "object-edit-items",
@@ -68,24 +71,26 @@ export class ObjectEditModal extends Modal {
 		// Footer Actions
 		const footer = contentEl.createDiv({ cls: "object-edit-footer" });
 
-		new ButtonComponent(footer).setButtonText("Add Entry").onClick(() => {
-			this.items.push({
-				id: Math.random().toString(36).substr(2, 9),
-				key: "",
-				value: "",
-				type: "string",
+		new ButtonComponent(footer)
+			.setButtonText(t("OBJECT_EDIT_BTN_ADD_ENTRY"))
+			.onClick(() => {
+				this.items.push({
+					id: Math.random().toString(36).substr(2, 9),
+					key: "",
+					value: "",
+					type: "string",
+				});
+				this.renderItems(itemsContainer);
 			});
-			this.renderItems(itemsContainer);
-		});
 
 		const actionButtons = footer.createDiv({ cls: "object-edit-actions" });
 
 		new ButtonComponent(actionButtons)
-			.setButtonText("Cancel")
+			.setButtonText(t("OBJECT_EDIT_BTN_CANCEL"))
 			.onClick(() => this.close());
 
 		new ButtonComponent(actionButtons)
-			.setButtonText("Save")
+			.setButtonText(t("OBJECT_EDIT_BTN_SAVE"))
 			.setCta()
 			.onClick(() => this.save());
 	}
@@ -96,7 +101,7 @@ export class ObjectEditModal extends Modal {
 		if (this.items.length === 0) {
 			container.createDiv({
 				cls: "object-edit-empty",
-				text: "No items. Click 'Add Entry' to start.",
+				text: t("OBJECT_EDIT_EMPTY_STATE"),
 			});
 			return;
 		}
@@ -112,7 +117,7 @@ export class ObjectEditModal extends Modal {
 			const keyInput = new TextComponent(row);
 			keyInput.inputEl.addClass("object-edit-key");
 			keyInput
-				.setPlaceholder("Key")
+				.setPlaceholder(t("OBJECT_EDIT_PLACEHOLDER_KEY"))
 				.setValue(item.key)
 				.onChange((val) => {
 					item.key = val;
@@ -123,10 +128,10 @@ export class ObjectEditModal extends Modal {
 			const typeDropdown = new DropdownComponent(row);
 			typeDropdown
 				.addOptions({
-					string: "String",
-					number: "Number",
-					boolean: "Boolean",
-					array: "Array",
+					string: t("OBJECT_EDIT_TYPE_STRING"),
+					number: t("OBJECT_EDIT_TYPE_NUMBER"),
+					boolean: t("OBJECT_EDIT_TYPE_BOOLEAN"),
+					array: t("OBJECT_EDIT_TYPE_ARRAY"),
 				})
 				.setValue(item.type)
 				.onChange((val) => {

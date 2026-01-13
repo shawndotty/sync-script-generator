@@ -1,4 +1,5 @@
 import { App, Modal, ButtonComponent } from "obsidian";
+import { t } from "./lang/helpers";
 
 interface ArrayItem {
 	id: string;
@@ -42,7 +43,9 @@ export class ArrayEditModal extends Modal {
 		contentEl.empty();
 		contentEl.addClass("array-edit-modal");
 
-		contentEl.createEl("h2", { text: `Edit ${this.title}` });
+		contentEl.createEl("h2", {
+			text: t("ARRAY_EDIT_TITLE").replace("${title}", this.title),
+		});
 
 		const itemsContainer = contentEl.createDiv({ cls: "array-edit-items" });
 
@@ -52,22 +55,24 @@ export class ArrayEditModal extends Modal {
 		// Footer Actions
 		const footer = contentEl.createDiv({ cls: "array-edit-footer" });
 
-		new ButtonComponent(footer).setButtonText("Add Item").onClick(() => {
-			this.items.push({
-				id: Math.random().toString(36).substr(2, 9),
-				value: "",
+		new ButtonComponent(footer)
+			.setButtonText(t("ARRAY_EDIT_BTN_ADD_ITEM"))
+			.onClick(() => {
+				this.items.push({
+					id: Math.random().toString(36).substr(2, 9),
+					value: "",
+				});
+				this.renderItems(itemsContainer);
 			});
-			this.renderItems(itemsContainer);
-		});
 
 		const actionButtons = footer.createDiv({ cls: "array-edit-actions" });
 
 		new ButtonComponent(actionButtons)
-			.setButtonText("Cancel")
+			.setButtonText(t("ARRAY_EDIT_BTN_CANCEL"))
 			.onClick(() => this.close());
 
 		new ButtonComponent(actionButtons)
-			.setButtonText("Save")
+			.setButtonText(t("ARRAY_EDIT_BTN_SAVE"))
 			.setCta()
 			.onClick(() => this.save());
 	}
@@ -89,7 +94,7 @@ export class ArrayEditModal extends Modal {
 			// Value Input
 			const valInput = row.createEl("input", {
 				type: "text",
-				placeholder: "Value",
+				placeholder: t("ARRAY_EDIT_PLACEHOLDER_VALUE"),
 				cls: "array-edit-value",
 			});
 			valInput.value = item.value;
@@ -100,7 +105,7 @@ export class ArrayEditModal extends Modal {
 			// Delete Button
 			const delBtn = new ButtonComponent(row)
 				.setIcon("trash")
-				.setTooltip("Delete");
+				.setTooltip(t("ARRAY_EDIT_TOOLTIP_DELETE"));
 			delBtn.buttonEl.classList.add("clickable-icon", "danger-icon");
 			delBtn.onClick(() => {
 				this.items.splice(index, 1);

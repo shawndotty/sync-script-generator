@@ -4,6 +4,7 @@ import { EditorState } from "@codemirror/state";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { defaultKeymap } from "@codemirror/commands";
+import { t } from "./lang/helpers";
 
 export class ScriptPreviewModal extends Modal {
 	private script: string;
@@ -24,7 +25,7 @@ export class ScriptPreviewModal extends Modal {
 
 	onOpen() {
 		this.modalEl.addClass("mod-script-preview");
-		this.contentEl.createEl("h2", { text: "Generated Script" });
+		this.contentEl.createEl("h2", { text: t("SCRIPT_PREVIEW_TITLE") });
 
 		const editorContainer = this.contentEl.createDiv({
 			cls: "script-editor-container",
@@ -47,27 +48,32 @@ export class ScriptPreviewModal extends Modal {
 
 		new Setting(this.contentEl)
 			.addButton((btn) => {
-				btn.setButtonText("Maximize").onClick(() => {
-					if (this.modalEl.hasClass("is-maximized")) {
-						this.modalEl.removeClass("is-maximized");
-						btn.setButtonText("Maximize");
-					} else {
-						this.modalEl.addClass("is-maximized");
-						btn.setButtonText("Restore");
+				btn.setButtonText(t("SCRIPT_PREVIEW_BTN_MAXIMIZE")).onClick(
+					() => {
+						if (this.modalEl.hasClass("is-maximized")) {
+							this.modalEl.removeClass("is-maximized");
+							btn.setButtonText(t("SCRIPT_PREVIEW_BTN_MAXIMIZE"));
+						} else {
+							this.modalEl.addClass("is-maximized");
+							btn.setButtonText(t("SCRIPT_PREVIEW_BTN_RESTORE"));
+						}
 					}
-				});
+				);
 			})
 			.addButton((btn) => {
-				btn.setButtonText("Copy to Clipboard").onClick(() => {
+				btn.setButtonText(t("SCRIPT_PREVIEW_BTN_COPY")).onClick(() => {
 					const content = view.state.doc.toString();
 					navigator.clipboard.writeText(content);
-					new Notice("Copied to clipboard");
+					new Notice(t("SCRIPT_PREVIEW_NOTICE_COPIED"));
 				});
 			})
 			.addButton((btn) => {
 				const label = this.importedFile
-					? `Update ${this.importedFile.basename}`
-					: "Save as File";
+					? t("SCRIPT_PREVIEW_BTN_UPDATE").replace(
+							"${file}",
+							this.importedFile.basename
+					  )
+					: t("SCRIPT_PREVIEW_BTN_SAVE_AS");
 				btn.setButtonText(label)
 					.setCta()
 					.onClick(async () => {
@@ -77,13 +83,23 @@ export class ScriptPreviewModal extends Modal {
 								this.importedFile,
 								content
 							);
-							new Notice(`Updated ${this.importedFile.path}`);
+							new Notice(
+								t("SCRIPT_PREVIEW_NOTICE_UPDATED").replace(
+									"${path}",
+									this.importedFile.path
+								)
+							);
 						} else {
 							const fileName = `SyncScript-${
 								this.platform
 							}-${Date.now()}.md`;
 							await this.app.vault.create(fileName, content);
-							new Notice(`Saved to vault as ${fileName}`);
+							new Notice(
+								t("SCRIPT_PREVIEW_NOTICE_SAVED").replace(
+									"${file}",
+									fileName
+								)
+							);
 						}
 						this.close();
 					});

@@ -689,4 +689,39 @@ export default {
 		"Template file not found: ${path}",
 	FETCH_GENERATOR_VIEW_NOTICE_LOAD_FAILED:
 		"Failed to load default template: ${error}",
+
+	// Object Edit Modal
+	OBJECT_EDIT_TITLE: "Edit ${title}",
+	OBJECT_EDIT_BTN_ADD_ENTRY: "Add Entry",
+	OBJECT_EDIT_BTN_CANCEL: "Cancel",
+	OBJECT_EDIT_BTN_SAVE: "Save",
+	OBJECT_EDIT_EMPTY_STATE: "No items. Click 'Add Entry' to start.",
+	OBJECT_EDIT_PLACEHOLDER_KEY: "Key",
+	OBJECT_EDIT_TYPE_STRING: "String",
+	OBJECT_EDIT_TYPE_NUMBER: "Number",
+	OBJECT_EDIT_TYPE_BOOLEAN: "Boolean",
+	OBJECT_EDIT_TYPE_ARRAY: "Array",
+	OBJECT_EDIT_TOOLTIP_OPEN_ARRAY_EDITOR: "Open Array Editor",
+	OBJECT_EDIT_PLACEHOLDER_VALUE: "Value",
+	OBJECT_EDIT_TOOLTIP_DELETE: "Delete",
+
+	// Array Edit Modal
+	ARRAY_EDIT_TITLE: "Edit ${title}",
+	ARRAY_EDIT_BTN_ADD_ITEM: "Add Item",
+	ARRAY_EDIT_BTN_CANCEL: "Cancel",
+	ARRAY_EDIT_BTN_SAVE: "Save",
+	ARRAY_EDIT_EMPTY_STATE: "No items. Click 'Add Item' to start.",
+	ARRAY_EDIT_PLACEHOLDER_VALUE: "Value",
+	ARRAY_EDIT_TOOLTIP_DELETE: "Delete",
+
+	// Script Preview Modal
+	SCRIPT_PREVIEW_TITLE: "Generated Script",
+	SCRIPT_PREVIEW_BTN_MAXIMIZE: "Maximize",
+	SCRIPT_PREVIEW_BTN_RESTORE: "Restore",
+	SCRIPT_PREVIEW_BTN_COPY: "Copy to Clipboard",
+	SCRIPT_PREVIEW_NOTICE_COPIED: "Copied to clipboard",
+	SCRIPT_PREVIEW_BTN_UPDATE: "Update ${file}",
+	SCRIPT_PREVIEW_BTN_SAVE_AS: "Save as File",
+	SCRIPT_PREVIEW_NOTICE_UPDATED: "Updated ${path}",
+	SCRIPT_PREVIEW_NOTICE_SAVED: "Saved to vault as ${file}",
 };
