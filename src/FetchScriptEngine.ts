@@ -99,24 +99,20 @@ export class FetchScriptEngine {
 						: platform === "WPS"
 						? "wpsAppSecretForFetch"
 						: "dingAppSecretForFetch",
-				appKey:
-					platform === "WPS" ? "wpsAppSecretForFetch" : "",
-				accessToken:
-					platform === "WPS" ? "wpsUserTokenForFetch" : "",
+				appKey: platform === "WPS" ? "wpsAppSecretForFetch" : "",
+				accessToken: platform === "WPS" ? "wpsUserTokenForFetch" : "",
 				defaultAppToken:
 					platform === "Feishu"
 						? "feishuBaseIDForFetch"
 						: "larkBaseIDForFetch",
-				defaultFileID:
-					platform === "WPS" ? "wpsBaseIDForFetch" : "",
+				defaultFileID: platform === "WPS" ? "wpsBaseIDForFetch" : "",
 				defaultSheetID:
 					platform === "WPS"
 						? "wpsTableIDForFetch"
 						: platform === "Ding"
 						? "dingTableIDForFetch"
 						: "",
-				defaultViewID:
-					platform === "Ding" ? "dingViewIDForFetch" : "",
+				defaultViewID: platform === "Ding" ? "dingViewIDForFetch" : "",
 				userID: platform === "Ding" ? "dingUserIDForFetch" : "",
 			};
 			const mappedVar = varMapping[opt.name];
@@ -167,12 +163,13 @@ export class FetchScriptEngine {
 
 		script += "};\n\n";
 
-		const methodName = "ObFetch" + platform;
+		const methodName = "ObSync" + platform;
 		script +=
 			"await tp.user." +
 			methodName +
 			"(tp, this.app, " +
 			varName +
+			"{fetchOnly: true}" +
 			");\n";
 
 		// 格式化缩进：保留原有缩进结构，整体向右缩进 4 格
@@ -206,8 +203,7 @@ export class FetchScriptEngine {
 			}
 		}
 
-		if (!platform)
-			return { platform, rootSettings, folderSettings };
+		if (!platform) return { platform, rootSettings, folderSettings };
 
 		// 2. Extract Main Config Object
 		const varName = platform.toLowerCase();
@@ -278,8 +274,6 @@ export class FetchScriptEngine {
 				}
 			}
 		}
-
-		console.dir({ platform, rootSettings, folderSettings });
 
 		return { platform, rootSettings, folderSettings };
 	}
