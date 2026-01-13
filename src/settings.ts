@@ -2,6 +2,7 @@ import { App, PluginSettingTab, Setting, TFile } from "obsidian";
 import MyPlugin from "./main";
 import { ConfigPreset, FetchConfigPreset, Platform } from "./types";
 import { ImportModal } from "./ImportModal";
+import { t } from "./lang/helpers";
 
 export interface SyncScriptGeneratorSettings {
 	mySetting: string;
@@ -116,8 +117,8 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 
 		// Sync Platform Setting
 		new Setting(containerEl)
-			.setName("同步平台")
-			.setDesc("选择同步平台")
+			.setName(t("SETTINGS_SYNC_PLATFORM_NAME"))
+			.setDesc(t("SETTINGS_SYNC_PLATFORM_DESC"))
 			.addDropdown((dropdown) => {
 				dropdown
 					.addOption("IOTO", "IOTO")
@@ -129,10 +130,12 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 					});
 			});
 
-		containerEl.createEl("h2", { text: "Default Sync Templates" });
+		containerEl.createEl("h2", {
+			text: t("SETTINGS_DEFAULT_SYNC_TEMPLATES_TITLE"),
+		});
 
 		containerEl.createEl("p", {
-			text: "Set default template files for each platform. These templates will be used when importing configurations.",
+			text: t("SETTINGS_DEFAULT_SYNC_TEMPLATES_DESC"),
 			cls: "setting-item-description",
 		});
 
@@ -149,10 +152,15 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			const currentValue = this.getTemplatePath(platform);
 
 			new Setting(containerEl)
-				.setName(`${platform} Default Template`)
-				.setDesc(`Default template file path for ${platform} platform`)
+				.setName(
+					t("SETTINGS_DEFAULT_TEMPLATE_NAME").replace("${platform}", platform)
+				)
+				.setDesc(
+					t("SETTINGS_DEFAULT_TEMPLATE_DESC").replace("${platform}", platform)
+				)
 				.addText((text) => {
-					text.setPlaceholder("No template selected")
+					text
+						.setPlaceholder(t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER"))
 						.setValue(currentValue)
 						.onChange(async (value) => {
 							this.setTemplatePath(platform, value);
@@ -162,7 +170,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				})
 				.addButton((button) => {
 					button
-						.setButtonText("Browse")
+						.setButtonText(t("SETTINGS_BTN_BROWSE"))
 						.setIcon("folder")
 						.onClick(() => {
 							new ImportModal(this.app, async (file: TFile) => {
@@ -175,7 +183,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				.addExtraButton((button) => {
 					button
 						.setIcon("cross")
-						.setTooltip("Clear")
+						.setTooltip(t("SETTINGS_TOOLTIP_CLEAR"))
 						.onClick(async () => {
 							this.setTemplatePath(platform, "");
 							await this.plugin.saveSettings();
@@ -184,10 +192,12 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				});
 		});
 
-		containerEl.createEl("h2", { text: "Default Fetch Templates" });
+		containerEl.createEl("h2", {
+			text: t("SETTINGS_DEFAULT_FETCH_TEMPLATES_TITLE"),
+		});
 
 		containerEl.createEl("p", {
-			text: "Set default fetch template files for each platform. These templates will be used when importing fetch configurations.",
+			text: t("SETTINGS_DEFAULT_FETCH_TEMPLATES_DESC"),
 			cls: "setting-item-description",
 		});
 
@@ -195,12 +205,21 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			const currentValue = this.getFetchTemplatePath(platform);
 
 			new Setting(containerEl)
-				.setName(`${platform} Default Fetch Template`)
+				.setName(
+					t("SETTINGS_DEFAULT_FETCH_TEMPLATE_NAME").replace(
+						"${platform}",
+						platform
+					)
+				)
 				.setDesc(
-					`Default fetch template file path for ${platform} platform`
+					t("SETTINGS_DEFAULT_FETCH_TEMPLATE_DESC").replace(
+						"${platform}",
+						platform
+					)
 				)
 				.addText((text) => {
-					text.setPlaceholder("No template selected")
+					text
+						.setPlaceholder(t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER"))
 						.setValue(currentValue)
 						.onChange(async (value) => {
 							this.setFetchTemplatePath(platform, value);
@@ -210,7 +229,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				})
 				.addButton((button) => {
 					button
-						.setButtonText("Browse")
+						.setButtonText(t("SETTINGS_BTN_BROWSE"))
 						.setIcon("folder")
 						.onClick(() => {
 							new ImportModal(this.app, async (file: TFile) => {
@@ -223,7 +242,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				.addExtraButton((button) => {
 					button
 						.setIcon("cross")
-						.setTooltip("Clear")
+						.setTooltip(t("SETTINGS_TOOLTIP_CLEAR"))
 						.onClick(async () => {
 							this.setFetchTemplatePath(platform, "");
 							await this.plugin.saveSettings();

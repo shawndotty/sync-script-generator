@@ -7,6 +7,7 @@ import {
 	DropdownComponent,
 } from "obsidian";
 import { ConfigPreset, Platform, SyncScriptSettings } from "./types";
+import { t } from "./lang/helpers";
 
 export class PresetManagerModal extends Modal {
 	private presets: ConfigPreset[];
@@ -39,7 +40,7 @@ export class PresetManagerModal extends Modal {
 		contentEl.empty();
 		contentEl.addClass("preset-manager-modal");
 
-		contentEl.createEl("h2", { text: "Configuration Presets" });
+		contentEl.createEl("h2", { text: t("PRESET_MANAGER_TITLE") });
 
 		// Tabs Container
 		const tabsContainer = contentEl.createDiv({
@@ -49,7 +50,10 @@ export class PresetManagerModal extends Modal {
 
 		tabs.forEach((tab) => {
 			const tabBtn = tabsContainer.createEl("button", {
-				text: tab === "Save" ? "Save Preset" : "Load Preset",
+				text:
+					tab === "Save"
+						? t("PRESET_MANAGER_TAB_SAVE")
+						: t("PRESET_MANAGER_TAB_LOAD"),
 				cls: "settings-tab-btn",
 			});
 			if (this.activeTab === tab) tabBtn.addClass("is-active");
@@ -69,6 +73,12 @@ export class PresetManagerModal extends Modal {
 		// Initial render
 		this.renderTabs(tabsContainer);
 		this.renderTabContent();
+
+		// Footer
+		const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
+		new ButtonComponent(footer)
+			.setButtonText(t("PRESET_MANAGER_BTN_CLOSE"))
+			.onClick(() => this.close());
 	}
 
 	private renderTabs(tabsContainer: HTMLElement) {

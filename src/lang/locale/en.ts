@@ -724,4 +724,69 @@ export default {
 	SCRIPT_PREVIEW_BTN_SAVE_AS: "Save as File",
 	SCRIPT_PREVIEW_NOTICE_UPDATED: "Updated ${path}",
 	SCRIPT_PREVIEW_NOTICE_SAVED: "Saved to vault as ${file}",
+
+	// Preset Manager Modal
+	PRESET_MANAGER_TITLE: "Configuration Presets",
+	PRESET_MANAGER_TAB_SAVE: "Save Preset",
+	PRESET_MANAGER_TAB_LOAD: "Load Preset",
+	PRESET_MANAGER_SAVE_TITLE: "Save Current Configuration",
+	PRESET_MANAGER_SAVE_PLACEHOLDER:
+		"Preset name (e.g., 'Airtable Production')",
+	PRESET_MANAGER_SAVE_BTN: "Save Preset",
+	PRESET_MANAGER_NOTICE_ENTER_NAME: "Please enter a preset name",
+	PRESET_MANAGER_NOTICE_DUPLICATE:
+		"A preset with this name already exists. Please use a different name.",
+	PRESET_MANAGER_NOTICE_SAVED: 'Preset "${name}" saved successfully',
+	PRESET_MANAGER_LOAD_TITLE: "Load Preset",
+	PRESET_MANAGER_LOAD_EMPTY:
+		"No presets saved yet. Save a configuration to create your first preset.",
+	PRESET_MANAGER_BTN_LOAD: "Load",
+	PRESET_MANAGER_BTN_DELETE: "Delete",
+	PRESET_MANAGER_CONFIRM_DELETE:
+		'Are you sure you want to delete preset "${name}"?',
+	PRESET_MANAGER_NOTICE_LOADED: 'Loaded preset "${name}"',
+	PRESET_MANAGER_NOTICE_DELETED: 'Deleted preset "${name}"',
+	PRESET_MANAGER_BTN_CLOSE: "Close",
+
+	// Fetch Preset Manager Modal
+	FETCH_PRESET_MANAGER_TITLE: "Fetch Configuration Presets",
+	FETCH_PRESET_MANAGER_TAB_SAVE: "Save Preset",
+	FETCH_PRESET_MANAGER_TAB_LOAD: "Load Preset",
+	FETCH_PRESET_MANAGER_SAVE_TITLE: "Save Current Configuration",
+	FETCH_PRESET_MANAGER_SAVE_PLACEHOLDER:
+		"Preset name (e.g., 'Airtable Fetch Production')",
+	FETCH_PRESET_MANAGER_SAVE_BTN: "Save Preset",
+	FETCH_PRESET_MANAGER_NOTICE_ENTER_NAME: "Please enter a preset name",
+	FETCH_PRESET_MANAGER_NOTICE_DUPLICATE:
+		"A preset with this name already exists. Please use a different name.",
+	FETCH_PRESET_MANAGER_NOTICE_SAVED: 'Preset "${name}" saved successfully',
+	FETCH_PRESET_MANAGER_LOAD_TITLE: "Load Preset",
+	FETCH_PRESET_MANAGER_LOAD_EMPTY:
+		"No presets saved yet. Save a configuration to create your first preset.",
+	FETCH_PRESET_MANAGER_BTN_LOAD: "Load",
+	FETCH_PRESET_MANAGER_BTN_DELETE: "Delete",
+	FETCH_PRESET_MANAGER_CONFIRM_DELETE:
+		'Are you sure you want to delete preset "${name}"?',
+	FETCH_PRESET_MANAGER_NOTICE_LOADED: 'Loaded preset "${name}"',
+	FETCH_PRESET_MANAGER_NOTICE_DELETED: 'Deleted preset "${name}"',
+	FETCH_PRESET_MANAGER_BTN_CLOSE: "Close",
+
+	// Settings
+	SETTINGS_SYNC_PLATFORM_NAME: "Sync Platform",
+	SETTINGS_SYNC_PLATFORM_DESC: "Select Sync Platform",
+	SETTINGS_DEFAULT_SYNC_TEMPLATES_TITLE: "Default Sync Templates",
+	SETTINGS_DEFAULT_SYNC_TEMPLATES_DESC:
+		"Set default template files for each platform. These templates will be used when importing configurations.",
+	SETTINGS_DEFAULT_TEMPLATE_NAME: "${platform} Default Template",
+	SETTINGS_DEFAULT_TEMPLATE_DESC:
+		"Default template file path for ${platform} platform",
+	SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER: "No template selected",
+	SETTINGS_BTN_BROWSE: "Browse",
+	SETTINGS_TOOLTIP_CLEAR: "Clear",
+	SETTINGS_DEFAULT_FETCH_TEMPLATES_TITLE: "Default Fetch Templates",
+	SETTINGS_DEFAULT_FETCH_TEMPLATES_DESC:
+		"Set default fetch template files for each platform. These templates will be used when importing fetch configurations.",
+	SETTINGS_DEFAULT_FETCH_TEMPLATE_NAME: "${platform} Default Fetch Template",
+	SETTINGS_DEFAULT_FETCH_TEMPLATE_DESC:
+		"Default fetch template file path for ${platform} platform",
 };
