@@ -107,7 +107,7 @@ export class PresetManagerModal extends Modal {
 		const saveSection = this.tabContentContainer.createDiv({
 			cls: "preset-save-section",
 		});
-		saveSection.createEl("h3", { text: "Save Current Configuration" });
+		saveSection.createEl("h3", { text: t("PRESET_MANAGER_SAVE_TITLE") });
 
 		const saveContainer = saveSection.createDiv({
 			cls: "preset-save-form",
@@ -115,7 +115,7 @@ export class PresetManagerModal extends Modal {
 		const nameInput = new TextComponent(saveContainer);
 		nameInput.inputEl.style.width = "100%";
 		nameInput.inputEl.style.marginBottom = "10px";
-		nameInput.setPlaceholder("Preset name (e.g., 'Airtable Production')");
+		nameInput.setPlaceholder(t("PRESET_MANAGER_SAVE_PLACEHOLDER"));
 
 		const platformDropdown = new DropdownComponent(saveContainer);
 		platformDropdown.selectEl.style.width = "100%";
@@ -134,19 +134,17 @@ export class PresetManagerModal extends Modal {
 		platformDropdown.setValue(this.currentSettings.platform);
 
 		const saveButton = new ButtonComponent(saveContainer);
-		saveButton.setButtonText("Save Preset").setCta();
+		saveButton.setButtonText(t("PRESET_MANAGER_SAVE_BTN")).setCta();
 		saveButton.onClick(() => {
 			const name = nameInput.getValue().trim();
 			if (!name) {
-				new Notice("Please enter a preset name");
+				new Notice(t("PRESET_MANAGER_NOTICE_ENTER_NAME"));
 				return;
 			}
 
 			// Check for duplicate name
 			if (this.presets.some((p) => p.name === name)) {
-				new Notice(
-					"A preset with this name already exists. Please use a different name."
-				);
+				new Notice(t("PRESET_MANAGER_NOTICE_DUPLICATE"));
 				return;
 			}
 
@@ -164,7 +162,9 @@ export class PresetManagerModal extends Modal {
 			};
 
 			this.onSavePreset(preset);
-			new Notice(`Preset "${name}" saved successfully`);
+			new Notice(
+				t("PRESET_MANAGER_NOTICE_SAVED").replace("${name}", name)
+			);
 			this.close();
 		});
 	}
@@ -173,11 +173,11 @@ export class PresetManagerModal extends Modal {
 		const loadSection = this.tabContentContainer.createDiv({
 			cls: "preset-load-section",
 		});
-		loadSection.createEl("h3", { text: "Load Preset" });
+		loadSection.createEl("h3", { text: t("PRESET_MANAGER_LOAD_TITLE") });
 
 		if (this.presets.length === 0) {
 			loadSection.createEl("p", {
-				text: "No presets saved yet. Save a configuration to create your first preset.",
+				text: t("PRESET_MANAGER_LOAD_EMPTY"),
 				cls: "preset-empty-message",
 			});
 		} else {
@@ -229,23 +229,40 @@ export class PresetManagerModal extends Modal {
 					});
 
 					const loadBtn = new ButtonComponent(presetActions);
-					loadBtn.setButtonText("Load").setCta();
+					loadBtn
+						.setButtonText(t("PRESET_MANAGER_BTN_LOAD"))
+						.setCta();
 					loadBtn.onClick(() => {
 						this.onLoadPreset(preset);
-						new Notice(`Loaded preset "${preset.name}"`);
+						new Notice(
+							t("PRESET_MANAGER_NOTICE_LOADED").replace(
+								"${name}",
+								preset.name
+							)
+						);
 						this.close();
 					});
 
 					const deleteBtn = new ButtonComponent(presetActions);
-					deleteBtn.setButtonText("Delete").setWarning();
+					deleteBtn
+						.setButtonText(t("PRESET_MANAGER_BTN_DELETE"))
+						.setWarning();
 					deleteBtn.onClick(() => {
 						if (
 							confirm(
-								`Are you sure you want to delete preset "${preset.name}"?`
+								t("PRESET_MANAGER_CONFIRM_DELETE").replace(
+									"${name}",
+									preset.name
+								)
 							)
 						) {
 							this.onDeletePreset(preset.id);
-							new Notice(`Deleted preset "${preset.name}"`);
+							new Notice(
+								t("PRESET_MANAGER_NOTICE_DELETED").replace(
+									"${name}",
+									preset.name
+								)
+							);
 							this.close();
 						}
 					});
