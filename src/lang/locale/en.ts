@@ -789,4 +789,10 @@ export default {
 	SETTINGS_DEFAULT_FETCH_TEMPLATE_NAME: "${platform} Default Fetch Template",
 	SETTINGS_DEFAULT_FETCH_TEMPLATE_DESC:
 		"Default fetch template file path for ${platform} platform",
+
+	// Main
+	MAIN_RIBBON_SYNC: "Sync Script Generator",
+	MAIN_RIBBON_FETCH: "Fetch Script Generator",
+	MAIN_CMD_OPEN_SYNC: "Open Sync Script Generator",
+	MAIN_CMD_OPEN_FETCH: "Open Fetch Script Generator",
 };

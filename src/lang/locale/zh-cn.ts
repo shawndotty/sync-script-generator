@@ -778,4 +778,10 @@ export default {
 	SETTINGS_DEFAULT_FETCH_TEMPLATE_NAME: "${platform} 默认 Fetch 模板",
 	SETTINGS_DEFAULT_FETCH_TEMPLATE_DESC:
 		"${platform} 平台的默认 Fetch 模板文件路径",
+
+	// Main
+	MAIN_RIBBON_SYNC: "同步脚本生成器",
+	MAIN_RIBBON_FETCH: "Fetch 脚本生成器",
+	MAIN_CMD_OPEN_SYNC: "打开同步脚本生成器",
+	MAIN_CMD_OPEN_FETCH: "打开 Fetch 脚本生成器",
 };

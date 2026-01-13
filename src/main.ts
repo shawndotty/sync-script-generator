@@ -16,6 +16,7 @@ import { GeneratorView } from "./GeneratorView";
 import { GENERATOR_VIEW_TYPE } from "./constants";
 import { FetchGeneratorView } from "./FetchGeneratorView";
 import { FETCH_SCRIPT_GENERATOR_VIEW_TYPE } from "./constantsFetch";
+import { t } from "./lang/helpers";
 
 export default class SyncScriptGeneratorPlugin extends Plugin {
 	settings: SyncScriptGeneratorSettings;
@@ -36,7 +37,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 		// This creates an icon in the left ribbon.
 		this.addRibbonIcon(
 			"arrow-down-up",
-			"Sync Script Generator",
+			t("MAIN_RIBBON_SYNC"),
 			(evt: MouseEvent) => {
 				this.activateView();
 			}
@@ -45,7 +46,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 		// This creates an icon in the left ribbon for Fetch Generator.
 		this.addRibbonIcon(
 			"arrow-down-to-line",
-			"Fetch Script Generator",
+			t("MAIN_RIBBON_FETCH"),
 			(evt: MouseEvent) => {
 				this.activateFetchView();
 			}
@@ -54,7 +55,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 		// This adds a simple command that can be triggered anywhere
 		this.addCommand({
 			id: "open-sync-script-generator",
-			name: "Open Sync Script Generator",
+			name: t("MAIN_CMD_OPEN_SYNC"),
 			callback: () => {
 				this.activateView();
 			},
@@ -63,7 +64,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 		// This adds a command for Fetch Script Generator
 		this.addCommand({
 			id: "open-fetch-script-generator",
-			name: "Open Fetch Script Generator",
+			name: t("MAIN_CMD_OPEN_FETCH"),
 			callback: () => {
 				this.activateFetchView();
 			},
