@@ -23,6 +23,7 @@ import { FetchScriptEngine } from "./FetchScriptEngine";
 import { FolderPickerModal } from "./ui/pickers/folder-picker";
 import { FetchPresetManagerModal } from "./FetchPresetManagerModal";
 import MyPlugin from "./main";
+import { t } from "./lang/helpers";
 
 export class FetchGeneratorView extends ItemView {
 	platform: Platform = "Airtable";
@@ -47,7 +48,7 @@ export class FetchGeneratorView extends ItemView {
 	}
 
 	getDisplayText() {
-		return "Fetch Script Generator";
+		return t("FETCH_GENERATOR_VIEW_TITLE");
 	}
 
 	getIcon() {
@@ -76,7 +77,9 @@ export class FetchGeneratorView extends ItemView {
 	}
 
 	renderPlatformList(container: HTMLElement) {
-		container.createEl("h3", { text: "Platforms" });
+		container.createEl("h3", {
+			text: t("FETCH_GENERATOR_VIEW_PLATFORMS_TITLE"),
+		});
 		const list = container.createEl("ul", { cls: "platform-list" });
 		const platforms: Platform[] = [
 			"Airtable",
@@ -112,31 +115,33 @@ export class FetchGeneratorView extends ItemView {
 	renderMiddleColumn() {
 		this.middleContainer.empty();
 		this.middleContainer.createEl("h2", {
-			text: `${this.platform} Fetch Settings`,
+			text: `${this.platform} ${t(
+				"FETCH_GENERATOR_VIEW_SETTINGS_TITLE_SUFFIX"
+			)}`,
 		});
 
 		// Action Bar
 		const actionBar = this.middleContainer.createDiv({ cls: "action-bar" });
 		new ButtonComponent(actionBar)
-			.setButtonText("Import Template")
+			.setButtonText(t("FETCH_GENERATOR_VIEW_BTN_IMPORT_TEMPLATE"))
 			.onClick(() => this.openImportModal());
 
 		// Load Default Template button (only show if default template is set)
 		const defaultTemplatePath = this.getDefaultTemplatePath();
 		if (defaultTemplatePath) {
 			new ButtonComponent(actionBar)
-				.setButtonText("Load Default Template")
+				.setButtonText(t("FETCH_GENERATOR_VIEW_BTN_LOAD_DEFAULT"))
 				.setIcon("file-down")
 				.onClick(() => this.loadDefaultTemplate());
 		}
 
 		new ButtonComponent(actionBar)
-			.setButtonText("Presets")
+			.setButtonText(t("FETCH_GENERATOR_VIEW_BTN_PRESETS"))
 			.setIcon("bookmark")
 			.onClick(() => this.openPresetManager());
 
 		new ButtonComponent(actionBar)
-			.setButtonText("Generate Script")
+			.setButtonText(t("FETCH_GENERATOR_VIEW_BTN_GENERATE"))
 			.setCta()
 			.onClick(() => this.generateScript());
 
@@ -147,8 +152,14 @@ export class FetchGeneratorView extends ItemView {
 		const tabs: ("Root" | "Folder")[] = ["Root", "Folder"];
 
 		tabs.forEach((tab) => {
+			const tabKey =
+				tab === "Root"
+					? "FETCH_GENERATOR_VIEW_TAB_ROOT"
+					: "FETCH_GENERATOR_VIEW_TAB_FOLDER";
 			const tabBtn = tabsContainer.createEl("button", {
-				text: `${tab} Settings`,
+				text: `${t(tabKey)} ${t(
+					"FETCH_GENERATOR_VIEW_SETTINGS_SUFFIX"
+				)}`,
 				cls: "settings-tab-btn",
 			});
 			if (this.activeTab === tab) tabBtn.addClass("is-active");
@@ -182,7 +193,7 @@ export class FetchGeneratorView extends ItemView {
 
 		if (this.activeTab === "Folder") {
 			const addButton = formContainer.createEl("button", {
-				text: "Add Folder Setting",
+				text: t("FETCH_GENERATOR_VIEW_BTN_ADD_FOLDER"),
 				cls: "mod-cta",
 			});
 			addButton.style.marginBottom = "20px";
@@ -209,7 +220,9 @@ export class FetchGeneratorView extends ItemView {
 
 				titleContainer.createEl("span", {
 					text:
-						`Folder ${index + 1}` +
+						`${t("FETCH_GENERATOR_VIEW_FOLDER_HEADER_PREFIX")} ${
+							index + 1
+						}` +
 						(folder.folderName ? `: ${folder.folderName}` : ""),
 				});
 
@@ -219,7 +232,9 @@ export class FetchGeneratorView extends ItemView {
 					this.renderMiddleColumn();
 				};
 
-				const removeBtn = header.createEl("button", { text: "Remove" });
+				const removeBtn = header.createEl("button", {
+					text: t("FETCH_GENERATOR_VIEW_BTN_REMOVE"),
+				});
 				removeBtn.onclick = (e) => {
 					e.stopPropagation();
 					this.folderSettings.splice(index, 1);
@@ -231,17 +246,22 @@ export class FetchGeneratorView extends ItemView {
 				});
 
 				const folderPathSetting = new Setting(contentDiv)
-					.setName("Target Folder")
+					.setName(t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_NAME"))
 					.addText((text) => {
-						text.setPlaceholder("Target Folder Path")
+						text.setPlaceholder(
+							t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_PLACEHOLDER")
+						)
 							.setValue(folder.folderName)
 							.onChange((val) => (folder.folderName = val));
 						this.addFocusListener(text.inputEl, {
 							name: "targetFolder",
-							title: "Target Folder",
-							description:
-								"The path to the folder you want to fetch datas to.",
-							example: "Example: MyVault/Projects/Active",
+							title: t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_NAME"),
+							description: t(
+								"FETCH_GENERATOR_VIEW_TARGET_FOLDER_DESC"
+							),
+							example: t(
+								"FETCH_GENERATOR_VIEW_TARGET_FOLDER_EXAMPLE"
+							),
 							platforms: [this.platform],
 							level: "Folder",
 							required: true,
@@ -251,7 +271,7 @@ export class FetchGeneratorView extends ItemView {
 					})
 					.addButton((button) => {
 						button
-							.setButtonText("Browse")
+							.setButtonText(t("FETCH_GENERATOR_VIEW_BTN_BROWSE"))
 							.setIcon("folder")
 							.onClick(() => {
 								new FolderPickerModal(
@@ -315,7 +335,9 @@ export class FetchGeneratorView extends ItemView {
 
 	renderRightColumn() {
 		this.rightContainer.empty();
-		this.rightContainer.createEl("h3", { text: "Description" });
+		this.rightContainer.createEl("h3", {
+			text: t("FETCH_GENERATOR_VIEW_DESC_TITLE"),
+		});
 
 		if (this.activeOption) {
 			const wrapper = this.rightContainer.createDiv({
@@ -327,7 +349,11 @@ export class FetchGeneratorView extends ItemView {
 			});
 
 			const badge = wrapper.createSpan({ cls: "help-badge" });
-			badge.setText(this.activeOption.level);
+			const levelKey =
+				this.activeOption.level === "Root"
+					? "FETCH_GENERATOR_VIEW_TAB_ROOT"
+					: "FETCH_GENERATOR_VIEW_TAB_FOLDER";
+			badge.setText(t(levelKey));
 
 			wrapper.createEl("div", {
 				text: this.activeOption.description,
@@ -335,7 +361,9 @@ export class FetchGeneratorView extends ItemView {
 			});
 
 			if (this.activeOption.example) {
-				wrapper.createEl("h5", { text: "Example/Usage:" });
+				wrapper.createEl("h5", {
+					text: t("FETCH_GENERATOR_VIEW_EXAMPLE_USAGE_TITLE"),
+				});
 				wrapper.createEl("pre", {
 					text: this.activeOption.example,
 					cls: "help-example",
@@ -343,7 +371,7 @@ export class FetchGeneratorView extends ItemView {
 			}
 		} else {
 			this.rightContainer.createEl("p", {
-				text: "Select a setting field to see its description here.",
+				text: t("FETCH_GENERATOR_VIEW_DESC_PLACEHOLDER"),
 				cls: "help-placeholder",
 			});
 		}
@@ -364,7 +392,12 @@ export class FetchGeneratorView extends ItemView {
 			this.rootSettings = result.rootSettings;
 			this.folderSettings = result.folderSettings;
 
-			new Notice(`Imported settings from ${file.basename}`);
+			new Notice(
+				t("FETCH_GENERATOR_VIEW_NOTICE_IMPORTED").replace(
+					"${file}",
+					file.basename
+				)
+			);
 
 			// Update UI list active state
 			const platformList =
@@ -379,7 +412,7 @@ export class FetchGeneratorView extends ItemView {
 
 			this.renderMiddleColumn();
 		} else {
-			new Notice("Could not detect platform in template.");
+			new Notice(t("FETCH_GENERATOR_VIEW_NOTICE_NO_PLATFORM"));
 		}
 	}
 
@@ -470,20 +503,30 @@ export class FetchGeneratorView extends ItemView {
 	async loadDefaultTemplate() {
 		const templatePath = this.getDefaultTemplatePath();
 		if (!templatePath) {
-			new Notice("No default template configured for this platform.");
+			new Notice(t("FETCH_GENERATOR_VIEW_NOTICE_NO_DEFAULT"));
 			return;
 		}
 
 		try {
 			const file = this.app.vault.getAbstractFileByPath(templatePath);
 			if (!file || !(file instanceof TFile)) {
-				new Notice(`Template file not found: ${templatePath}`);
+				new Notice(
+					t("FETCH_GENERATOR_VIEW_NOTICE_TEMPLATE_NOT_FOUND").replace(
+						"${path}",
+						templatePath
+					)
+				);
 				return;
 			}
 
 			await this.importTemplate(file);
 		} catch (error) {
-			new Notice(`Failed to load default template: ${error}`);
+			new Notice(
+				t("FETCH_GENERATOR_VIEW_NOTICE_LOAD_FAILED").replace(
+					"${error}",
+					String(error)
+				)
+			);
 		}
 	}
 }
