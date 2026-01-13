@@ -1,37 +1,24 @@
-// Credits go to Liam's Periodic Notes Plugin: https://github.com/liamcain/obsidian-periodic-notes
+import { App, FuzzySuggestModal, TFolder } from "obsidian";
 
-import { App, TAbstractFile, TFolder } from "obsidian";
-import { TextInputSuggest } from "./suggest";
+export class FolderPickerModal extends FuzzySuggestModal<TFolder> {
+	private onChoose: (folder: TFolder) => void;
 
-export class FolderSuggest extends TextInputSuggest<TFolder> {
-	constructor(app: App, inputEl: HTMLInputElement | HTMLTextAreaElement) {
-		super(app, inputEl);
+	constructor(app: App, onChoose: (folder: TFolder) => void) {
+		super(app);
+		this.onChoose = onChoose;
 	}
 
-	getSuggestions(inputStr: string): TFolder[] {
-		const abstractFiles = this.app.vault.getAllLoadedFiles();
-		const folders: TFolder[] = [];
-		const lowerCaseInputStr = inputStr.toLowerCase();
-
-		abstractFiles.forEach((folder: TAbstractFile) => {
-			if (
-				folder instanceof TFolder &&
-				folder.path.toLowerCase().contains(lowerCaseInputStr)
-			) {
-				folders.push(folder);
-			}
-		});
-
-		return folders.slice(0, 1000);
+	getItems(): TFolder[] {
+		return this.app.vault
+			.getAllLoadedFiles()
+			.filter((file): file is TFolder => file instanceof TFolder);
 	}
 
-	renderSuggestion(file: TFolder, el: HTMLElement): void {
-		el.setText(file.path);
+	getItemText(folder: TFolder): string {
+		return folder.path;
 	}
 
-	selectSuggestion(file: TFolder): void {
-		this.inputEl.value = file.path;
-		this.inputEl.trigger("input");
-		this.close();
+	onChooseItem(folder: TFolder): void {
+		this.onChoose(folder);
 	}
 }

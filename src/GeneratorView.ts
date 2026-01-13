@@ -14,7 +14,7 @@ import { ScriptPreviewModal } from "./ScriptPreviewModal";
 import { ObjectEditModal } from "./ObjectEditModal";
 import { ArrayEditModal } from "./ArrayEditModal";
 import { ScriptEngine } from "./ScriptEngine";
-import { FolderSuggest } from "./ui/pickers/folder-picker";
+import { FolderPickerModal } from "./ui/pickers/folder-picker";
 import { PresetManagerModal } from "./PresetManagerModal";
 import MyPlugin from "./main";
 
@@ -294,10 +294,9 @@ export class GeneratorView extends ItemView {
 					cls: "folder-content",
 				});
 
-				new Setting(contentDiv)
+				const folderPathSetting = new Setting(contentDiv)
 					.setName("Folder Path")
-					.addSearch((text) => {
-						new FolderSuggest(this.app, text.inputEl);
+					.addText((text) => {
 						text.setPlaceholder("Folder Path")
 							.setValue(folder.folderName)
 							.onChange((val) => (folder.folderName = val));
@@ -313,6 +312,20 @@ export class GeneratorView extends ItemView {
 							defaultValue: "",
 							valueType: "string",
 						});
+					})
+					.addButton((button) => {
+						button
+							.setButtonText("Browse")
+							.setIcon("folder")
+							.onClick(() => {
+								new FolderPickerModal(
+									this.app,
+									(selectedFolder) => {
+										folder.folderName = selectedFolder.path;
+										this.renderMiddleColumn();
+									}
+								).open();
+							});
 					});
 
 				const folderOptions = SYNC_OPTIONS.filter(
