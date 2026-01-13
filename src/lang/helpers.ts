@@ -21,7 +21,7 @@ let cachedLang: string | null = null;
 function _get_current_lang(): string {
 	try {
 		// Use plugin settings for language, fallback to Obsidian's moment.locale()
-		return moment.locale();
+		return moment.locale().toLowerCase();
 	} catch (e) {
 		console.error(
 			"Failed to get language setting, falling back to 'en'",
