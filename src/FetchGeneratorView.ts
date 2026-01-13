@@ -7,25 +7,30 @@ import {
 	setIcon,
 	TFile,
 } from "obsidian";
-import { Platform, SyncOption, FolderSetting, ConfigPreset } from "./types";
-import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
+import {
+	Platform,
+	FetchOption,
+	FolderSetting,
+	FetchConfigPreset,
+} from "./types";
+import {
+	FETCH_OPTIONS,
+	FETCH_SCRIPT_GENERATOR_VIEW_TYPE,
+} from "./constantsFetch";
 import { ImportModal } from "./ImportModal";
 import { ScriptPreviewModal } from "./ScriptPreviewModal";
-import { ObjectEditModal } from "./ObjectEditModal";
-import { ArrayEditModal } from "./ArrayEditModal";
-import { ScriptEngine } from "./ScriptEngine";
+import { FetchScriptEngine } from "./FetchScriptEngine";
 import { FolderSuggest } from "./ui/pickers/folder-picker";
-import { PresetManagerModal } from "./PresetManagerModal";
+import { FetchPresetManagerModal } from "./FetchPresetManagerModal";
 import MyPlugin from "./main";
 
-export class GeneratorView extends ItemView {
+export class FetchGeneratorView extends ItemView {
 	platform: Platform = "Airtable";
 	rootSettings: Record<string, string> = {};
-	vaultSettings: Record<string, any> = {};
 	folderSettings: FolderSetting[] = [];
-	activeOption: SyncOption | null = null;
+	activeOption: FetchOption | null = null;
 	importedFile: TFile | null = null;
-	activeTab: "Root" | "Vault" | "Folder" = "Root";
+	activeTab: "Root" | "Folder" = "Root";
 	plugin: MyPlugin;
 
 	// UI Elements
@@ -38,15 +43,15 @@ export class GeneratorView extends ItemView {
 	}
 
 	getViewType() {
-		return GENERATOR_VIEW_TYPE;
+		return FETCH_SCRIPT_GENERATOR_VIEW_TYPE;
 	}
 
 	getDisplayText() {
-		return "Sync Script Generator";
+		return "Fetch Script Generator";
 	}
 
 	getIcon() {
-		return "arrow-down-up";
+		return "arrow-down-to-line";
 	}
 
 	async onOpen() {
@@ -91,7 +96,6 @@ export class GeneratorView extends ItemView {
 				// Reset imported file context when switching platforms manually
 				this.importedFile = null;
 				this.rootSettings = {};
-				this.vaultSettings = {};
 				this.folderSettings = [];
 
 				container
@@ -108,7 +112,7 @@ export class GeneratorView extends ItemView {
 	renderMiddleColumn() {
 		this.middleContainer.empty();
 		this.middleContainer.createEl("h2", {
-			text: `${this.platform} Settings`,
+			text: `${this.platform} Fetch Settings`,
 		});
 
 		// Action Bar
@@ -140,11 +144,7 @@ export class GeneratorView extends ItemView {
 		const tabsContainer = this.middleContainer.createDiv({
 			cls: "settings-tabs",
 		});
-		const tabs: ("Root" | "Vault" | "Folder")[] = [
-			"Root",
-			"Vault",
-			"Folder",
-		];
+		const tabs: ("Root" | "Folder")[] = ["Root", "Folder"];
 
 		tabs.forEach((tab) => {
 			const tabBtn = tabsContainer.createEl("button", {
@@ -164,7 +164,7 @@ export class GeneratorView extends ItemView {
 		});
 
 		if (this.activeTab === "Root") {
-			const rootOptions = SYNC_OPTIONS.filter(
+			const rootOptions = FETCH_OPTIONS.filter(
 				(o) =>
 					o.level === "Root" &&
 					(o.platforms.includes(this.platform) ||
@@ -177,70 +177,6 @@ export class GeneratorView extends ItemView {
 					this.rootSettings,
 					"Root"
 				);
-			});
-		}
-
-		if (this.activeTab === "Vault") {
-			const vaultOptions = SYNC_OPTIONS.filter(
-				(o) =>
-					o.level === "Vault" &&
-					(o.platforms.includes(this.platform) ||
-						o.platforms.length === 0)
-			).sort((a, b) => (a.groupOrder || 0) - (b.groupOrder || 0));
-
-			// Group options by group
-			const groupedOptions: Record<string, SyncOption[]> = {};
-			vaultOptions.forEach((opt) => {
-				const groupName = opt.group || "Other";
-				if (!groupedOptions[groupName]) {
-					groupedOptions[groupName] = [];
-				}
-				groupedOptions[groupName].push(opt);
-			});
-
-			// Render groups
-			Object.entries(groupedOptions).forEach(([groupName, options]) => {
-				const groupDiv = formContainer.createDiv({
-					cls: "folder-group-block",
-				});
-				const collapsedKey = `_group_collapsed_${groupName}`;
-				if (this.vaultSettings[collapsedKey]) {
-					groupDiv.addClass("is-collapsed");
-				}
-
-				const groupHeader = groupDiv.createDiv({
-					cls: "folder-group-header",
-				});
-
-				const titleContainer = groupHeader.createDiv({
-					cls: "folder-group-title",
-				});
-
-				const iconSpan = titleContainer.createSpan({
-					cls: "folder-group-toggle-icon",
-				});
-				setIcon(iconSpan, "chevron-down");
-
-				titleContainer.createEl("span", { text: groupName });
-
-				groupHeader.onclick = () => {
-					this.vaultSettings[collapsedKey] =
-						!this.vaultSettings[collapsedKey];
-					this.renderMiddleColumn();
-				};
-
-				const groupContent = groupDiv.createDiv({
-					cls: "folder-group-content",
-				});
-
-				options.forEach((opt) => {
-					this.renderOption(
-						groupContent,
-						opt,
-						this.vaultSettings,
-						"Vault"
-					);
-				});
 			});
 		}
 
@@ -305,7 +241,7 @@ export class GeneratorView extends ItemView {
 							name: "folderName",
 							title: "Folder Path",
 							description:
-								"The path to the folder you want to sync.",
+								"The path to the folder you want to fetch from.",
 							example: "Example: MyVault/Projects/Active",
 							platforms: [],
 							level: "Folder",
@@ -315,76 +251,24 @@ export class GeneratorView extends ItemView {
 						});
 					});
 
-				const folderOptions = SYNC_OPTIONS.filter(
+				const folderOptions = FETCH_OPTIONS.filter(
 					(o) =>
 						o.level === "Folder" &&
 						(o.platforms.includes(this.platform) ||
 							o.platforms.length === 0)
-				).sort((a, b) => (a.groupOrder || 0) - (b.groupOrder || 0));
+				);
 
-				// Group options by group
-				const groupedOptions: Record<string, SyncOption[]> = {};
 				folderOptions.forEach((opt) => {
 					if (opt.name === "folderName") return;
-					const groupName = opt.group || "Other";
-					if (!groupedOptions[groupName]) {
-						groupedOptions[groupName] = [];
-					}
-					groupedOptions[groupName].push(opt);
+					this.renderOption(contentDiv, opt, folder, "Folder");
 				});
-
-				// Render groups
-				Object.entries(groupedOptions).forEach(
-					([groupName, options]) => {
-						const groupDiv = contentDiv.createDiv({
-							cls: "folder-group-block",
-						});
-						const collapsedKey = `_group_collapsed_${groupName}`;
-						if (folder[collapsedKey]) {
-							groupDiv.addClass("is-collapsed");
-						}
-
-						const groupHeader = groupDiv.createDiv({
-							cls: "folder-group-header",
-						});
-
-						const titleContainer = groupHeader.createDiv({
-							cls: "folder-group-title",
-						});
-
-						const iconSpan = titleContainer.createSpan({
-							cls: "folder-group-toggle-icon",
-						});
-						setIcon(iconSpan, "chevron-down");
-
-						titleContainer.createEl("span", { text: groupName });
-
-						groupHeader.onclick = () => {
-							folder[collapsedKey] = !folder[collapsedKey];
-							this.renderMiddleColumn();
-						};
-
-						const groupContent = groupDiv.createDiv({
-							cls: "folder-group-content",
-						});
-
-						options.forEach((opt) => {
-							this.renderOption(
-								groupContent,
-								opt,
-								folder,
-								"Folder"
-							);
-						});
-					}
-				);
 			});
 		}
 	}
 
 	renderOption(
 		container: HTMLElement,
-		opt: SyncOption,
+		opt: FetchOption,
 		target: any,
 		section: string
 	) {
@@ -394,120 +278,17 @@ export class GeneratorView extends ItemView {
 			this.addFocusListener(el, opt);
 		};
 
-		if (opt.valueType === "boolean") {
-			s.addToggle((toggle) => {
-				toggle
-					.setValue(target[opt.name] ?? opt.defaultValue === "true")
-					.onChange((val) => (target[opt.name] = val));
-				handleFocus(toggle.toggleEl);
-			});
-		} else if (opt.valueType === "object") {
-			s.addExtraButton((btn) => {
-				btn.setIcon("pencil")
-					.setTooltip("Edit Object")
-					.onClick(() => {
-						let currentData = target[opt.name];
-						if (typeof currentData === "string") {
-							try {
-								currentData = JSON.parse(currentData);
-							} catch {
-								currentData = {};
-							}
-						}
-						if (
-							!currentData ||
-							typeof currentData !== "object" ||
-							Array.isArray(currentData)
-						) {
-							currentData = {};
-						}
-
-						new ObjectEditModal(
-							this.app,
-							opt.title || opt.name,
-							currentData,
-							(result) => {
-								target[opt.name] = result;
-								this.renderMiddleColumn();
-							}
-						).open();
-					});
-			});
-
-			s.addTextArea((text) => {
-				text.setPlaceholder(opt.example || "")
-					.setValue(
-						target[opt.name]
-							? JSON.stringify(target[opt.name], null, 2)
-							: ""
-					)
-					.onChange((val) => {
-						try {
-							target[opt.name] = JSON.parse(val);
-						} catch (e) {
-							// Silent failure for partial JSON input
-						}
-					});
-				handleFocus(text.inputEl);
-			});
-		} else if (opt.valueType === "array") {
-			s.addExtraButton((btn) => {
-				btn.setIcon("pencil")
-					.setTooltip("Edit Array")
-					.onClick(() => {
-						let currentData = target[opt.name];
-						if (typeof currentData === "string") {
-							try {
-								currentData = JSON.parse(currentData);
-							} catch {
-								currentData = [];
-							}
-						}
-						if (!Array.isArray(currentData)) {
-							currentData = [];
-						}
-
-						new ArrayEditModal(
-							this.app,
-							opt.title || opt.name,
-							currentData,
-							(result) => {
-								target[opt.name] = result;
-								this.renderMiddleColumn();
-							}
-						).open();
-					});
-			});
-
-			s.addTextArea((text) => {
-				text.setPlaceholder(opt.example || "")
-					.setValue(
-						target[opt.name]
-							? JSON.stringify(target[opt.name], null, 2)
-							: ""
-					)
-					.onChange((val) => {
-						try {
-							target[opt.name] = JSON.parse(val);
-						} catch (e) {
-							// Silent failure
-						}
-					});
-				handleFocus(text.inputEl);
-			});
-		} else {
-			s.addText((text) => {
-				text.setValue(
-					target[opt.name] ||
-						(opt.defaultValue === "无" ? "" : opt.defaultValue) ||
-						""
-				).onChange((val) => (target[opt.name] = val));
-				handleFocus(text.inputEl);
-			});
-		}
+		s.addText((text) => {
+			text.setValue(
+				target[opt.name] ||
+					(opt.defaultValue === "无" ? "" : opt.defaultValue) ||
+					""
+			).onChange((val) => (target[opt.name] = val));
+			handleFocus(text.inputEl);
+		});
 	}
 
-	addFocusListener(el: HTMLElement, opt: SyncOption) {
+	addFocusListener(el: HTMLElement, opt: FetchOption) {
 		el.addEventListener("focus", () => {
 			this.activeOption = opt;
 			this.renderRightColumn();
@@ -562,12 +343,11 @@ export class GeneratorView extends ItemView {
 		const content = await this.app.vault.read(file);
 		this.importedFile = file;
 
-		const result = ScriptEngine.parse(content);
+		const result = FetchScriptEngine.parse(content);
 
 		if (result.platform) {
 			this.platform = result.platform;
 			this.rootSettings = result.rootSettings;
-			this.vaultSettings = result.vaultSettings;
 			this.folderSettings = result.folderSettings;
 
 			new Notice(`Imported settings from ${file.basename}`);
@@ -590,12 +370,10 @@ export class GeneratorView extends ItemView {
 	}
 
 	generateScript() {
-		const script = ScriptEngine.generate(
+		const script = FetchScriptEngine.generate(
 			this.platform,
 			this.rootSettings,
-			this.vaultSettings,
-			this.folderSettings,
-			this.plugin.settings.syncPlatform || "IOTO"
+			this.folderSettings
 		);
 		new ScriptPreviewModal(
 			this.app,
@@ -609,13 +387,12 @@ export class GeneratorView extends ItemView {
 		const currentSettings = {
 			platform: this.platform,
 			rootSettings: this.rootSettings,
-			vaultSettings: this.vaultSettings,
 			folderSettings: this.folderSettings,
 		};
 
-		new PresetManagerModal(
+		new FetchPresetManagerModal(
 			this.app,
-			this.plugin.settings.presets || [],
+			this.plugin.settings.fetchPresets || [],
 			currentSettings,
 			(preset) => this.savePreset(preset),
 			(preset) => this.loadPreset(preset),
@@ -623,18 +400,17 @@ export class GeneratorView extends ItemView {
 		).open();
 	}
 
-	async savePreset(preset: ConfigPreset) {
-		if (!this.plugin.settings.presets) {
-			this.plugin.settings.presets = [];
+	async savePreset(preset: FetchConfigPreset) {
+		if (!this.plugin.settings.fetchPresets) {
+			this.plugin.settings.fetchPresets = [];
 		}
-		this.plugin.settings.presets.push(preset);
+		this.plugin.settings.fetchPresets.push(preset);
 		await this.plugin.saveSettings();
 	}
 
-	async loadPreset(preset: ConfigPreset) {
+	async loadPreset(preset: FetchConfigPreset) {
 		this.platform = preset.platform;
 		this.rootSettings = { ...preset.rootSettings };
-		this.vaultSettings = { ...preset.vaultSettings };
 		this.folderSettings = JSON.parse(JSON.stringify(preset.folderSettings)); // Deep copy
 		this.importedFile = null; // Clear imported file context
 
@@ -653,10 +429,9 @@ export class GeneratorView extends ItemView {
 	}
 
 	async deletePreset(presetId: string) {
-		if (!this.plugin.settings.presets) return;
-		this.plugin.settings.presets = this.plugin.settings.presets.filter(
-			(p) => p.id !== presetId
-		);
+		if (!this.plugin.settings.fetchPresets) return;
+		this.plugin.settings.fetchPresets =
+			this.plugin.settings.fetchPresets.filter((p) => p.id !== presetId);
 		await this.plugin.saveSettings();
 	}
 
@@ -665,12 +440,12 @@ export class GeneratorView extends ItemView {
 			Platform,
 			keyof typeof this.plugin.settings
 		> = {
-			Airtable: "defaultSyncTemplateAirtable",
-			Feishu: "defaultSyncTemplateFeishu",
-			Vika: "defaultSyncTemplateVika",
-			Lark: "defaultSyncTemplateLark",
-			WPS: "defaultSyncTemplateWPS",
-			Ding: "defaultSyncTemplateDing",
+			Airtable: "defaultFetchTemplateAirtable",
+			Feishu: "defaultFetchTemplateFeishu",
+			Vika: "defaultFetchTemplateVika",
+			Lark: "defaultFetchTemplateLark",
+			WPS: "defaultFetchTemplateWPS",
+			Ding: "defaultFetchTemplateDing",
 		};
 
 		const key = platformSettingsMap[this.platform];

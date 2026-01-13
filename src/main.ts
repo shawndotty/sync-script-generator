@@ -14,6 +14,8 @@ import {
 } from "./settings";
 import { GeneratorView } from "./GeneratorView";
 import { GENERATOR_VIEW_TYPE } from "./constants";
+import { FetchGeneratorView } from "./FetchGeneratorView";
+import { FETCH_SCRIPT_GENERATOR_VIEW_TYPE } from "./constantsFetch";
 
 export default class SyncScriptGeneratorPlugin extends Plugin {
 	settings: SyncScriptGeneratorSettings;
@@ -26,12 +28,26 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 			(leaf) => new GeneratorView(leaf, this)
 		);
 
+		this.registerView(
+			FETCH_SCRIPT_GENERATOR_VIEW_TYPE,
+			(leaf) => new FetchGeneratorView(leaf, this)
+		);
+
 		// This creates an icon in the left ribbon.
 		this.addRibbonIcon(
-			"dice",
+			"arrow-down-up",
 			"Sync Script Generator",
 			(evt: MouseEvent) => {
 				this.activateView();
+			}
+		);
+
+		// This creates an icon in the left ribbon for Fetch Generator.
+		this.addRibbonIcon(
+			"arrow-down-to-line",
+			"Fetch Script Generator",
+			(evt: MouseEvent) => {
+				this.activateFetchView();
 			}
 		);
 
@@ -41,6 +57,15 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 			name: "Open Sync Script Generator",
 			callback: () => {
 				this.activateView();
+			},
+		});
+
+		// This adds a command for Fetch Script Generator
+		this.addCommand({
+			id: "open-fetch-script-generator",
+			name: "Open Fetch Script Generator",
+			callback: () => {
+				this.activateFetchView();
 			},
 		});
 
@@ -64,6 +89,34 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 			leaf = workspace.getLeaf("tab");
 			await leaf.setViewState({
 				type: GENERATOR_VIEW_TYPE,
+				active: true,
+			});
+		}
+
+		// "Reveal" the leaf in case it is in a collapsed sidebar
+		if (leaf) {
+			workspace.revealLeaf(leaf);
+		}
+	}
+
+	async activateFetchView() {
+		const { workspace } = this.app;
+
+		let leaf: WorkspaceLeaf | null = null;
+		const leaves = workspace.getLeavesOfType(
+			FETCH_SCRIPT_GENERATOR_VIEW_TYPE
+		);
+
+		if (leaves.length > 0) {
+			// A leaf with our view already exists, use that
+			leaf = leaves[0] as WorkspaceLeaf;
+		} else {
+			// Our view could not be found in the workspace, create a new leaf
+			// in the right sidebar for default, or main area if preferred.
+			// The user requested a main workspace leaf item view.
+			leaf = workspace.getLeaf("tab");
+			await leaf.setViewState({
+				type: FETCH_SCRIPT_GENERATOR_VIEW_TYPE,
 				active: true,
 			});
 		}

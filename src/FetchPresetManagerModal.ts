@@ -1,0 +1,254 @@
+import {
+	App,
+	Modal,
+	ButtonComponent,
+	TextComponent,
+	Notice,
+	DropdownComponent,
+} from "obsidian";
+import { FetchConfigPreset, Platform, FetchScriptSettings } from "./types";
+
+export class FetchPresetManagerModal extends Modal {
+	private presets: FetchConfigPreset[];
+	private onSavePreset: (preset: FetchConfigPreset) => void;
+	private onLoadPreset: (preset: FetchConfigPreset) => void;
+	private onDeletePreset: (presetId: string) => void;
+	private currentSettings: FetchScriptSettings;
+	private activeTab: "Save" | "Load" = "Load";
+	private tabContentContainer: HTMLElement;
+
+	constructor(
+		app: App,
+		presets: FetchConfigPreset[],
+		currentSettings: FetchScriptSettings,
+		onSavePreset: (preset: FetchConfigPreset) => void,
+		onLoadPreset: (preset: FetchConfigPreset) => void,
+		onDeletePreset: (presetId: string) => void
+	) {
+		super(app);
+		this.presets = presets;
+		this.currentSettings = currentSettings;
+		this.onSavePreset = onSavePreset;
+		this.onLoadPreset = onLoadPreset;
+		this.onDeletePreset = onDeletePreset;
+	}
+
+	onOpen() {
+		const { contentEl } = this;
+		contentEl.empty();
+		contentEl.addClass("preset-manager-modal");
+
+		contentEl.createEl("h2", { text: "Fetch Configuration Presets" });
+
+		// Tabs Container
+		const tabsContainer = contentEl.createDiv({
+			cls: "settings-tabs",
+		});
+		const tabs: ("Save" | "Load")[] = ["Save", "Load"];
+
+		tabs.forEach((tab) => {
+			const tabBtn = tabsContainer.createEl("button", {
+				text: tab === "Save" ? "Save Preset" : "Load Preset",
+				cls: "settings-tab-btn",
+			});
+			if (this.activeTab === tab) tabBtn.addClass("is-active");
+
+			tabBtn.onclick = () => {
+				this.activeTab = tab;
+				this.renderTabs(tabsContainer);
+				this.renderTabContent();
+			};
+		});
+
+		// Tab Content Container
+		this.tabContentContainer = contentEl.createDiv({
+			cls: "preset-tab-content",
+		});
+
+		// Initial render
+		this.renderTabs(tabsContainer);
+		this.renderTabContent();
+
+		// Footer
+		const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
+		new ButtonComponent(footer)
+			.setButtonText("Close")
+			.onClick(() => this.close());
+	}
+
+	private renderTabs(tabsContainer: HTMLElement) {
+		const tabs: ("Save" | "Load")[] = ["Save", "Load"];
+		tabsContainer.findAll(".settings-tab-btn").forEach((btn, index) => {
+			const tab = tabs[index];
+			if (this.activeTab === tab) {
+				btn.addClass("is-active");
+			} else {
+				btn.removeClass("is-active");
+			}
+		});
+	}
+
+	private renderTabContent() {
+		this.tabContentContainer.empty();
+
+		if (this.activeTab === "Save") {
+			this.renderSaveTab();
+		} else {
+			this.renderLoadTab();
+		}
+	}
+
+	private renderSaveTab() {
+		const saveSection = this.tabContentContainer.createDiv({
+			cls: "preset-save-section",
+		});
+		saveSection.createEl("h3", { text: "Save Current Configuration" });
+
+		const saveContainer = saveSection.createDiv({
+			cls: "preset-save-form",
+		});
+		const nameInput = new TextComponent(saveContainer);
+		nameInput.inputEl.style.width = "100%";
+		nameInput.inputEl.style.marginBottom = "10px";
+		nameInput.setPlaceholder("Preset name (e.g., 'Airtable Fetch Production')");
+
+		const platformDropdown = new DropdownComponent(saveContainer);
+		platformDropdown.selectEl.style.width = "100%";
+		platformDropdown.selectEl.style.marginBottom = "10px";
+		const platforms: Platform[] = [
+			"Airtable",
+			"Feishu",
+			"Vika",
+			"Lark",
+			"WPS",
+			"Ding",
+		];
+		platformDropdown.addOptions(
+			Object.fromEntries(platforms.map((p) => [p, p]))
+		);
+		platformDropdown.setValue(this.currentSettings.platform);
+
+		const saveButton = new ButtonComponent(saveContainer);
+		saveButton.setButtonText("Save Preset").setCta();
+		saveButton.onClick(() => {
+			const name = nameInput.getValue().trim();
+			if (!name) {
+				new Notice("Please enter a preset name");
+				return;
+			}
+
+			// Check for duplicate name
+			if (this.presets.some((p) => p.name === name)) {
+				new Notice(
+					"A preset with this name already exists. Please use a different name."
+				);
+				return;
+			}
+
+			const preset: FetchConfigPreset = {
+				id: Math.random().toString(36).substr(2, 9),
+				name,
+				platform: platformDropdown.getValue() as Platform,
+				rootSettings: { ...this.currentSettings.rootSettings },
+				folderSettings: JSON.parse(
+					JSON.stringify(this.currentSettings.folderSettings)
+				), // Deep copy
+				createdAt: Date.now(),
+				updatedAt: Date.now(),
+			};
+
+			this.onSavePreset(preset);
+			new Notice(`Preset "${name}" saved successfully`);
+			this.close();
+		});
+	}
+
+	private renderLoadTab() {
+		const loadSection = this.tabContentContainer.createDiv({
+			cls: "preset-load-section",
+		});
+		loadSection.createEl("h3", { text: "Load Preset" });
+
+		if (this.presets.length === 0) {
+			loadSection.createEl("p", {
+				text: "No presets saved yet. Save a configuration to create your first preset.",
+				cls: "preset-empty-message",
+			});
+		} else {
+			const presetsList = loadSection.createDiv({ cls: "presets-list" });
+
+			// Group presets by platform
+			const presetsByPlatform: Record<Platform, FetchConfigPreset[]> = {
+				Airtable: [],
+				Feishu: [],
+				Vika: [],
+				Lark: [],
+				WPS: [],
+				Ding: [],
+			};
+
+			this.presets.forEach((preset) => {
+				if (presetsByPlatform[preset.platform]) {
+					presetsByPlatform[preset.platform].push(preset);
+				}
+			});
+
+			Object.entries(presetsByPlatform).forEach(([platform, presets]) => {
+				if (presets.length === 0) return;
+
+				const platformGroup = presetsList.createDiv({
+					cls: "preset-platform-group",
+				});
+				platformGroup.createEl("h4", { text: platform });
+
+				presets.forEach((preset) => {
+					const presetItem = platformGroup.createDiv({
+						cls: "preset-item",
+					});
+
+					const presetInfo = presetItem.createDiv({
+						cls: "preset-info",
+					});
+					presetInfo.createEl("div", {
+						text: preset.name,
+						cls: "preset-name",
+					});
+					presetInfo.createEl("div", {
+						text: new Date(preset.updatedAt).toLocaleDateString(),
+						cls: "preset-date",
+					});
+
+					const presetActions = presetItem.createDiv({
+						cls: "preset-actions",
+					});
+
+					const loadBtn = new ButtonComponent(presetActions);
+					loadBtn.setButtonText("Load").setCta();
+					loadBtn.onClick(() => {
+						this.onLoadPreset(preset);
+						new Notice(`Loaded preset "${preset.name}"`);
+						this.close();
+					});
+
+					const deleteBtn = new ButtonComponent(presetActions);
+					deleteBtn.setButtonText("Delete").setWarning();
+					deleteBtn.onClick(() => {
+						if (
+							confirm(
+								`Are you sure you want to delete preset "${preset.name}"?`
+							)
+						) {
+							this.onDeletePreset(preset.id);
+							new Notice(`Deleted preset "${preset.name}"`);
+							this.close();
+						}
+					});
+				});
+			});
+		}
+	}
+
+	onClose() {
+		this.contentEl.empty();
+	}
+}

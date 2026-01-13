@@ -1,11 +1,12 @@
 import { App, PluginSettingTab, Setting, TFile } from "obsidian";
 import MyPlugin from "./main";
-import { ConfigPreset, Platform } from "./types";
+import { ConfigPreset, FetchConfigPreset, Platform } from "./types";
 import { ImportModal } from "./ImportModal";
 
 export interface SyncScriptGeneratorSettings {
 	mySetting: string;
 	presets: ConfigPreset[];
+	fetchPresets: FetchConfigPreset[];
 	syncPlatform: "IOTO" | "obSyncWithMDB";
 	defaultSyncTemplateAirtable: string;
 	defaultSyncTemplateFeishu: string;
@@ -13,11 +14,18 @@ export interface SyncScriptGeneratorSettings {
 	defaultSyncTemplateLark: string;
 	defaultSyncTemplateWPS: string;
 	defaultSyncTemplateDing: string;
+	defaultFetchTemplateAirtable: string;
+	defaultFetchTemplateFeishu: string;
+	defaultFetchTemplateVika: string;
+	defaultFetchTemplateLark: string;
+	defaultFetchTemplateWPS: string;
+	defaultFetchTemplateDing: string;
 }
 
 export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 	mySetting: "default",
 	presets: [],
+	fetchPresets: [],
 	syncPlatform: "IOTO",
 	defaultSyncTemplateAirtable: "",
 	defaultSyncTemplateFeishu: "",
@@ -25,6 +33,12 @@ export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 	defaultSyncTemplateLark: "",
 	defaultSyncTemplateWPS: "",
 	defaultSyncTemplateDing: "",
+	defaultFetchTemplateAirtable: "",
+	defaultFetchTemplateFeishu: "",
+	defaultFetchTemplateVika: "",
+	defaultFetchTemplateLark: "",
+	defaultFetchTemplateWPS: "",
+	defaultFetchTemplateDing: "",
 };
 
 export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
@@ -50,6 +64,26 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		Ding: "defaultSyncTemplateDing",
 	};
 
+	private readonly fetchPlatformSettingsMap: Record<
+		Platform,
+		keyof Pick<
+			SyncScriptGeneratorSettings,
+			| "defaultFetchTemplateAirtable"
+			| "defaultFetchTemplateFeishu"
+			| "defaultFetchTemplateVika"
+			| "defaultFetchTemplateLark"
+			| "defaultFetchTemplateWPS"
+			| "defaultFetchTemplateDing"
+		>
+	> = {
+		Airtable: "defaultFetchTemplateAirtable",
+		Feishu: "defaultFetchTemplateFeishu",
+		Vika: "defaultFetchTemplateVika",
+		Lark: "defaultFetchTemplateLark",
+		WPS: "defaultFetchTemplateWPS",
+		Ding: "defaultFetchTemplateDing",
+	};
+
 	constructor(app: App, plugin: MyPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
@@ -62,6 +96,16 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 
 	private getTemplatePath(platform: Platform): string {
 		const key = this.platformSettingsMap[platform];
+		return (this.plugin.settings[key] as string) || "";
+	}
+
+	private setFetchTemplatePath(platform: Platform, path: string): void {
+		const key = this.fetchPlatformSettingsMap[platform];
+		(this.plugin.settings[key] as string) = path;
+	}
+
+	private getFetchTemplatePath(platform: Platform): string {
+		const key = this.fetchPlatformSettingsMap[platform];
 		return (this.plugin.settings[key] as string) || "";
 	}
 
@@ -134,6 +178,54 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 						.setTooltip("Clear")
 						.onClick(async () => {
 							this.setTemplatePath(platform, "");
+							await this.plugin.saveSettings();
+							this.display(); // Refresh to show updated value
+						});
+				});
+		});
+
+		containerEl.createEl("h2", { text: "Default Fetch Templates" });
+
+		containerEl.createEl("p", {
+			text: "Set default fetch template files for each platform. These templates will be used when importing fetch configurations.",
+			cls: "setting-item-description",
+		});
+
+		platforms.forEach((platform) => {
+			const currentValue = this.getFetchTemplatePath(platform);
+
+			new Setting(containerEl)
+				.setName(`${platform} Default Fetch Template`)
+				.setDesc(
+					`Default fetch template file path for ${platform} platform`
+				)
+				.addText((text) => {
+					text.setPlaceholder("No template selected")
+						.setValue(currentValue)
+						.onChange(async (value) => {
+							this.setFetchTemplatePath(platform, value);
+							await this.plugin.saveSettings();
+						});
+					text.inputEl.style.width = "100%";
+				})
+				.addButton((button) => {
+					button
+						.setButtonText("Browse")
+						.setIcon("folder")
+						.onClick(() => {
+							new ImportModal(this.app, async (file: TFile) => {
+								this.setFetchTemplatePath(platform, file.path);
+								await this.plugin.saveSettings();
+								this.display(); // Refresh to show updated value
+							}).open();
+						});
+				})
+				.addExtraButton((button) => {
+					button
+						.setIcon("cross")
+						.setTooltip("Clear")
+						.onClick(async () => {
+							this.setFetchTemplatePath(platform, "");
 							await this.plugin.saveSettings();
 							this.display(); // Refresh to show updated value
 						});

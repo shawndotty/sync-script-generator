@@ -345,7 +345,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 			"同步设置时使用：\n${dingUserIDForSync}\n\nFetch设置时使用：\n${dingUserIDForFetch}",
 	},
 	{
-		name: "badeID",
+		name: "baseID",
 
 		title: "Base ID",
 		platforms: ["Airtable"],
@@ -353,9 +353,9 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "钉钉通讯录中的用户ID",
+		description: "Airtable Base ID for this folder",
 		example:
-			"同步设置时使用：\n${dingUserIDForSync}\n\nFetch设置时使用：\n${dingUserIDForFetch}",
+			"同步设置时使用：\n${airtableBaseIDForSync}\n\nFetch设置时使用：\n${airtableBaseIDForFetch}",
 	},
 	{
 		name: "appToken",

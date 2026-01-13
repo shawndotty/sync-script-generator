@@ -1,0 +1,307 @@
+import { Platform, FolderSetting } from "./types";
+import { FETCH_OPTIONS } from "./constantsFetch";
+import { Notice } from "obsidian";
+
+export class FetchScriptEngine {
+	static generate(
+		platform: Platform,
+		rootSettings: Record<string, string>,
+		folderSettings: FolderSetting[]
+	): string {
+		let script = "";
+		const varName = platform.toLowerCase();
+
+		// Root variables mapping
+		const platformRootVars: Record<Platform, string[]> = {
+			Airtable: [
+				"airtableAPIKeyForFetch",
+				"airtableBaseIDForFetch",
+				"airtableTableIDForFetch",
+			],
+			Feishu: [
+				"feishuAppIDForFetch",
+				"feishuAppSecretForFetch",
+				"feishuBaseIDForFetch",
+				"feishuTableIDForFetch",
+			],
+			Vika: ["vikaAPIKeyForFetch", "vikaTableIDForFetch"],
+			Lark: [
+				"larkAppIDForFetch",
+				"larkAppSecretForFetch",
+				"larkBaseIDForFetch",
+				"larkTableIDForFetch",
+			],
+			WPS: [
+				"wpsAppIDForFetch",
+				"wpsAppSecretForFetch",
+				"wpsUserTokenForFetch",
+				"wpsBaseIDForFetch",
+				"wpsTableIDForFetch",
+			],
+			Ding: [
+				"dingAppIDForFetch",
+				"dingAppSecretForFetch",
+				"dingBaseIDForFetch",
+				"dingTableIDForFetch",
+				"dingViewIDForFetch",
+				"dingUserIDForFetch",
+			],
+		};
+
+		const rootVars = platformRootVars[platform] || [];
+		if (rootVars.length > 0) {
+			script += `const {${rootVars.join(
+				", "
+			)}} = app.plugins.plugins["ioto-settings"].settings;\n\n`;
+		}
+
+		script += `const ${varName} = {\n`;
+
+		// Root Settings
+		const rootOptions = FETCH_OPTIONS.filter(
+			(o) => o.level === "Root" && o.platforms.includes(platform)
+		);
+		rootOptions.forEach((opt) => {
+			const varMapping: Record<string, string> = {
+				apiKey:
+					platform === "Airtable"
+						? "airtableAPIKeyForFetch"
+						: "vikaAPIKeyForFetch",
+				defaultBaseID:
+					platform === "Airtable"
+						? "airtableBaseIDForFetch"
+						: "dingBaseIDForFetch",
+				defaultTableID:
+					platform === "Airtable"
+						? "airtableTableIDForFetch"
+						: platform === "Feishu"
+						? "feishuTableIDForFetch"
+						: platform === "Lark"
+						? "larkTableIDForFetch"
+						: platform === "WPS"
+						? "wpsTableIDForFetch"
+						: platform === "Ding"
+						? "dingTableIDForFetch"
+						: "vikaTableIDForFetch",
+				appID:
+					platform === "Feishu"
+						? "feishuAppIDForFetch"
+						: platform === "Lark"
+						? "larkAppIDForFetch"
+						: platform === "WPS"
+						? "wpsAppIDForFetch"
+						: "dingAppIDForFetch",
+				appSecret:
+					platform === "Feishu"
+						? "feishuAppSecretForFetch"
+						: platform === "Lark"
+						? "larkAppSecretForFetch"
+						: platform === "WPS"
+						? "wpsAppSecretForFetch"
+						: "dingAppSecretForFetch",
+				appKey:
+					platform === "WPS" ? "wpsAppSecretForFetch" : "",
+				accessToken:
+					platform === "WPS" ? "wpsUserTokenForFetch" : "",
+				defaultAppToken:
+					platform === "Feishu"
+						? "feishuBaseIDForFetch"
+						: "larkBaseIDForFetch",
+				defaultFileID:
+					platform === "WPS" ? "wpsBaseIDForFetch" : "",
+				defaultSheetID:
+					platform === "WPS"
+						? "wpsTableIDForFetch"
+						: platform === "Ding"
+						? "dingTableIDForFetch"
+						: "",
+				defaultViewID:
+					platform === "Ding" ? "dingViewIDForFetch" : "",
+				userID: platform === "Ding" ? "dingUserIDForFetch" : "",
+			};
+			const mappedVar = varMapping[opt.name];
+
+			const userVal = rootSettings[opt.name];
+
+			if (
+				userVal &&
+				userVal !== (opt.defaultValue === "无" ? "" : opt.defaultValue)
+			) {
+				script +=
+					"    " + opt.name + ": " + JSON.stringify(userVal) + ",\n";
+			} else if (mappedVar) {
+				script +=
+					"    " + opt.name + ": `$" + "{" + mappedVar + "}`,\n";
+			} else {
+				let val = opt.defaultValue === "无" ? "" : opt.defaultValue;
+				script +=
+					"    " + opt.name + ": " + JSON.stringify(val) + ",\n";
+			}
+		});
+
+		// Folder Settings
+		if (folderSettings.length > 0) {
+			script += "\n    // Folders Settings\n";
+			script += "    tables: [\n";
+			folderSettings.forEach((folder, i) => {
+				script += "        {\n";
+				const entries = Object.entries(folder);
+				entries.forEach(([key, val], j) => {
+					if (key === "collapsed") return;
+					script +=
+						"            " +
+						key +
+						": " +
+						this.indentMultiline(
+							JSON.stringify(val, null, 4),
+							"            "
+						) +
+						(j < entries.length - 1 ? ",\n" : "\n");
+				});
+				script +=
+					"        }" +
+					(i < folderSettings.length - 1 ? ",\n" : "\n");
+			});
+			script += "    ]\n";
+		}
+
+		script += "};\n\n";
+
+		const methodName = "ObFetch" + platform;
+		script +=
+			"await tp.user." +
+			methodName +
+			"(tp, this.app, " +
+			varName +
+			");\n";
+
+		// 格式化缩进：保留原有缩进结构，整体向右缩进 4 格
+		const formatted = script
+			.trim()
+			.split("\n")
+			.map((line) => (line ? "    " + line : ""))
+			.join("\n");
+		return "<%*\n" + formatted + "\n_%>";
+	}
+
+	static parse(content: string): {
+		platform: Platform | null;
+		rootSettings: Record<string, string>;
+		folderSettings: FolderSetting[];
+	} {
+		let platform: Platform | null = null;
+		let rootSettings: Record<string, string> = {};
+		let folderSettings: FolderSetting[] = [];
+
+		// 1. Detect Platform
+		const platformMatch = content.match(/await tp\.user\.ObFetch(\w+)\(/);
+		if (platformMatch && platformMatch[1]) {
+			const parsedPlatform = platformMatch[1] as Platform;
+			if (
+				["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"].includes(
+					parsedPlatform
+				)
+			) {
+				platform = parsedPlatform;
+			}
+		}
+
+		if (!platform)
+			return { platform, rootSettings, folderSettings };
+
+		// 2. Extract Main Config Object
+		const varName = platform.toLowerCase();
+		const configBlockRegex = new RegExp(
+			`const ${varName}\\s*=\\s*\\{`,
+			"m"
+		);
+
+		const match = content.match(configBlockRegex);
+
+		if (match) {
+			const startObj = match.index! + match[0].length - 1; // index of '{'
+
+			const endObj = this.findMatchingBracket(content, startObj);
+
+			if (endObj !== -1) {
+				const configStr = content.substring(startObj, endObj + 1);
+
+				// Sanitize template literals to strings to avoid ReferenceError
+				// Replace `...` with "..." and escape internal quotes/newlines
+				const sanitizedConfig = configStr.replace(
+					/`([\s\S]*?)`/g,
+					(match, p1) => {
+						return (
+							'"' +
+							p1.replace(/"/g, '\\"').replace(/\n/g, "\\n") +
+							'"'
+						);
+					}
+				);
+
+				try {
+					// Parse the sanitized object string
+					const configObj = new Function(
+						"return " + sanitizedConfig
+					)();
+
+					// Extract Folder Settings (tables)
+					if (Array.isArray(configObj.tables)) {
+						folderSettings = configObj.tables;
+					}
+
+					// Extract Root Settings
+					const rootKeys = FETCH_OPTIONS.filter(
+						(o) => o.level === "Root"
+					).map((o) => o.name);
+
+					for (const key in configObj) {
+						if (key === "tables") continue;
+
+						if (rootKeys.includes(key)) {
+							const val = configObj[key];
+							if (typeof val === "string") {
+								// If it's a template variable reference (e.g. "${apiKey}"), don't import it as a value
+								// because the generator will supply the default variable reference if the field is empty.
+								if (val.includes("${")) continue;
+								rootSettings[key] = val;
+							} else if (val !== undefined && val !== null) {
+								rootSettings[key] = String(val);
+							}
+						}
+					}
+				} catch (e) {
+					console.error("Failed to parse configuration object", e);
+					new Notice(
+						"Warning: Could not parse configuration from template."
+					);
+				}
+			}
+		}
+
+		console.dir({ platform, rootSettings, folderSettings });
+
+		return { platform, rootSettings, folderSettings };
+	}
+
+	private static findMatchingBracket(text: string, start: number): number {
+		let count = 0;
+		const open = text[start];
+		const close = open === "[" ? "]" : "}";
+
+		for (let i = start; i < text.length; i++) {
+			if (text[i] === open) count++;
+			else if (text[i] === close) count--;
+
+			if (count === 0) return i;
+		}
+		return -1;
+	}
+
+	private static indentMultiline(str: string, spaces: string): string {
+		return str
+			.split("\n")
+			.map((line, i) => (i === 0 ? line : spaces + line))
+			.join("\n");
+	}
+}

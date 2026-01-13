@@ -65,3 +65,19 @@ export interface ConfigPreset {
 	createdAt: number;
 	updatedAt: number;
 }
+
+export interface FetchScriptSettings {
+	platform: Platform;
+	rootSettings: Record<string, string>;
+	folderSettings: FolderSetting[];
+}
+
+export interface FetchConfigPreset {
+	id: string;
+	name: string;
+	platform: Platform;
+	rootSettings: Record<string, string>;
+	folderSettings: FolderSetting[];
+	createdAt: number;
+	updatedAt: number;
+}
