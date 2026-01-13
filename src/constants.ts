@@ -588,8 +588,8 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "fmFetchFields",
-		group: "Basic",
-		groupOrder: 1,
+		group: "Advanced",
+		groupOrder: 2,
 		title: "Fm Fetch Fields",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Vault",
@@ -1349,8 +1349,8 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "fmFetchFields",
-		group: "Basic",
-		groupOrder: 1,
+		group: "Advanced",
+		groupOrder: 2,
 		title: "Fm Fetch Fields",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
@@ -1363,8 +1363,8 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	},
 	{
 		name: "fmFetchFieldsOverrideMode",
-		group: "Basic",
-		groupOrder: 1,
+		group: "Advanced",
+		groupOrder: 2,
 		title: "Fm Fetch Fields Override Mode",
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
