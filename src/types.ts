@@ -30,6 +30,18 @@ export interface SyncOption {
 	example?: string;
 }
 
+export interface FetchOption {
+	name: string;
+	title: string;
+	platforms: Platform[];
+	level: "Root" | "Folder";
+	required: boolean;
+	defaultValue: any;
+	valueType: "string";
+	description: string;
+	example?: string;
+}
+
 export interface FolderSetting {
 	folderName: string;
 	collapsed?: boolean;
