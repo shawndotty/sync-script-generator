@@ -6,6 +6,7 @@ import { ImportModal } from "./ImportModal";
 export interface SyncScriptGeneratorSettings {
 	mySetting: string;
 	presets: ConfigPreset[];
+	syncPlatform: "IOTO" | "obSyncWithMDB";
 	defaultSyncTemplateAirtable: string;
 	defaultSyncTemplateFeishu: string;
 	defaultSyncTemplateVika: string;
@@ -17,6 +18,7 @@ export interface SyncScriptGeneratorSettings {
 export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 	mySetting: "default",
 	presets: [],
+	syncPlatform: "IOTO",
 	defaultSyncTemplateAirtable: "",
 	defaultSyncTemplateFeishu: "",
 	defaultSyncTemplateVika: "",
@@ -67,6 +69,21 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 
 		containerEl.empty();
+
+		// Sync Platform Setting
+		new Setting(containerEl)
+			.setName("同步平台")
+			.setDesc("选择同步平台")
+			.addDropdown((dropdown) => {
+				dropdown
+					.addOption("IOTO", "IOTO")
+					.addOption("obSyncWithMDB", "obSyncWithMDB")
+					.setValue(this.plugin.settings.syncPlatform || "IOTO")
+					.onChange(async (value: "IOTO" | "obSyncWithMDB") => {
+						this.plugin.settings.syncPlatform = value;
+						await this.plugin.saveSettings();
+					});
+			});
 
 		containerEl.createEl("h2", { text: "Default Sync Templates" });
 

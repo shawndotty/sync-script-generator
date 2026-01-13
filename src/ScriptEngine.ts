@@ -7,7 +7,8 @@ export class ScriptEngine {
 		platform: Platform,
 		rootSettings: Record<string, string>,
 		vaultSettings: Record<string, any>,
-		folderSettings: FolderSetting[]
+		folderSettings: FolderSetting[],
+		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO"
 	): string {
 		let script = "";
 		const varName = platform.toLowerCase();
@@ -49,9 +50,11 @@ export class ScriptEngine {
 
 		const rootVars = platformRootVars[platform] || [];
 		if (rootVars.length > 0) {
+			const pluginName =
+				syncPlatform === "IOTO" ? "ioto-settings" : "ob-sync-with-mdb";
 			script += `const {${rootVars.join(
 				", "
-			)}} = app.plugins.plugins[\"ioto-settings\"].settings;\n\n`;
+			)}} = app.plugins.plugins[\"${pluginName}\"].settings;\n\n`;
 		}
 
 		script += `const ${varName} = {\n`;
