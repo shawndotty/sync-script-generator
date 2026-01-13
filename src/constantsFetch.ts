@@ -13,8 +13,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		defaultValue: "无",
 		valueType: "string",
 		description: "WPS的用户Access Token",
-		example:
-			"同步设置时使用：\n${wpsUserTokenForSync}\n\nFetch设置时使用：\n${wpsUserTokenForFetch}",
+		example: "Fetch设置时默认使用：\n${wpsUserTokenForFetch}",
 	},
 	{
 		name: "apiKey",
@@ -26,9 +25,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		defaultValue: "无",
 		valueType: "string",
 		description:
-			"同步到Airtable或者Vika时，必须提供一个相应的API Key。\n\n其中，Airtable的API Key，已经升级为Personal Access Token。",
-		example:
-			"同步设置时使用：\n${airtableAPIKeyForSync}\n\nFetch设置时使用：\n${airtableAPIKeyForFetch}",
+			"从Airtable获取数据时，必须提供一个相应的API Key。\n\n其中，Airtable的API Key，已经升级为Personal Access Token。",
+		example: "Fetch设置时使用：\n${airtableAPIKeyForFetch}",
 	},
 	{
 		name: "apiKey",
@@ -39,9 +37,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到Vika时，使用的API Key。",
-		example:
-			"同步设置时使用：\n${vikaAPIKeyForSync}\n\nFetch设置时使用：\n${vikaAPIKeyForFetch}",
+		description: "从Vika获取数据时，必须提供一个相应的API Key。",
+		example: "Fetch设置时默认使用：\n${vikaAPIKeyForFetch}",
 	},
 	{
 		name: "appID",
@@ -52,9 +49,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到飞书时，需要提供自建应用的APP ID",
-		example:
-			"同步设置时使用：\n${feishuAppIDForSync}\n\nFetch设置时使用：\n${feishuAppIDForFetch}",
+		description: "从飞书获取数据时，需要提供自建应用的APP ID",
+		example: "Fetch设置时默认使用：\n${feishuAppIDForFetch}",
 	},
 	{
 		name: "appID",
@@ -65,9 +61,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "钉钉自建应用的App ID",
-		example:
-			"同步设置时使用：\n${dingAppIDForSync}\n\nFetch设置时使用：\n${dingAppIDForFetch}",
+		description: "从钉钉获取数据时，需要提供自建应用的App ID",
+		example: "Fetch设置时默认使用：\n${dingAppIDForFetch}",
 	},
 	{
 		name: "appID",
@@ -78,9 +73,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "WPS自建应用的App ID",
-		example:
-			"同步设置时使用：\n${wpsAppIDForSync}\n\nFetch设置时使用：\n${wpsAppIDForFetch}",
+		description: "从WPS获取数据时，需要提供自建应用的App ID",
+		example: "Fetch设置时默认使用：\n${wpsAppIDForFetch}",
 	},
 	{
 		name: "appID",
@@ -91,9 +85,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到Lark时，需要提供自建应用的APP ID",
-		example:
-			"同步设置时使用：\n${larkAppIDForSync}\n\nFetch设置时使用：\n${larkAppIDForFetch}",
+		description: "从Lark获取数据时，需要提供自建应用的APP ID",
+		example: "Fetch设置时默认使用：\n${larkAppIDForFetch}",
 	},
 	{
 		name: "appKey",
@@ -104,9 +97,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "WPS自建应用的APP Key",
-		example:
-			"同步设置时使用：\n${wpsAppSecretForSync}\n\nFetch设置时使用：\n${wpsAppSecretForFetch}",
+		description: "从WPS获取数据时，需要提供自建应用的APP Key",
+		example: "Fetch设置时默认使用：\n${wpsAppSecretForFetch}",
 	},
 	{
 		name: "appSecret",
@@ -117,9 +109,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到飞书时，需要提供自建应用的APP Secret",
-		example:
-			"同步设置时使用：\n${feishuAppSecretForSync}\n\nFetch设置时使用：\n${feishuAppSecretForFetch}",
+		description: "从飞书获取数据时，需要提供自建应用的APP Secret",
+		example: "Fetch设置时默认使用：\n${feishuAppSecretForFetch}",
 	},
 	{
 		name: "appSecret",
@@ -130,9 +121,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "钉钉自建应用的App Secrect",
-		example:
-			"同步设置时使用：\n${dingAppSecretForSync}\n\nFetch设置时使用：\n${dingAppSecretForFetch}",
+		description: "从钉钉获取数据时，需要提供自建应用的App Secret",
+		example: "Fetch设置时默认使用：\n${dingAppSecretForFetch}",
 	},
 	{
 		name: "appSecret",
@@ -143,9 +133,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到Lark时，需要提供自建应用的APP Secret",
-		example:
-			"同步设置时使用：\n${larkAppSecretForSync}\n\nFetch设置时使用：\n${larkAppSecretForFetch}",
+		description: "从Lark获取数据时，需要提供自建应用的APP Secret",
+		example: "Fetch设置时默认使用：\n${larkAppSecretForFetch}",
 	},
 	{
 		name: "defaultAppToken",
@@ -157,9 +146,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		defaultValue: "无",
 		valueType: "string",
 		description:
-			"同步到飞书时，默认使用的多维表的App Token。\n\n多维表的App Token，相当于Airtable中的Base ID。",
-		example:
-			"同步设置时使用：\n${feishuBaseIDForSync}\n\nFetch设置时使用：\n${feishuBaseIDForFetch}",
+			"从飞书获取数据时，默认使用的多维表的App Token。\n\n多维表的App Token，相当于Airtable中的Base ID。",
+		example: "Fetch设置时默认使用：\n${feishuBaseIDForFetch}",
 	},
 	{
 		name: "defaultAppToken",
@@ -171,9 +159,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		defaultValue: "无",
 		valueType: "string",
 		description:
-			"同步到Lark时，默认使用的多维表的App Token。\n\n多维表的App Token，相当于Airtable中的Base ID。",
-		example:
-			"同步设置时使用：\n${larkBaseIDForSync}\n\nFetch设置时使用：\n${larkBaseIDForFetch}",
+			"从Lark获取数据时，默认使用的多维表的App Token。\n\n多维表的App Token，相当于Airtable中的Base ID。",
+		example: "Fetch设置时默认使用：\n${larkBaseIDForFetch}",
 	},
 	{
 		name: "defaultBaseID",
@@ -184,9 +171,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到Airtable时，默认使用的Base ID。",
-		example:
-			"同步设置时使用：\n${airtableBaseIDForSync}\n\nFetch设置时使用：\n${airtableBaseIDForFetch}",
+		description: "从Airtable获取数据时，默认使用的Base ID。",
+		example: "Fetch设置时默认使用：\n${airtableBaseIDForFetch}",
 	},
 	{
 		name: "defaultBaseID",
@@ -197,9 +183,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "默认的钉钉AI表格的Base ID",
-		example:
-			"同步设置时使用：\n${dingBaseIDForSync}\n\nFetch设置时使用：\n${dingBaseIDForFetch}",
+		description: "从钉钉获取数据时，默认使用的AI表格的Base ID",
+		example: "Fetch设置时默认使用：\n${dingBaseIDForFetch}",
 	},
 	{
 		name: "defaultFileID",
@@ -210,9 +195,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "默认的WPS多维表文件ID",
-		example:
-			"同步设置时使用：\n${wpsBaseIDForSync}\n\nFetch设置时使用：\n${wpsBaseIDForFetch}",
+		description: "从WPS获取数据时，默认使用的多维表文件ID",
+		example: "Fetch设置时默认使用：\n${wpsBaseIDForFetch}",
 	},
 	{
 		name: "defaultSheetID",
@@ -223,9 +207,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "默认的钉钉AI表格的Sheet ID",
-		example:
-			"同步设置时使用：\n${dingTableIDForSync}\n\nFetch设置时使用：\n${dingTableIDForFetch}",
+		description: "从钉钉获取数据时，默认使用的AI表格的Sheet ID",
+		example: "Fetch设置时默认使用：\n${dingTableIDForFetch}",
 	},
 	{
 		name: "defaultSheetID",
@@ -236,9 +219,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "默认的WPS多维表Sheet ID",
-		example:
-			"同步设置时使用：\n${wpsTableIDForSync}\n\nFetch设置时使用：\n${wpsTableIDForFetch}",
+		description: "从WPS获取数据时，默认使用的多维表Sheet ID",
+		example: "Fetch设置时默认使用：\n${wpsTableIDForFetch}",
 	},
 	{
 		name: "defaultTableID",
@@ -249,9 +231,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到Airtable时，默认使用的Table ID。",
-		example:
-			"同步设置时使用：\n${airtableTableIDForSync}\n\nFetch设置时使用：\n${airtableTableIDForFetch}",
+		description: "从Airtable获取数据时，默认使用的Table ID。",
+		example: "Fetch设置时默认使用：\n${airtableTableIDForFetch}",
 	},
 	{
 		name: "defaultTableID",
@@ -262,9 +243,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到飞书时，默认使用的Table ID。",
-		example:
-			"同步设置时使用：\n${feishuTableIDForSync}\n\nFetch设置时使用：\n${feishuTableIDForFetch}",
+		description: "从飞书获取数据时，默认使用的Table ID。",
+		example: "Fetch设置时默认使用：\n${feishuTableIDForFetch}",
 	},
 	{
 		name: "defaultTableID",
@@ -275,9 +255,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到Vika时，默认使用的Table ID。",
-		example:
-			"同步设置时使用：\n${vikaTableIDForSync}\n\nFetch设置时使用：\n${vikaTableIDForFetch}",
+		description: "从Vika获取数据时，默认使用的Table ID。",
+		example: "Fetch设置时默认使用：\n${vikaTableIDForFetch}",
 	},
 	{
 		name: "defaultTableID",
@@ -288,9 +267,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "同步到Lark时，默认使用的Table ID。",
-		example:
-			"同步设置时使用：\n${larkTableIDForSync}\n\nFetch设置时使用：\n${larkTableIDForFetch}",
+		description: "从Lark获取数据时，默认使用的Table ID。",
+		example: "Fetch设置时默认使用：\n${larkTableIDForFetch}",
 	},
 	{
 		name: "defaultViewID",
@@ -301,9 +279,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "默认的钉钉AI表格的View ID",
-		example:
-			"同步设置时使用：\n${dingViewIDForSync}\n\nFetch设置时使用：\n${dingViewIDForFetch}",
+		description: "从钉钉获取数据时，默认使用的AI表格的View ID",
+		example: "Fetch设置时默认使用：\n${dingViewIDForFetch}",
 	},
 	{
 		name: "userID",
@@ -314,9 +291,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "钉钉通讯录中的用户ID",
-		example:
-			"同步设置时使用：\n${dingUserIDForSync}\n\nFetch设置时使用：\n${dingUserIDForFetch}",
+		description: "从钉钉获取数据时，默认使用的通讯录中的用户ID",
+		example: "Fetch设置时默认使用：\n${dingUserIDForFetch}",
 	},
 	{
 		name: "sourceName",
@@ -327,9 +303,8 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "钉钉通讯录中的用户ID",
-		example:
-			"同步设置时使用：\n${dingUserIDForSync}\n\nFetch设置时使用：\n${dingUserIDForFetch}",
+		description: "用户自定义的数据来源名",
+		example: "我的闪念",
 	},
 	{
 		name: "targetFolder",
@@ -340,48 +315,43 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "钉钉通讯录中的用户ID",
-		example:
-			"同步设置时使用：\n${dingUserIDForSync}\n\nFetch设置时使用：\n${dingUserIDForFetch}",
+		description: "获取数据的存放路径",
+		example: "2-输出/闪念",
 	},
 	{
 		name: "baseID",
-
 		title: "Base ID",
 		platforms: ["Airtable"],
 		level: "Folder",
-		required: true,
+		required: false,
 		defaultValue: "无",
 		valueType: "string",
-		description: "Airtable Base ID for this folder",
-		example:
-			"同步设置时使用：\n${airtableBaseIDForSync}\n\nFetch设置时使用：\n${airtableBaseIDForFetch}",
+		description: "数据源的Base ID，如果为空，使用默认的Base ID。",
+		example: "appxxxxxx",
 	},
 	{
 		name: "appToken",
 
 		title: "App Token",
-		platforms: ["Feishu"],
+		platforms: ["Feishu", "Lark"],
 		level: "Folder",
-		required: true,
+		required: false,
 		defaultValue: "无",
 		valueType: "string",
-		description: "钉钉通讯录中的用户ID",
-		example:
-			"同步设置时使用：\n${dingUserIDForSync}\n\nFetch设置时使用：\n${dingUserIDForFetch}",
+		description: "数据源的App Token，如果为空，使用默认的App Token。",
+		example: "appxxxxxx",
 	},
 	{
 		name: "tableID",
 
 		title: "Table ID",
-		platforms: ["Airtable", "Vika", "Feishu"],
+		platforms: ["Airtable", "Vika", "Feishu", "Lark"],
 		level: "Folder",
-		required: true,
+		required: false,
 		defaultValue: "无",
 		valueType: "string",
-		description: "钉钉通讯录中的用户ID",
-		example:
-			"同步设置时使用：\n${dingUserIDForSync}\n\nFetch设置时使用：\n${dingUserIDForFetch}",
+		description: "数据源的Table ID，如果为空，使用默认的Table ID。",
+		example: "tblxxxxxx",
 	},
 	{
 		name: "viewID",
@@ -392,8 +362,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: "钉钉通讯录中的用户ID",
-		example:
-			"同步设置时使用：\n${dingUserIDForSync}\n\nFetch设置时使用：\n${dingUserIDForFetch}",
+		description: "数据源的View ID",
+		example: "vwxxxxxx",
 	},
 ];
