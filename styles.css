@@ -498,3 +498,8 @@
 .setting-item-description.ssg-setting-description {
     padding-left: 16px;
 }
+
+.ssg-folder-action-container {
+    display: flex;
+    justify-content: space-between;
+}

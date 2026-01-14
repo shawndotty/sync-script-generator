@@ -272,7 +272,10 @@ export class GeneratorView extends ItemView {
 		}
 
 		if (this.activeTab === "Folder") {
-			const addButton = formContainer.createEl("button", {
+			const folderActionsContainer = formContainer.createEl("div", {
+				cls: "ssg-folder-action-container",
+			});
+			const addButton = folderActionsContainer.createEl("button", {
 				text: t("GENERATOR_VIEW_BTN_ADD_FOLDER"),
 				cls: "mod-cta",
 			});
@@ -281,6 +284,25 @@ export class GeneratorView extends ItemView {
 				this.folderSettings.push({ folderName: "" });
 				this.renderMiddleColumn();
 			};
+
+			if (this.folderSettings.length > 4) {
+				const toggleAllButton = folderActionsContainer.createEl(
+					"button",
+					{
+						text: t("FETCH_GENERATOR_VIEW_BTN_TOGGLE_ALL_FOLDERS"),
+					}
+				);
+				toggleAllButton.style.marginLeft = "8px";
+				toggleAllButton.onclick = () => {
+					const allCollapsed = this.folderSettings.every(
+						(folder) => folder.collapsed
+					);
+					this.folderSettings.forEach((folder) => {
+						folder.collapsed = !allCollapsed;
+					});
+					this.renderMiddleColumn();
+				};
+			}
 
 			this.folderSettings.forEach((folder, index) => {
 				const folderDiv = formContainer.createDiv({

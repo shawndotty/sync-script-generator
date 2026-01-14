@@ -501,6 +501,8 @@ export default {
 	FETCH_GENERATOR_VIEW_BTN_PRESETS: "Load Preset",
 	FETCH_GENERATOR_VIEW_BTN_REMOVE: "Remove",
 	FETCH_GENERATOR_VIEW_BTN_SAVE_PRESET: "Save Preset",
+	FETCH_GENERATOR_VIEW_BTN_TOGGLE_ALL_FOLDERS:
+		"Expand/Collapse all folder cards",
 	FETCH_GENERATOR_VIEW_DESC_PLACEHOLDER:
 		"Select a setting to view its description here.",
 	FETCH_GENERATOR_VIEW_DESC_TITLE: "Explanation",
@@ -739,7 +741,8 @@ export default {
 		"Default template file path for the ${platform} platform",
 	SETTINGS_DEFAULT_TEMPLATE_NAME: "${platform} Default Template",
 	SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER: "No template selected",
-	SETTINGS_SCRIPT_PREPEND_CONTENT_NAME: "Content to prepend to generated scripts",
+	SETTINGS_SCRIPT_PREPEND_CONTENT_NAME:
+		"Content to prepend to generated scripts",
 	SETTINGS_SCRIPT_PREPEND_CONTENT_DESC:
 		"Multi-line text that will be inserted at the beginning of every generated script.",
 	SETTINGS_SCRIPT_PREPEND_CONTENT_PLACEHOLDER:
