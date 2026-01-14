@@ -21,7 +21,8 @@ import { ImportModal } from "./ImportModal";
 import { ScriptPreviewModal } from "./ScriptPreviewModal";
 import { FetchScriptEngine } from "./FetchScriptEngine";
 import { FolderPickerModal } from "./ui/pickers/folder-picker";
-import { FetchPresetManagerModal } from "./FetchPresetManagerModal";
+import { FetchPresetLoadModal } from "./FetchPresetLoadModal";
+import { FetchPresetSaveModal } from "./FetchPresetSaveModal";
 import MyPlugin from "./main";
 import { t } from "./lang/helpers";
 
@@ -138,7 +139,12 @@ export class FetchGeneratorView extends ItemView {
 		new ButtonComponent(actionBar)
 			.setButtonText(t("FETCH_GENERATOR_VIEW_BTN_PRESETS"))
 			.setIcon("bookmark")
-			.onClick(() => this.openPresetManager());
+			.onClick(() => this.openPresetLoadModal());
+
+		new ButtonComponent(actionBar)
+			.setButtonText(t("FETCH_GENERATOR_VIEW_BTN_SAVE_PRESET"))
+			.setIcon("save")
+			.onClick(() => this.openPresetSaveModal());
 
 		new ButtonComponent(actionBar)
 			.setButtonText(t("FETCH_GENERATOR_VIEW_BTN_GENERATE"))
@@ -430,18 +436,25 @@ export class FetchGeneratorView extends ItemView {
 		).open();
 	}
 
-	openPresetManager() {
+	openPresetSaveModal() {
 		const currentSettings = {
 			platform: this.platform,
 			rootSettings: this.rootSettings,
 			folderSettings: this.folderSettings,
 		};
 
-		new FetchPresetManagerModal(
+		new FetchPresetSaveModal(
 			this.app,
 			this.plugin.settings.fetchPresets || [],
 			currentSettings,
-			(preset) => this.savePreset(preset),
+			(preset) => this.savePreset(preset)
+		).open();
+	}
+
+	openPresetLoadModal() {
+		new FetchPresetLoadModal(
+			this.app,
+			this.plugin.settings.fetchPresets || [],
 			(preset) => this.loadPreset(preset),
 			(presetId) => this.deletePreset(presetId)
 		).open();
