@@ -29,16 +29,14 @@ export class FetchPresetSaveModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		this.modalEl.addClass("mod-preset-manager");
+		this.titleEl.setText(t("FETCH_PRESET_MANAGER_SAVE_TITLE"));
 		contentEl.empty();
 		contentEl.addClass("preset-manager-modal");
 
-		contentEl.createEl("h2", { text: t("FETCH_PRESET_MANAGER_TITLE") });
+		// contentEl.createEl("h2", { text: t("FETCH_PRESET_MANAGER_TITLE") });
 
 		const saveSection = contentEl.createDiv({
 			cls: "preset-save-section",
-		});
-		saveSection.createEl("h3", {
-			text: t("FETCH_PRESET_MANAGER_SAVE_TITLE"),
 		});
 
 		const saveContainer = saveSection.createDiv({
@@ -100,10 +98,10 @@ export class FetchPresetSaveModal extends Modal {
 		});
 
 		// Footer
-		const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
-		new ButtonComponent(footer)
-			.setButtonText(t("FETCH_PRESET_MANAGER_BTN_CLOSE"))
-			.onClick(() => this.close());
+		// const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
+		// new ButtonComponent(footer)
+		// 	.setButtonText(t("FETCH_PRESET_MANAGER_BTN_CLOSE"))
+		// 	.onClick(() => this.close());
 	}
 
 	onClose() {

@@ -15,9 +15,9 @@ class FetchPresetDeleteConfirmModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		contentEl.empty();
+		this.titleEl.setText(t("FETCH_PRESET_MANAGER_TITLE"));
 		contentEl.addClass("preset-manager-modal");
 
-		contentEl.createEl("h2", { text: t("FETCH_PRESET_MANAGER_TITLE") });
 		contentEl.createEl("p", {
 			text: this.message,
 			cls: "preset-confirm-message",
@@ -60,17 +60,17 @@ export class FetchPresetLoadModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		this.modalEl.addClass("mod-preset-manager");
+		this.titleEl.setText(t("FETCH_PRESET_MANAGER_TITLE"));
+
 		contentEl.empty();
 		contentEl.addClass("preset-manager-modal");
-
-		contentEl.createEl("h2", { text: t("FETCH_PRESET_MANAGER_TITLE") });
 
 		const loadSection = contentEl.createDiv({
 			cls: "preset-load-section",
 		});
-		loadSection.createEl("h3", {
-			text: t("FETCH_PRESET_MANAGER_LOAD_TITLE"),
-		});
+		// loadSection.createEl("h3", {
+		// 	text: t("FETCH_PRESET_MANAGER_LOAD_TITLE"),
+		// });
 
 		if (this.presets.length === 0) {
 			loadSection.createEl("p", {
@@ -168,10 +168,10 @@ export class FetchPresetLoadModal extends Modal {
 		}
 
 		// Footer
-		const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
-		new ButtonComponent(footer)
-			.setButtonText(t("FETCH_PRESET_MANAGER_BTN_CLOSE"))
-			.onClick(() => this.close());
+		// const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
+		// new ButtonComponent(footer)
+		// 	.setButtonText(t("FETCH_PRESET_MANAGER_BTN_CLOSE"))
+		// 	.onClick(() => this.close());
 	}
 
 	onClose() {
