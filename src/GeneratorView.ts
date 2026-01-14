@@ -117,6 +117,8 @@ export class GeneratorView extends ItemView {
 		const actionBar = this.middleContainer.createDiv({ cls: "action-bar" });
 		new ButtonComponent(actionBar)
 			.setButtonText(t("GENERATOR_VIEW_BTN_IMPORT_TEMPLATE"))
+			.setIcon("import")
+			.setTooltip(t("GENERATOR_VIEW_BTN_IMPORT_TEMPLATE"))
 			.onClick(() => this.openImportModal());
 
 		// Load Default Template button (only show if default template is set)
@@ -125,17 +127,20 @@ export class GeneratorView extends ItemView {
 			new ButtonComponent(actionBar)
 				.setButtonText(t("GENERATOR_VIEW_BTN_LOAD_DEFAULT"))
 				.setIcon("file-down")
+				.setTooltip(t("GENERATOR_VIEW_BTN_LOAD_DEFAULT"))
 				.onClick(() => this.loadDefaultTemplate());
 		}
 
 		new ButtonComponent(actionBar)
 			.setButtonText(t("GENERATOR_VIEW_BTN_PRESETS"))
 			.setIcon("bookmark")
+			.setTooltip(t("GENERATOR_VIEW_BTN_PRESETS"))
 			.onClick(() => this.openPresetLoadModal());
 
 		new ButtonComponent(actionBar)
 			.setButtonText(t("GENERATOR_VIEW_BTN_SAVE_PRESET"))
 			.setIcon("save")
+			.setTooltip(t("GENERATOR_VIEW_BTN_SAVE_PRESET"))
 			.onClick(() => this.openPresetSaveModal());
 
 		new ButtonComponent(actionBar)
