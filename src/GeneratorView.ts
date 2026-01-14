@@ -15,7 +15,8 @@ import { ObjectEditModal } from "./ObjectEditModal";
 import { ArrayEditModal } from "./ArrayEditModal";
 import { ScriptEngine } from "./ScriptEngine";
 import { FolderPickerModal } from "./ui/pickers/folder-picker";
-import { PresetManagerModal } from "./PresetManagerModal";
+import { PresetLoadModal } from "./PresetLoadModal";
+import { PresetSaveModal } from "./PresetSaveModal";
 import MyPlugin from "./main";
 import { t } from "./lang/helpers";
 
@@ -130,7 +131,12 @@ export class GeneratorView extends ItemView {
 		new ButtonComponent(actionBar)
 			.setButtonText(t("GENERATOR_VIEW_BTN_PRESETS"))
 			.setIcon("bookmark")
-			.onClick(() => this.openPresetManager());
+			.onClick(() => this.openPresetLoadModal());
+
+		new ButtonComponent(actionBar)
+			.setButtonText(t("GENERATOR_VIEW_BTN_SAVE_PRESET"))
+			.setIcon("save")
+			.onClick(() => this.openPresetSaveModal());
 
 		new ButtonComponent(actionBar)
 			.setButtonText(t("GENERATOR_VIEW_BTN_GENERATE"))
@@ -662,7 +668,7 @@ export class GeneratorView extends ItemView {
 		).open();
 	}
 
-	openPresetManager() {
+	openPresetSaveModal() {
 		const currentSettings = {
 			platform: this.platform,
 			rootSettings: this.rootSettings,
@@ -670,11 +676,18 @@ export class GeneratorView extends ItemView {
 			folderSettings: this.folderSettings,
 		};
 
-		new PresetManagerModal(
+		new PresetSaveModal(
 			this.app,
 			this.plugin.settings.presets || [],
 			currentSettings,
-			(preset) => this.savePreset(preset),
+			(preset) => this.savePreset(preset)
+		).open();
+	}
+
+	openPresetLoadModal() {
+		new PresetLoadModal(
+			this.app,
+			this.plugin.settings.presets || [],
 			(preset) => this.loadPreset(preset),
 			(presetId) => this.deletePreset(presetId)
 		).open();
