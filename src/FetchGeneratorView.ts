@@ -10,7 +10,7 @@ import {
 import {
 	Platform,
 	FetchOption,
-	FolderSetting,
+	FetchFolderSetting,
 	FetchConfigPreset,
 } from "./types";
 import {
@@ -31,7 +31,7 @@ export class FetchGeneratorView extends ItemView {
 	platform: Platform = "Airtable";
 	rootSettings: Record<string, string> = {};
 	vaultSettings: Record<string, any> = {};
-	folderSettings: FolderSetting[] = [];
+	folderSettings: FetchFolderSetting[] = [];
 	activeOption: FetchOption | null = null;
 	importedFile: TFile | null = null;
 	activeTab: "Root" | "Vault" | "Folder" = "Root";
@@ -236,7 +236,7 @@ export class FetchGeneratorView extends ItemView {
 			});
 			addButton.style.marginBottom = "20px";
 			addButton.onclick = () => {
-				this.folderSettings.push({ folderName: "" });
+				this.folderSettings.push({ targetFolder: "" });
 				this.renderMiddleColumn();
 			};
 
@@ -261,7 +261,7 @@ export class FetchGeneratorView extends ItemView {
 						`${t("FETCH_GENERATOR_VIEW_FOLDER_HEADER_PREFIX")} ${
 							index + 1
 						}` +
-						(folder.folderName ? `: ${folder.folderName}` : ""),
+						(folder.targetFolder ? `: ${folder.targetFolder}` : ""),
 				});
 
 				header.onclick = (e) => {
@@ -289,8 +289,8 @@ export class FetchGeneratorView extends ItemView {
 						text.setPlaceholder(
 							t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_PLACEHOLDER")
 						)
-							.setValue(folder.folderName)
-							.onChange((val) => (folder.folderName = val));
+							.setValue(folder.targetFolder)
+							.onChange((val) => (folder.targetFolder = val));
 						this.addFocusListener(text.inputEl, {
 							name: "targetFolder",
 							title: t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_NAME"),

@@ -48,6 +48,11 @@ export interface FolderSetting {
 	[key: string]: any;
 }
 
+export interface FetchFolderSetting {
+	collapsed?: boolean;
+	[key: string]: any;
+}
+
 export interface SyncScriptSettings {
 	platform: Platform;
 	rootSettings: Record<string, string>;
@@ -69,7 +74,7 @@ export interface ConfigPreset {
 export interface FetchScriptSettings {
 	platform: Platform;
 	rootSettings: Record<string, string>;
-	folderSettings: FolderSetting[];
+	folderSettings: FetchFolderSetting[];
 }
 
 export interface FetchConfigPreset {

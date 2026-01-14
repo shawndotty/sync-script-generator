@@ -1,4 +1,4 @@
-import { Platform, FolderSetting } from "./types";
+import { Platform, FetchFolderSetting } from "./types";
 import { FETCH_OPTIONS } from "./constantsFetch";
 import { Notice } from "obsidian";
 
@@ -7,7 +7,7 @@ export class FetchScriptEngine {
 		platform: Platform,
 		rootSettings: Record<string, string>,
 		vaultSettings: Record<string, any>,
-		folderSettings: FolderSetting[],
+		folderSettings: FetchFolderSetting[],
 		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO",
 		prependContent: string = ""
 	): string {
@@ -259,11 +259,11 @@ export class FetchScriptEngine {
 	static parse(content: string): {
 		platform: Platform | null;
 		rootSettings: Record<string, string>;
-		folderSettings: FolderSetting[];
+		folderSettings: FetchFolderSetting[];
 	} {
 		let platform: Platform | null = null;
 		let rootSettings: Record<string, string> = {};
-		let folderSettings: FolderSetting[] = [];
+		let folderSettings: FetchFolderSetting[] = [];
 
 		// 1. Detect Platform
 		const platformMatch = content.match(/await tp\.user\.ObFetch(\w+)\(/);
