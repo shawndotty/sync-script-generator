@@ -505,7 +505,8 @@ export class FetchGeneratorView extends ItemView {
 			this.platform,
 			this.rootSettings,
 			this.vaultSettings,
-			this.folderSettings
+			this.folderSettings,
+			this.plugin.settings.syncPlatform || "IOTO"
 		);
 		new ScriptPreviewModal(
 			this.app,

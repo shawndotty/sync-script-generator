@@ -45,6 +45,7 @@ export class ScriptEngine {
 				"dingBaseIDForSync",
 				"dingTableIDForSync",
 				"dingViewIDForSync",
+				"dingUserIDForSync",
 			],
 		};
 
@@ -103,6 +104,17 @@ export class ScriptEngine {
 					platform === "Feishu"
 						? "feishuBaseIDForSync"
 						: "larkBaseIDForSync",
+				appKey: platform === "WPS" ? "wpsAppSecretForSync" : "",
+				accessToken: platform === "WPS" ? "wpsUserTokenForSync" : "",
+				defaultFileID: platform === "WPS" ? "wpsBaseIDForSync" : "",
+				defaultSheetID:
+					platform === "WPS"
+						? "wpsTableIDForSync"
+						: platform === "Ding"
+						? "dingTableIDForSync"
+						: "",
+				defaultViewID: platform === "Ding" ? "dingViewIDForSync" : "",
+				userID: platform === "Ding" ? "dingUserIDForSync" : "",
 			};
 			const mappedVar = varMapping[opt.name];
 
@@ -135,6 +147,7 @@ export class ScriptEngine {
 			script += "    syncSettings: {\n";
 			vaultOptions.forEach((opt) => {
 				let val = vaultSettings[opt.name];
+				let isDefault = false;
 				if (val === undefined) {
 					// Parse default value if necessary
 					if (
@@ -152,19 +165,42 @@ export class ScriptEngine {
 						typeof opt.defaultValue === "string" &&
 						opt.defaultValue.startsWith("{")
 					) {
+						isDefault = true;
 						try {
 							val = JSON.parse(opt.defaultValue);
 						} catch (e) {
 							val = {};
 						}
 					} else if (opt.valueType === "boolean") {
+						isDefault = true;
 						val = opt.defaultValue === "true";
 					} else {
+						isDefault = true;
 						val = opt.defaultValue === "无" ? "" : opt.defaultValue;
+					}
+				} else {
+					const normalizedDefault =
+						opt.defaultValue === "无" ? "" : opt.defaultValue;
+					if (val === normalizedDefault) {
+						isDefault = true;
 					}
 				}
 
-				if (val !== undefined) {
+				const isEmptyString = val === "";
+				const isEmptyArray = Array.isArray(val) && val.length === 0;
+				const isEmptyObject =
+					val &&
+					typeof val === "object" &&
+					!Array.isArray(val) &&
+					Object.keys(val).length === 0;
+
+				if (
+					val !== undefined &&
+					!isDefault &&
+					!isEmptyString &&
+					!isEmptyArray &&
+					!isEmptyObject
+				) {
 					script +=
 						"        " +
 						opt.name +
@@ -185,17 +221,19 @@ export class ScriptEngine {
 			script += "    tables: [\n";
 			folderSettings.forEach((folder, i) => {
 				script += "        {\n";
-				const entries = Object.entries(folder);
+				const entries = Object.entries(folder).filter(
+					([key]) => key !== "collapsed"
+				);
 				entries.forEach(([key, val], j) => {
-					if (key === "collapsed") return;
+					const renderedVal =
+						typeof val === "string" && /^\$\{.*\}$/.test(val)
+							? "`" + val + "`"
+							: JSON.stringify(val, null, 4);
 					script +=
 						"            " +
 						key +
 						": " +
-						this.indentMultiline(
-							JSON.stringify(val, null, 4),
-							"            "
-						) +
+						this.indentMultiline(renderedVal, "            ") +
 						(j < entries.length - 1 ? ",\n" : "\n");
 				});
 				script +=

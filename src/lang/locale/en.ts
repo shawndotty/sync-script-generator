@@ -520,6 +520,7 @@ export default {
 	FETCH_GENERATOR_VIEW_SETTINGS_SUFFIX: "Settings",
 	FETCH_GENERATOR_VIEW_SETTINGS_TITLE_SUFFIX: "Get Settings",
 	FETCH_GENERATOR_VIEW_TAB_FOLDER: "Folder-level",
+	FETCH_GENERATOR_VIEW_TAB_VAULT: "Vault-level",
 	FETCH_GENERATOR_VIEW_TAB_ROOT: "Necessary",
 	FETCH_GENERATOR_VIEW_TARGET_FOLDER_DESC:
 		"The path of the target folder where you want to obtain the data.",

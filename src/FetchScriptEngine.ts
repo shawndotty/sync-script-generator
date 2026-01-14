@@ -7,7 +7,8 @@ export class FetchScriptEngine {
 		platform: Platform,
 		rootSettings: Record<string, string>,
 		vaultSettings: Record<string, any>,
-		folderSettings: FolderSetting[]
+		folderSettings: FolderSetting[],
+		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO"
 	): string {
 		let script = "";
 		const varName = platform.toLowerCase();
@@ -51,9 +52,11 @@ export class FetchScriptEngine {
 
 		const rootVars = platformRootVars[platform] || [];
 		if (rootVars.length > 0) {
+			const pluginName =
+				syncPlatform === "IOTO" ? "ioto-settings" : "ob-sync-with-mdb";
 			script += `const {${rootVars.join(
 				", "
-			)}} = app.plugins.plugins["ioto-settings"].settings;\n\n`;
+			)}} = app.plugins.plugins[\"${pluginName}\"].settings;\n\n`;
 		}
 
 		script += `const ${varName} = {\n`;
@@ -147,6 +150,7 @@ export class FetchScriptEngine {
 			script += "    syncSettings: {\n";
 			vaultOptions.forEach((opt) => {
 				let val = vaultSettings[opt.name];
+				let isDefault = false;
 				if (val === undefined) {
 					// Parse default value if necessary
 					if (
@@ -154,17 +158,39 @@ export class FetchScriptEngine {
 						typeof opt.defaultValue === "string" &&
 						opt.defaultValue.startsWith("{")
 					) {
+						isDefault = true;
 						try {
 							val = JSON.parse(opt.defaultValue);
 						} catch (e) {
 							val = {};
 						}
 					} else {
+						isDefault = true;
 						val = opt.defaultValue === "无" ? "" : opt.defaultValue;
+					}
+				} else {
+					const normalizedDefault =
+						opt.defaultValue === "无" ? "" : opt.defaultValue;
+					if (val === normalizedDefault) {
+						isDefault = true;
 					}
 				}
 
-				if (val !== undefined) {
+				const isEmptyString = val === "";
+				const isEmptyArray = Array.isArray(val) && val.length === 0;
+				const isEmptyObject =
+					val &&
+					typeof val === "object" &&
+					!Array.isArray(val) &&
+					Object.keys(val).length === 0;
+
+				if (
+					val !== undefined &&
+					!isDefault &&
+					!isEmptyString &&
+					!isEmptyArray &&
+					!isEmptyObject
+				) {
 					script +=
 						"        " +
 						opt.name +
@@ -185,17 +211,19 @@ export class FetchScriptEngine {
 			script += "    tables: [\n";
 			folderSettings.forEach((folder, i) => {
 				script += "        {\n";
-				const entries = Object.entries(folder);
+				const entries = Object.entries(folder).filter(
+					([key]) => key !== "collapsed"
+				);
 				entries.forEach(([key, val], j) => {
-					if (key === "collapsed") return;
+					const renderedVal =
+						typeof val === "string" && /^\$\{.*\}$/.test(val)
+							? "`" + val + "`"
+							: JSON.stringify(val, null, 4);
 					script +=
 						"            " +
 						key +
 						": " +
-						this.indentMultiline(
-							JSON.stringify(val, null, 4),
-							"            "
-						) +
+						this.indentMultiline(renderedVal, "            ") +
 						(j < entries.length - 1 ? ",\n" : "\n");
 				});
 				script +=
@@ -213,7 +241,7 @@ export class FetchScriptEngine {
 			methodName +
 			"(tp, this.app, " +
 			varName +
-			"{fetchOnly: true}" +
+			", {fetchOnly: true}" +
 			");\n";
 
 		// 格式化缩进：保留原有缩进结构，整体向右缩进 4 格
