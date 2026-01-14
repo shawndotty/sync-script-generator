@@ -2,6 +2,44 @@ import { App, Modal, ButtonComponent, Notice } from "obsidian";
 import { FetchConfigPreset, Platform } from "./types";
 import { t } from "./lang/helpers";
 
+class FetchPresetDeleteConfirmModal extends Modal {
+	private message: string;
+	private onConfirm: () => void;
+
+	constructor(app: App, message: string, onConfirm: () => void) {
+		super(app);
+		this.message = message;
+		this.onConfirm = onConfirm;
+	}
+
+	onOpen() {
+		const { contentEl } = this;
+		contentEl.empty();
+		contentEl.addClass("preset-manager-modal");
+
+		contentEl.createEl("h2", { text: t("FETCH_PRESET_MANAGER_TITLE") });
+		contentEl.createEl("p", {
+			text: this.message,
+			cls: "preset-confirm-message",
+		});
+
+		const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
+
+		new ButtonComponent(footer)
+			.setButtonText(t("FETCH_PRESET_MANAGER_BTN_CLOSE"))
+			.onClick(() => this.close());
+
+		new ButtonComponent(footer)
+			.setButtonText(t("FETCH_PRESET_MANAGER_BTN_DELETE"))
+			.setWarning()
+			.setCta()
+			.onClick(() => {
+				this.onConfirm();
+				this.close();
+			});
+	}
+}
+
 export class FetchPresetLoadModal extends Modal {
 	private presets: FetchConfigPreset[];
 	private onLoadPreset: (preset: FetchConfigPreset) => void;
@@ -107,21 +145,23 @@ export class FetchPresetLoadModal extends Modal {
 						.setButtonText(t("FETCH_PRESET_MANAGER_BTN_DELETE"))
 						.setWarning();
 					deleteBtn.onClick(() => {
-						if (
-							confirm(
-								t(
-									"FETCH_PRESET_MANAGER_CONFIRM_DELETE"
-								).replace("${name}", preset.name)
-							)
-						) {
-							this.onDeletePreset(preset.id);
-							new Notice(
-								t(
-									"FETCH_PRESET_MANAGER_NOTICE_DELETED"
-								).replace("${name}", preset.name)
-							);
-							this.close();
-						}
+						const message = t(
+							"FETCH_PRESET_MANAGER_CONFIRM_DELETE"
+						).replace("${name}", preset.name);
+
+						new FetchPresetDeleteConfirmModal(
+							this.app,
+							message,
+							() => {
+								this.onDeletePreset(preset.id);
+								new Notice(
+									t(
+										"FETCH_PRESET_MANAGER_NOTICE_DELETED"
+									).replace("${name}", preset.name)
+								);
+								this.close();
+							}
+						).open();
 					});
 				});
 			});
