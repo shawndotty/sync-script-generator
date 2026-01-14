@@ -9,6 +9,7 @@ export interface SyncScriptGeneratorSettings {
 	presets: ConfigPreset[];
 	fetchPresets: FetchConfigPreset[];
 	syncPlatform: "IOTO" | "obSyncWithMDB";
+	scriptPrependContent: string;
 	defaultSyncTemplateAirtable: string;
 	defaultSyncTemplateFeishu: string;
 	defaultSyncTemplateVika: string;
@@ -28,6 +29,7 @@ export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 	presets: [],
 	fetchPresets: [],
 	syncPlatform: "IOTO",
+	scriptPrependContent: "",
 	defaultSyncTemplateAirtable: "",
 	defaultSyncTemplateFeishu: "",
 	defaultSyncTemplateVika: "",
@@ -130,13 +132,29 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 					});
 			});
 
+		new Setting(containerEl)
+			.setName(t("SETTINGS_SCRIPT_PREPEND_CONTENT_NAME"))
+			.setDesc(t("SETTINGS_SCRIPT_PREPEND_CONTENT_DESC"))
+			.addTextArea((text) => {
+				text.setPlaceholder(
+					t("SETTINGS_SCRIPT_PREPEND_CONTENT_PLACEHOLDER")
+				)
+					.setValue(this.plugin.settings.scriptPrependContent || "")
+					.onChange(async (value) => {
+						this.plugin.settings.scriptPrependContent = value;
+						await this.plugin.saveSettings();
+					});
+				text.inputEl.style.width = "100%";
+				text.inputEl.rows = 4;
+			});
+
 		containerEl.createEl("h2", {
 			text: t("SETTINGS_DEFAULT_SYNC_TEMPLATES_TITLE"),
 		});
 
 		containerEl.createEl("p", {
 			text: t("SETTINGS_DEFAULT_SYNC_TEMPLATES_DESC"),
-			cls: "setting-item-description",
+			cls: "setting-item-description ssg-setting-description",
 		});
 
 		const platforms: Platform[] = [
@@ -153,14 +171,21 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 
 			new Setting(containerEl)
 				.setName(
-					t("SETTINGS_DEFAULT_TEMPLATE_NAME").replace("${platform}", platform)
+					t("SETTINGS_DEFAULT_TEMPLATE_NAME").replace(
+						"${platform}",
+						platform
+					)
 				)
 				.setDesc(
-					t("SETTINGS_DEFAULT_TEMPLATE_DESC").replace("${platform}", platform)
+					t("SETTINGS_DEFAULT_TEMPLATE_DESC").replace(
+						"${platform}",
+						platform
+					)
 				)
 				.addText((text) => {
-					text
-						.setPlaceholder(t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER"))
+					text.setPlaceholder(
+						t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER")
+					)
 						.setValue(currentValue)
 						.onChange(async (value) => {
 							this.setTemplatePath(platform, value);
@@ -198,7 +223,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 
 		containerEl.createEl("p", {
 			text: t("SETTINGS_DEFAULT_FETCH_TEMPLATES_DESC"),
-			cls: "setting-item-description",
+			cls: "setting-item-description ssg-setting-description",
 		});
 
 		platforms.forEach((platform) => {
@@ -218,8 +243,9 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 					)
 				)
 				.addText((text) => {
-					text
-						.setPlaceholder(t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER"))
+					text.setPlaceholder(
+						t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER")
+					)
 						.setValue(currentValue)
 						.onChange(async (value) => {
 							this.setFetchTemplatePath(platform, value);

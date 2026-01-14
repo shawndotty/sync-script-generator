@@ -663,7 +663,8 @@ export class GeneratorView extends ItemView {
 			this.rootSettings,
 			this.vaultSettings,
 			this.folderSettings,
-			this.plugin.settings.syncPlatform || "IOTO"
+			this.plugin.settings.syncPlatform || "IOTO",
+			this.plugin.settings.scriptPrependContent || ""
 		);
 		new ScriptPreviewModal(
 			this.app,

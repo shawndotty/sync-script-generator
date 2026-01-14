@@ -739,6 +739,11 @@ export default {
 		"Default template file path for the ${platform} platform",
 	SETTINGS_DEFAULT_TEMPLATE_NAME: "${platform} Default Template",
 	SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER: "No template selected",
+	SETTINGS_SCRIPT_PREPEND_CONTENT_NAME: "Content to prepend to generated scripts",
+	SETTINGS_SCRIPT_PREPEND_CONTENT_DESC:
+		"Multi-line text that will be inserted at the beginning of every generated script.",
+	SETTINGS_SCRIPT_PREPEND_CONTENT_PLACEHOLDER:
+		"Optional. For example, common imports, helper functions, or comments.",
 	SETTINGS_SYNC_PLATFORM_DESC: "Select synchronization platform",
 	SETTINGS_SYNC_PLATFORM_NAME: "Synchronization platform",
 	SETTINGS_TOOLTIP_CLEAR: "Clear",

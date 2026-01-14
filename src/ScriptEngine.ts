@@ -8,9 +8,13 @@ export class ScriptEngine {
 		rootSettings: Record<string, string>,
 		vaultSettings: Record<string, any>,
 		folderSettings: FolderSetting[],
-		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO"
+		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO",
+		prependContent: string = ""
 	): string {
 		let script = "";
+
+		script += prependContent + "\n\n";
+
 		const varName = platform.toLowerCase();
 
 		// Root variables mapping
