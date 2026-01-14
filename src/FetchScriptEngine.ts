@@ -8,10 +8,13 @@ export class FetchScriptEngine {
 		rootSettings: Record<string, string>,
 		vaultSettings: Record<string, any>,
 		folderSettings: FolderSetting[],
-		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO"
+		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO",
+		prependContent: string = ""
 	): string {
 		let script = "";
 		const varName = platform.toLowerCase();
+
+		script += prependContent + "\n\n";
 
 		// Root variables mapping
 		const platformRootVars: Record<Platform, string[]> = {
