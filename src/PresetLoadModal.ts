@@ -15,9 +15,9 @@ class PresetDeleteConfirmModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		contentEl.empty();
+		this.titleEl.setText(t("PRESET_MANAGER_TITLE"));
 		contentEl.addClass("preset-manager-modal");
 
-		contentEl.createEl("h2", { text: t("PRESET_MANAGER_TITLE") });
 		contentEl.createEl("p", {
 			text: this.message,
 			cls: "preset-confirm-message",
@@ -61,9 +61,9 @@ export class PresetLoadModal extends Modal {
 		const { contentEl } = this;
 		this.modalEl.addClass("mod-preset-manager"); // Reusing style for now
 		contentEl.empty();
-		contentEl.addClass("preset-manager-modal"); // Reusing style for now
 
-		contentEl.createEl("h2", { text: t("PRESET_MANAGER_LOAD_TITLE") });
+		this.titleEl.setText(t("PRESET_MANAGER_LOAD_TITLE"));
+		contentEl.addClass("preset-manager-modal"); // Reusing style for now
 
 		const loadSection = contentEl.createDiv({
 			cls: "preset-load-section",
@@ -162,10 +162,10 @@ export class PresetLoadModal extends Modal {
 		}
 
 		// Footer
-		const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
-		new ButtonComponent(footer)
-			.setButtonText(t("PRESET_MANAGER_BTN_CLOSE"))
-			.onClick(() => this.close());
+		// const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
+		// new ButtonComponent(footer)
+		// 	.setButtonText(t("PRESET_MANAGER_BTN_CLOSE"))
+		// 	.onClick(() => this.close());
 	}
 
 	onClose() {

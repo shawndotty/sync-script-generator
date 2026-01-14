@@ -25,7 +25,7 @@ export class ScriptPreviewModal extends Modal {
 
 	onOpen() {
 		this.modalEl.addClass("mod-script-preview");
-		this.contentEl.createEl("h2", { text: t("SCRIPT_PREVIEW_TITLE") });
+		this.titleEl.setText(t("SCRIPT_PREVIEW_TITLE"));
 
 		const editorContainer = this.contentEl.createDiv({
 			cls: "script-editor-container",

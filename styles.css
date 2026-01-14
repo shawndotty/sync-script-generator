@@ -403,12 +403,11 @@
 .modal.mod-preset-manager .modal-content {
     display: flex;
     flex-direction: column;
-    padding: 24px;
     overflow-y: auto;
 }
 
 .preset-manager-modal h2 {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .preset-manager-modal .settings-tabs {
@@ -440,6 +439,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    padding: 12px 0;
 }
 
 .preset-manager-modal .presets-list {
@@ -452,6 +452,10 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.preset-manager-modal .preset-platform-group h4 {
+    margin: 0px;
 }
 
 .preset-manager-modal .preset-item {
@@ -481,11 +485,12 @@
 
 .preset-manager-modal .preset-actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
 }
 
 .preset-manager-modal .preset-modal-footer {
     display: flex;
     justify-content: flex-end;
     margin-top: 8px;
+    gap: 10px;
 }
