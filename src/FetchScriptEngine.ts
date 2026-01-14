@@ -6,6 +6,7 @@ export class FetchScriptEngine {
 	static generate(
 		platform: Platform,
 		rootSettings: Record<string, string>,
+		vaultSettings: Record<string, any>,
 		folderSettings: FolderSetting[]
 	): string {
 		let script = "";
@@ -134,6 +135,49 @@ export class FetchScriptEngine {
 					"    " + opt.name + ": " + JSON.stringify(val) + ",\n";
 			}
 		});
+
+		// Vault Settings
+		const vaultOptions = FETCH_OPTIONS.filter(
+			(o) =>
+				o.level === "Vault" &&
+				(o.platforms.includes(platform) || o.platforms.length === 0)
+		);
+		if (vaultOptions.length > 0) {
+			script += "\n    // Vault Settings\n";
+			script += "    syncSettings: {\n";
+			vaultOptions.forEach((opt) => {
+				let val = vaultSettings[opt.name];
+				if (val === undefined) {
+					// Parse default value if necessary
+					if (
+						opt.valueType === "object" &&
+						typeof opt.defaultValue === "string" &&
+						opt.defaultValue.startsWith("{")
+					) {
+						try {
+							val = JSON.parse(opt.defaultValue);
+						} catch (e) {
+							val = {};
+						}
+					} else {
+						val = opt.defaultValue === "无" ? "" : opt.defaultValue;
+					}
+				}
+
+				if (val !== undefined) {
+					script +=
+						"        " +
+						opt.name +
+						": " +
+						this.indentMultiline(
+							JSON.stringify(val, null, 4),
+							"        "
+						) +
+						",\n";
+				}
+			});
+			script += "    },\n";
+		}
 
 		// Folder Settings
 		if (folderSettings.length > 0) {

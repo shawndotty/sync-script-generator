@@ -561,6 +561,9 @@ export default {
 		"从钉钉获取数据时，默认使用的通讯录中的用户ID",
 	FETCH_USER_ID_ROOT_DING_EXAMPLE:
 		"Fetch设置时默认使用：\n${dingUserIDForFetch}",
+	FETCH_VAULT_FIELDS_NAME_TITLE: "字段名",
+	FETCH_VAULT_FIELDS_NAME_DESC: "字段名",
+	FETCH_VAULT_FIELDS_NAME_EXAMPLE: "{}",
 	FETCH_SOURCE_NAME_FOLDER_TITLE: "数据源名称",
 	FETCH_SOURCE_NAME_FOLDER_DESC: "用户定义的数据源名称",
 	FETCH_SOURCE_NAME_FOLDER_EXAMPLE: "My Idea",

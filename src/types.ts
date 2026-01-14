@@ -34,10 +34,10 @@ export interface FetchOption {
 	name: string;
 	title: string;
 	platforms: Platform[];
-	level: "Root" | "Folder";
+	level: "Root" | "Vault" | "Folder";
 	required: boolean;
 	defaultValue: any;
-	valueType: "string";
+	valueType: "string" | "object";
 	description: string;
 	example?: string;
 }

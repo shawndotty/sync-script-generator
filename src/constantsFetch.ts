@@ -293,6 +293,18 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		example: t("FETCH_USER_ID_ROOT_DING_EXAMPLE"),
 	},
 	{
+		name: "fieldsName",
+
+		title: t("FETCH_VAULT_FIELDS_NAME_TITLE"),
+		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
+		level: "Vault",
+		required: false,
+		defaultValue: "{}",
+		valueType: "object",
+		description: t("FETCH_VAULT_FIELDS_NAME_DESC"),
+		example: t("FETCH_VAULT_FIELDS_NAME_EXAMPLE"),
+	},
+	{
 		name: "sourceName",
 
 		title: t("FETCH_SOURCE_NAME_FOLDER_TITLE"),

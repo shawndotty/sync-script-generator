@@ -25,14 +25,16 @@ import { FetchPresetLoadModal } from "./FetchPresetLoadModal";
 import { FetchPresetSaveModal } from "./FetchPresetSaveModal";
 import MyPlugin from "./main";
 import { t } from "./lang/helpers";
+import { ObjectEditModal } from "./ObjectEditModal";
 
 export class FetchGeneratorView extends ItemView {
 	platform: Platform = "Airtable";
 	rootSettings: Record<string, string> = {};
+	vaultSettings: Record<string, any> = {};
 	folderSettings: FolderSetting[] = [];
 	activeOption: FetchOption | null = null;
 	importedFile: TFile | null = null;
-	activeTab: "Root" | "Folder" = "Root";
+	activeTab: "Root" | "Vault" | "Folder" = "Root";
 	plugin: MyPlugin;
 
 	// UI Elements
@@ -100,6 +102,7 @@ export class FetchGeneratorView extends ItemView {
 				// Reset imported file context when switching platforms manually
 				this.importedFile = null;
 				this.rootSettings = {};
+				this.vaultSettings = {};
 				this.folderSettings = [];
 
 				container
@@ -155,15 +158,21 @@ export class FetchGeneratorView extends ItemView {
 		const tabsContainer = this.middleContainer.createDiv({
 			cls: "settings-tabs",
 		});
-		const tabs: ("Root" | "Folder")[] = ["Root", "Folder"];
+		const tabs: ("Root" | "Vault" | "Folder")[] = [
+			"Root",
+			"Vault",
+			"Folder",
+		];
+
+		const tabNames: Record<string, string> = {
+			Root: t("FETCH_GENERATOR_VIEW_TAB_ROOT"),
+			Vault: t("FETCH_GENERATOR_VIEW_TAB_VAULT"),
+			Folder: t("FETCH_GENERATOR_VIEW_TAB_FOLDER"),
+		};
 
 		tabs.forEach((tab) => {
-			const tabKey =
-				tab === "Root"
-					? "FETCH_GENERATOR_VIEW_TAB_ROOT"
-					: "FETCH_GENERATOR_VIEW_TAB_FOLDER";
 			const tabBtn = tabsContainer.createEl("button", {
-				text: `${t(tabKey)} ${t(
+				text: `${tabNames[tab]} ${t(
 					"FETCH_GENERATOR_VIEW_SETTINGS_SUFFIX"
 				)}`,
 				cls: "settings-tab-btn",
@@ -193,6 +202,24 @@ export class FetchGeneratorView extends ItemView {
 					opt,
 					this.rootSettings,
 					"Root"
+				);
+			});
+		}
+
+		if (this.activeTab === "Vault") {
+			const vaultOptions = FETCH_OPTIONS.filter(
+				(o) =>
+					o.level === "Vault" &&
+					(o.platforms.includes(this.platform) ||
+						o.platforms.length === 0)
+			);
+
+			vaultOptions.forEach((opt) => {
+				this.renderOption(
+					formContainer,
+					opt,
+					this.vaultSettings,
+					"Vault"
 				);
 			});
 		}
@@ -318,14 +345,65 @@ export class FetchGeneratorView extends ItemView {
 			this.addFocusListener(el, opt);
 		};
 
-		s.addText((text) => {
-			text.setValue(
-				target[opt.name] ||
-					(opt.defaultValue === "无" ? "" : opt.defaultValue) ||
-					""
-			).onChange((val) => (target[opt.name] = val));
-			handleFocus(text.inputEl);
-		});
+		if (opt.valueType === "object") {
+			s.addExtraButton((btn) => {
+				btn.setIcon("pencil")
+					.setTooltip(t("GENERATOR_VIEW_TOOLTIP_EDIT_OBJECT"))
+					.onClick(() => {
+						let currentData = target[opt.name];
+						if (typeof currentData === "string") {
+							try {
+								currentData = JSON.parse(currentData);
+							} catch {
+								currentData = {};
+							}
+						}
+						if (
+							!currentData ||
+							typeof currentData !== "object" ||
+							Array.isArray(currentData)
+						) {
+							currentData = {};
+						}
+
+						new ObjectEditModal(
+							this.app,
+							opt.title || opt.name,
+							currentData,
+							(result) => {
+								target[opt.name] = result;
+								this.renderMiddleColumn();
+							}
+						).open();
+					});
+			});
+
+			s.addTextArea((text) => {
+				text.setPlaceholder(opt.example || "")
+					.setValue(
+						target[opt.name]
+							? JSON.stringify(target[opt.name], null, 2)
+							: ""
+					)
+					.onChange((val) => {
+						try {
+							target[opt.name] = JSON.parse(val);
+						} catch (e) {
+							// Silent failure for partial JSON input
+						}
+					});
+				handleFocus(text.inputEl);
+			});
+		} else {
+			s.addText((text) => {
+				text.setValue(
+					target[opt.name] ||
+						(opt.defaultValue === "无" ? "" : opt.defaultValue) ||
+						""
+				).onChange((val) => (target[opt.name] = val));
+				handleFocus(text.inputEl);
+			});
+		}
 	}
 
 	addFocusListener(el: HTMLElement, opt: FetchOption) {
@@ -426,6 +504,7 @@ export class FetchGeneratorView extends ItemView {
 		const script = FetchScriptEngine.generate(
 			this.platform,
 			this.rootSettings,
+			this.vaultSettings,
 			this.folderSettings
 		);
 		new ScriptPreviewModal(

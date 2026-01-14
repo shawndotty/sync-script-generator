@@ -596,6 +596,9 @@ export default {
 		"User ID in DingTalk Contacts used when fetching data.",
 	FETCH_USER_ID_ROOT_DING_EXAMPLE:
 		"Default used in Fetch settings:\n${dingUserIDForFetch}",
+	FETCH_VAULT_FIELDS_NAME_TITLE: "Fields Name",
+	FETCH_VAULT_FIELDS_NAME_DESC: "Fields names",
+	FETCH_VAULT_FIELDS_NAME_EXAMPLE: "{}",
 	FETCH_SOURCE_NAME_FOLDER_TITLE: "Source Name",
 	FETCH_SOURCE_NAME_FOLDER_DESC: "User defined data source name",
 	FETCH_SOURCE_NAME_FOLDER_EXAMPLE: "My Idea",
@@ -666,6 +669,7 @@ export default {
 	FETCH_GENERATOR_VIEW_BTN_SAVE_PRESET: "Save Preset",
 	FETCH_GENERATOR_VIEW_BTN_GENERATE: "Generate Script",
 	FETCH_GENERATOR_VIEW_TAB_ROOT: "Root",
+	FETCH_GENERATOR_VIEW_TAB_VAULT: "Vault",
 	FETCH_GENERATOR_VIEW_TAB_FOLDER: "Folder",
 	FETCH_GENERATOR_VIEW_SETTINGS_SUFFIX: "Settings",
 	FETCH_GENERATOR_VIEW_BTN_ADD_FOLDER: "Add Folder Setting",
