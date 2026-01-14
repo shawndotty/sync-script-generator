@@ -39,7 +39,11 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 			"arrow-down-up",
 			t("MAIN_RIBBON_SYNC"),
 			(evt: MouseEvent) => {
-				this.activateView();
+				if (evt.shiftKey) {
+					this.activateView(true);
+				} else {
+					this.activateView();
+				}
 			}
 		);
 
@@ -48,7 +52,11 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 			"arrow-down-to-line",
 			t("MAIN_RIBBON_FETCH"),
 			(evt: MouseEvent) => {
-				this.activateFetchView();
+				if (evt.shiftKey) {
+					this.activateFetchView(true);
+				} else {
+					this.activateFetchView();
+				}
 			}
 		);
 
@@ -74,8 +82,18 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 		this.addSettingTab(new SyncScriptGeneratorSettingTab(this.app, this));
 	}
 
-	async activateView() {
+	async activateView(openInNewWindow = false) {
 		const { workspace } = this.app;
+
+		if (openInNewWindow) {
+			const leaf = workspace.getLeaf("window");
+			await leaf.setViewState({
+				type: GENERATOR_VIEW_TYPE,
+				active: true,
+			});
+			workspace.revealLeaf(leaf);
+			return;
+		}
 
 		let leaf: WorkspaceLeaf | null = null;
 		const leaves = workspace.getLeavesOfType(GENERATOR_VIEW_TYPE);
@@ -100,8 +118,18 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 		}
 	}
 
-	async activateFetchView() {
+	async activateFetchView(openInNewWindow = false) {
 		const { workspace } = this.app;
+
+		if (openInNewWindow) {
+			const leaf = workspace.getLeaf("window");
+			await leaf.setViewState({
+				type: FETCH_SCRIPT_GENERATOR_VIEW_TYPE,
+				active: true,
+			});
+			workspace.revealLeaf(leaf);
+			return;
+		}
 
 		let leaf: WorkspaceLeaf | null = null;
 		const leaves = workspace.getLeavesOfType(
