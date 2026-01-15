@@ -3,6 +3,7 @@ import MyPlugin from "./main";
 import { ConfigPreset, FetchConfigPreset, Platform } from "./types";
 import { ImportModal } from "./ImportModal";
 import { t } from "./lang/helpers";
+import { TabbedSettings } from "ui/tabbed-settings";
 
 export interface SyncScriptGeneratorSettings {
 	mySetting: string;
@@ -87,6 +88,15 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		Ding: "defaultFetchTemplateDing",
 	};
 
+	private readonly platforms: Platform[] = [
+		"Airtable",
+		"Feishu",
+		"Vika",
+		"Lark",
+		"WPS",
+		"Ding",
+	];
+
 	constructor(app: App, plugin: MyPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
@@ -117,6 +127,35 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
+		const tabbedSettings = new TabbedSettings(containerEl);
+
+		const tabConfigs = [
+			{
+				title: "BASIC_SETTINGS",
+				renderMethod: (content: HTMLElement) =>
+					this.renderBasicSettings(content),
+			},
+			{
+				title: "SETTINGS_DEFAULT_SYNC_TEMPLATES_TITLE",
+				renderMethod: (content: HTMLElement) =>
+					this.renderSyncSettings(content),
+			},
+			{
+				title: "SETTINGS_DEFAULT_FETCH_TEMPLATES_TITLE",
+				renderMethod: (content: HTMLElement) =>
+					this.renderFetchSettings(content),
+			},
+		];
+		tabConfigs.forEach((config) => {
+			const title =
+				t(config.title as any) === config.title
+					? config.title
+					: t(config.title as any);
+			tabbedSettings.addTab(title, config.renderMethod);
+		});
+	}
+
+	private renderBasicSettings(containerEl: HTMLElement) {
 		// Sync Platform Setting
 		new Setting(containerEl)
 			.setName(t("SETTINGS_SYNC_PLATFORM_NAME"))
@@ -147,7 +186,9 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				text.inputEl.style.width = "100%";
 				text.inputEl.rows = 4;
 			});
+	}
 
+	private renderSyncSettings(containerEl: HTMLElement) {
 		containerEl.createEl("h2", {
 			text: t("SETTINGS_DEFAULT_SYNC_TEMPLATES_TITLE"),
 		});
@@ -157,16 +198,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			cls: "setting-item-description ssg-setting-description",
 		});
 
-		const platforms: Platform[] = [
-			"Airtable",
-			"Feishu",
-			"Vika",
-			"Lark",
-			"WPS",
-			"Ding",
-		];
-
-		platforms.forEach((platform) => {
+		this.platforms.forEach((platform) => {
 			const currentValue = this.getTemplatePath(platform);
 
 			new Setting(containerEl)
@@ -216,7 +248,9 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 						});
 				});
 		});
+	}
 
+	private renderFetchSettings(containerEl: HTMLElement) {
 		containerEl.createEl("h2", {
 			text: t("SETTINGS_DEFAULT_FETCH_TEMPLATES_TITLE"),
 		});
@@ -226,7 +260,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			cls: "setting-item-description ssg-setting-description",
 		});
 
-		platforms.forEach((platform) => {
+		this.platforms.forEach((platform) => {
 			const currentValue = this.getFetchTemplatePath(platform);
 
 			new Setting(containerEl)
