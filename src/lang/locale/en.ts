@@ -838,4 +838,5 @@ export default {
 	VIEW_ID_FOLDER_DING_EXAMPLE: "Translation not possible.",
 	VIEW_ID_FOLDER_DING_TITLE: "View ID",
 	BASIC_SETTINGS: "Basic Settings",
+	CONTENT: "Content",
 };

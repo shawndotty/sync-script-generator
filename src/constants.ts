@@ -848,7 +848,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
 		level: "Folder",
 		required: false,
-		defaultValue: "Content",
+		defaultValue: t("CONTENT"),
 		valueType: "string",
 		description: t("CONTENT_FETCH_FIELD_FOLDER_DESC"),
 		example: t("CONTENT_FETCH_FIELD_FOLDER_EXAMPLE"),

@@ -749,4 +749,5 @@ export default {
 	VIEW_ID_FOLDER_DING_EXAMPLE: "JYP28Be",
 	VIEW_ID_FOLDER_DING_TITLE: "視圖ID",
 	BASIC_SETTINGS: "基本設定",
+	CONTENT: "內容",
 };

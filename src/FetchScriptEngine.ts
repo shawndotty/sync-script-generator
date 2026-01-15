@@ -215,7 +215,7 @@ export class FetchScriptEngine {
 			folderSettings.forEach((folder, i) => {
 				script += "        {\n";
 				const entries = Object.entries(folder).filter(
-					([key]) => key !== "collapsed"
+					([key]) => !key.includes("collapsed")
 				);
 				entries.forEach(([key, val], j) => {
 					const renderedVal =
