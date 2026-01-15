@@ -47,6 +47,7 @@ export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 
 export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 	plugin: MyPlugin;
+	private currentTabIndex = 0;
 
 	private readonly platformSettingsMap: Record<
 		Platform,
@@ -153,6 +154,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 					: t(config.title as any);
 			tabbedSettings.addTab(title, config.renderMethod);
 		});
+		tabbedSettings.activateTab(this.currentTabIndex);
 	}
 
 	private renderBasicSettings(containerEl: HTMLElement) {
@@ -233,6 +235,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 							new ImportModal(this.app, async (file: TFile) => {
 								this.setTemplatePath(platform, file.path);
 								await this.plugin.saveSettings();
+								this.currentTabIndex = 1;
 								this.display(); // Refresh to show updated value
 							}).open();
 						});
@@ -244,6 +247,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 						.onClick(async () => {
 							this.setTemplatePath(platform, "");
 							await this.plugin.saveSettings();
+							this.currentTabIndex = 1;
 							this.display(); // Refresh to show updated value
 						});
 				});
@@ -295,6 +299,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 							new ImportModal(this.app, async (file: TFile) => {
 								this.setFetchTemplatePath(platform, file.path);
 								await this.plugin.saveSettings();
+								this.currentTabIndex = 2;
 								this.display(); // Refresh to show updated value
 							}).open();
 						});
@@ -306,6 +311,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 						.onClick(async () => {
 							this.setFetchTemplatePath(platform, "");
 							await this.plugin.saveSettings();
+							this.currentTabIndex = 2;
 							this.display(); // Refresh to show updated value
 						});
 				});
