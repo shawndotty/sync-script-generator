@@ -29,6 +29,8 @@ export class GeneratorView extends ItemView {
 	importedFile: TFile | null = null;
 	activeTab: "Root" | "Vault" | "Folder" = "Root";
 	plugin: MyPlugin;
+	platformListCollapsed = false;
+	rightPanelCollapsed = false;
 
 	// UI Elements
 	middleContainer: HTMLElement;
@@ -57,6 +59,12 @@ export class GeneratorView extends ItemView {
 		container.addClass("sync-generator-container");
 
 		const grid = container.createDiv({ cls: "sync-generator-grid" });
+		if (this.platformListCollapsed) {
+			grid.addClass("platforms-collapsed");
+		}
+		if (this.rightPanelCollapsed) {
+			grid.addClass("right-collapsed");
+		}
 
 		// Left Column: Platform List
 		const leftCol = grid.createDiv({ cls: "sync-generator-left" });
@@ -73,8 +81,37 @@ export class GeneratorView extends ItemView {
 	}
 
 	renderPlatformList(container: HTMLElement) {
-		container.createEl("h3", { text: t("GENERATOR_VIEW_PLATFORMS_TITLE") });
-		const list = container.createEl("ul", { cls: "platform-list" });
+		container.empty();
+		const header = container.createDiv({ cls: "platform-header" });
+		if (!this.platformListCollapsed) {
+			header.createEl("h3", {
+				text: t("GENERATOR_VIEW_PLATFORMS_TITLE"),
+			});
+		}
+		const toggle = header.createEl("button", {
+			cls: "platform-toggle",
+		});
+		setIcon(
+			toggle,
+			this.platformListCollapsed ? "chevrons-right" : "chevrons-left"
+		);
+		toggle.onclick = () => {
+			const grid = container.closest(".sync-generator-grid");
+			this.platformListCollapsed = !this.platformListCollapsed;
+			if (grid) {
+				if (this.platformListCollapsed) {
+					grid.addClass("platforms-collapsed");
+				} else {
+					grid.removeClass("platforms-collapsed");
+				}
+			}
+			this.renderPlatformList(container);
+		};
+		const list = container.createEl("ul", {
+			cls: this.platformListCollapsed
+				? "platform-list platform-list-collapsed"
+				: "platform-list",
+		});
 		const platforms: Platform[] = [
 			"Airtable",
 			"Feishu",
@@ -83,9 +120,12 @@ export class GeneratorView extends ItemView {
 			"WPS",
 			"Ding",
 		];
-
 		platforms.forEach((p) => {
-			const item = list.createEl("li", { text: p, cls: "platform-item" });
+			const label = this.platformListCollapsed ? p.charAt(0) : p;
+			const item = list.createEl("li", {
+				text: label,
+				cls: "platform-item",
+			});
 			if (p === this.platform) item.addClass("is-active");
 
 			item.onclick = () => {
@@ -593,10 +633,44 @@ export class GeneratorView extends ItemView {
 	}
 
 	renderRightColumn() {
+		const grid = this.rightContainer.closest(".sync-generator-grid");
+		if (grid) {
+			if (this.rightPanelCollapsed) {
+				grid.addClass("right-collapsed");
+			} else {
+				grid.removeClass("right-collapsed");
+			}
+		}
+
 		this.rightContainer.empty();
-		this.rightContainer.createEl("h3", {
+
+		if (this.rightPanelCollapsed) {
+			this.rightContainer.addClass("is-collapsed");
+			const toggleOnly = this.rightContainer.createEl("button", {
+				cls: "help-toggle-only",
+			});
+			setIcon(toggleOnly, "chevrons-left");
+			toggleOnly.onclick = () => {
+				this.rightPanelCollapsed = false;
+				this.renderRightColumn();
+			};
+			return;
+		}
+
+		this.rightContainer.removeClass("is-collapsed");
+
+		const header = this.rightContainer.createDiv({ cls: "help-header" });
+		header.createEl("h3", {
 			text: t("GENERATOR_VIEW_DESC_TITLE"),
 		});
+		const toggle = header.createEl("button", {
+			cls: "help-toggle",
+		});
+		setIcon(toggle, "chevrons-right");
+		toggle.onclick = () => {
+			this.rightPanelCollapsed = true;
+			this.renderRightColumn();
+		};
 
 		if (this.activeOption) {
 			const wrapper = this.rightContainer.createDiv({
