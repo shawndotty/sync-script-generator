@@ -239,7 +239,7 @@ export class FetchGeneratorView extends ItemView {
 			});
 			addButton.style.marginBottom = "20px";
 			addButton.onclick = () => {
-				this.folderSettings.push({ targetFolder: "" });
+				this.folderSettings.push({ targetFolderPath: "" });
 				this.renderMiddleColumn();
 			};
 
@@ -283,7 +283,9 @@ export class FetchGeneratorView extends ItemView {
 						`${t("FETCH_GENERATOR_VIEW_FOLDER_HEADER_PREFIX")} ${
 							index + 1
 						}` +
-						(folder.targetFolder ? `: ${folder.targetFolder}` : ""),
+						(folder.targetFolderPath
+							? `: ${folder.targetFolderPath}`
+							: ""),
 				});
 
 				header.onclick = (e) => {
@@ -311,10 +313,10 @@ export class FetchGeneratorView extends ItemView {
 						text.setPlaceholder(
 							t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_PLACEHOLDER")
 						)
-							.setValue(folder.targetFolder)
-							.onChange((val) => (folder.targetFolder = val));
+							.setValue(folder.targetFolderPath || "")
+							.onChange((val) => (folder.targetFolderPath = val));
 						this.addFocusListener(text.inputEl, {
-							name: "targetFolder",
+							name: "targetFolderPath",
 							title: t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_NAME"),
 							description: t(
 								"FETCH_GENERATOR_VIEW_TARGET_FOLDER_DESC"
@@ -337,7 +339,7 @@ export class FetchGeneratorView extends ItemView {
 								new FolderPickerModal(
 									this.app,
 									(selectedFolder) => {
-										folder.targetFolder =
+										folder.targetFolderPath =
 											selectedFolder.path;
 										this.renderMiddleColumn();
 									}
@@ -353,7 +355,7 @@ export class FetchGeneratorView extends ItemView {
 				);
 
 				folderOptions.forEach((opt) => {
-					if (opt.name === "targetFolder") return;
+					if (opt.name === "targetFolderPath") return;
 					this.renderOption(contentDiv, opt, folder, "Folder");
 				});
 			});
@@ -501,6 +503,7 @@ export class FetchGeneratorView extends ItemView {
 		if (result.platform) {
 			this.platform = result.platform;
 			this.rootSettings = result.rootSettings;
+			this.vaultSettings = result.vaultSettings;
 			this.folderSettings = result.folderSettings;
 
 			new Notice(

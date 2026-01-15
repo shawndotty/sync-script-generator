@@ -259,14 +259,17 @@ export class FetchScriptEngine {
 	static parse(content: string): {
 		platform: Platform | null;
 		rootSettings: Record<string, string>;
+		vaultSettings: Record<string, string>;
 		folderSettings: FetchFolderSetting[];
 	} {
 		let platform: Platform | null = null;
 		let rootSettings: Record<string, string> = {};
+		let vaultSettings: Record<string, string> = {};
+
 		let folderSettings: FetchFolderSetting[] = [];
 
 		// 1. Detect Platform
-		const platformMatch = content.match(/await tp\.user\.ObFetch(\w+)\(/);
+		const platformMatch = content.match(/await tp\.user\.ObSync(\w+)\(/);
 		if (platformMatch && platformMatch[1]) {
 			const parsedPlatform = platformMatch[1] as Platform;
 			if (
@@ -278,7 +281,8 @@ export class FetchScriptEngine {
 			}
 		}
 
-		if (!platform) return { platform, rootSettings, folderSettings };
+		if (!platform)
+			return { platform, rootSettings, vaultSettings, folderSettings };
 
 		// 2. Extract Main Config Object
 		const varName = platform.toLowerCase();
@@ -321,6 +325,14 @@ export class FetchScriptEngine {
 						folderSettings = configObj.tables;
 					}
 
+					// Extract Vault Settings (syncSettings)
+					if (
+						configObj.syncSettings &&
+						typeof configObj.syncSettings === "object"
+					) {
+						vaultSettings = configObj.syncSettings;
+					}
+
 					// Extract Root Settings
 					const rootKeys = FETCH_OPTIONS.filter(
 						(o) => o.level === "Root"
@@ -350,7 +362,7 @@ export class FetchScriptEngine {
 			}
 		}
 
-		return { platform, rootSettings, folderSettings };
+		return { platform, rootSettings, vaultSettings, folderSettings };
 	}
 
 	private static findMatchingBracket(text: string, start: number): number {

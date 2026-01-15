@@ -317,7 +317,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		example: t("FETCH_SOURCE_NAME_FOLDER_EXAMPLE"),
 	},
 	{
-		name: "targetFolder",
+		name: "targetFolderPath",
 
 		title: t("FETCH_TARGET_FOLDER_FOLDER_TITLE"),
 		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
