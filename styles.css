@@ -20,9 +20,12 @@
     grid-template-columns: 200px 1fr 40px;
 }
 
+
 .sync-generator-grid.platforms-collapsed.right-collapsed {
     grid-template-columns: 72px 1fr 40px;
 }
+
+
 
 /* Left Column: Platform List */
 .sync-generator-left {
