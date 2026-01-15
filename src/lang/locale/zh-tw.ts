@@ -6,7 +6,7 @@ export default {
 	API_KEY_ROOT_AIRTABLE_DESC:
 		"同步到Airtable使用的API Key。\nAirtable的API Key，已經升級為Personal Access Token。\n你可以在 https://airtable.com/create/tokens 獲取你的 Personal Access Token。",
 	API_KEY_ROOT_AIRTABLE_EXAMPLE:
-		"輸入為空時，預設使用：\n${airtableAPIKeyForSync}\n\n如果自行輸入，請現在Airtable中獲取你的Personal Acces Token",
+		"輸入為空時，預設使用：\n${airtableAPIKeyForSync}\n\n如果自行輸入，請現在Airtable中獲取你的Personal Access Token",
 	API_KEY_ROOT_AIRTABLE_TITLE: "Airtable PAT金鑰",
 	API_KEY_ROOT_VIKA_DESC: "同步到Vika時，使用的API Key。",
 	API_KEY_ROOT_VIKA_EXAMPLE:
