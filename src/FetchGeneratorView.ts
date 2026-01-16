@@ -23,7 +23,7 @@ import { FetchScriptEngine } from "./FetchScriptEngine";
 import { FolderPickerModal } from "./ui/pickers/folder-picker";
 import { FetchPresetLoadModal } from "./FetchPresetLoadModal";
 import { FetchPresetSaveModal } from "./FetchPresetSaveModal";
-import MyPlugin from "./main";
+import SyncScriptGeneratorPlugin from "./main";
 import { t } from "./lang/helpers";
 import { ObjectEditModal } from "./ObjectEditModal";
 
@@ -35,7 +35,7 @@ export class FetchGeneratorView extends ItemView {
 	activeOption: FetchOption | null = null;
 	importedFile: TFile | null = null;
 	activeTab: "Root" | "Vault" | "Folder" = "Root";
-	plugin: MyPlugin;
+	plugin: SyncScriptGeneratorPlugin;
 	platformListCollapsed = false;
 	rightPanelCollapsed = false;
 
@@ -43,7 +43,7 @@ export class FetchGeneratorView extends ItemView {
 	middleContainer: HTMLElement;
 	rightContainer: HTMLElement;
 
-	constructor(leaf: WorkspaceLeaf, plugin: MyPlugin) {
+	constructor(leaf: WorkspaceLeaf, plugin: SyncScriptGeneratorPlugin) {
 		super(leaf);
 		this.plugin = plugin;
 	}

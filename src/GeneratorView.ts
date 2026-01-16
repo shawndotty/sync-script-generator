@@ -17,7 +17,7 @@ import { ScriptEngine } from "./ScriptEngine";
 import { FolderPickerModal } from "./ui/pickers/folder-picker";
 import { PresetLoadModal } from "./PresetLoadModal";
 import { PresetSaveModal } from "./PresetSaveModal";
-import MyPlugin from "./main";
+import SyncScriptGeneratorPlugin from "./main";
 import { t } from "./lang/helpers";
 
 export class GeneratorView extends ItemView {
@@ -28,7 +28,7 @@ export class GeneratorView extends ItemView {
 	activeOption: SyncOption | null = null;
 	importedFile: TFile | null = null;
 	activeTab: "Root" | "Vault" | "Folder" = "Root";
-	plugin: MyPlugin;
+	plugin: SyncScriptGeneratorPlugin;
 	platformListCollapsed = false;
 	rightPanelCollapsed = false;
 
@@ -36,7 +36,7 @@ export class GeneratorView extends ItemView {
 	middleContainer: HTMLElement;
 	rightContainer: HTMLElement;
 
-	constructor(leaf: WorkspaceLeaf, plugin: MyPlugin) {
+	constructor(leaf: WorkspaceLeaf, plugin: SyncScriptGeneratorPlugin) {
 		super(leaf);
 		this.plugin = plugin;
 	}

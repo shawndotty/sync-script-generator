@@ -1,5 +1,5 @@
 import { App, PluginSettingTab, Setting, TFile } from "obsidian";
-import MyPlugin from "./main";
+import SyncScriptGeneratorPlugin from "./main";
 import { ConfigPreset, FetchConfigPreset, Platform } from "./types";
 import { ImportModal } from "./ImportModal";
 import { t } from "./lang/helpers";
@@ -46,7 +46,7 @@ export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 };
 
 export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	plugin: SyncScriptGeneratorPlugin;
 	private currentTabIndex = 0;
 
 	private readonly platformSettingsMap: Record<
@@ -98,7 +98,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		"Ding",
 	];
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: SyncScriptGeneratorPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
