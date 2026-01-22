@@ -4,7 +4,7 @@ import { EditorState } from "@codemirror/state";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { defaultKeymap } from "@codemirror/commands";
-import { t } from "./lang/helpers";
+import { t } from "../lang/helpers";
 
 export class ScriptPreviewModal extends Modal {
 	private script: string;
@@ -15,7 +15,7 @@ export class ScriptPreviewModal extends Modal {
 		app: App,
 		script: string,
 		platform: string,
-		importedFile: TFile | null
+		importedFile: TFile | null,
 	) {
 		super(app);
 		this.script = script;
@@ -57,7 +57,7 @@ export class ScriptPreviewModal extends Modal {
 							this.modalEl.addClass("is-maximized");
 							btn.setButtonText(t("SCRIPT_PREVIEW_BTN_RESTORE"));
 						}
-					}
+					},
 				);
 			})
 			.addButton((btn) => {
@@ -71,8 +71,8 @@ export class ScriptPreviewModal extends Modal {
 				const label = this.importedFile
 					? t("SCRIPT_PREVIEW_BTN_UPDATE").replace(
 							"${file}",
-							this.importedFile.basename
-					  )
+							this.importedFile.basename,
+						)
 					: t("SCRIPT_PREVIEW_BTN_SAVE_AS");
 				btn.setButtonText(label)
 					.setCta()
@@ -81,13 +81,13 @@ export class ScriptPreviewModal extends Modal {
 						if (this.importedFile) {
 							await this.app.vault.modify(
 								this.importedFile,
-								content
+								content,
 							);
 							new Notice(
 								t("SCRIPT_PREVIEW_NOTICE_UPDATED").replace(
 									"${path}",
-									this.importedFile.path
-								)
+									this.importedFile.path,
+								),
 							);
 						} else {
 							const fileName = `SyncScript-${
@@ -97,8 +97,8 @@ export class ScriptPreviewModal extends Modal {
 							new Notice(
 								t("SCRIPT_PREVIEW_NOTICE_SAVED").replace(
 									"${file}",
-									fileName
-								)
+									fileName,
+								),
 							);
 						}
 						this.close();

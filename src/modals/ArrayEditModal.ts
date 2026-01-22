@@ -1,5 +1,5 @@
 import { App, Modal, ButtonComponent } from "obsidian";
-import { t } from "./lang/helpers";
+import { t } from "../lang/helpers";
 
 interface ArrayItem {
 	id: string;
@@ -16,7 +16,7 @@ export class ArrayEditModal extends Modal {
 		app: App,
 		title: string,
 		data: any[],
-		onSave: (result: any[]) => void
+		onSave: (result: any[]) => void,
 	) {
 		super(app);
 		this.title = title;

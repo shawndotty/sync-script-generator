@@ -1,7 +1,7 @@
 import { App, PluginSettingTab, Setting, TFile } from "obsidian";
 import SyncScriptGeneratorPlugin from "./main";
-import { ConfigPreset, FetchConfigPreset, Platform } from "./types";
-import { ImportModal } from "./ImportModal";
+import { ConfigPreset, FetchConfigPreset, Platform } from "./types/types";
+import { ImportModal } from "./modals/ImportModal";
 import { t } from "./lang/helpers";
 import { TabbedSettings } from "ui/tabbed-settings";
 
@@ -178,7 +178,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			.setDesc(t("SETTINGS_SCRIPT_PREPEND_CONTENT_DESC"))
 			.addTextArea((text) => {
 				text.setPlaceholder(
-					t("SETTINGS_SCRIPT_PREPEND_CONTENT_PLACEHOLDER")
+					t("SETTINGS_SCRIPT_PREPEND_CONTENT_PLACEHOLDER"),
 				)
 					.setValue(this.plugin.settings.scriptPrependContent || "")
 					.onChange(async (value) => {
@@ -207,18 +207,18 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				.setName(
 					t("SETTINGS_DEFAULT_TEMPLATE_NAME").replace(
 						"${platform}",
-						platform
-					)
+						platform,
+					),
 				)
 				.setDesc(
 					t("SETTINGS_DEFAULT_TEMPLATE_DESC").replace(
 						"${platform}",
-						platform
-					)
+						platform,
+					),
 				)
 				.addText((text) => {
 					text.setPlaceholder(
-						t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER")
+						t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER"),
 					)
 						.setValue(currentValue)
 						.onChange(async (value) => {
@@ -271,18 +271,18 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				.setName(
 					t("SETTINGS_DEFAULT_FETCH_TEMPLATE_NAME").replace(
 						"${platform}",
-						platform
-					)
+						platform,
+					),
 				)
 				.setDesc(
 					t("SETTINGS_DEFAULT_FETCH_TEMPLATE_DESC").replace(
 						"${platform}",
-						platform
-					)
+						platform,
+					),
 				)
 				.addText((text) => {
 					text.setPlaceholder(
-						t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER")
+						t("SETTINGS_DEFAULT_TEMPLATE_PLACEHOLDER"),
 					)
 						.setValue(currentValue)
 						.onChange(async (value) => {

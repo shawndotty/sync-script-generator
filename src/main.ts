@@ -12,10 +12,10 @@ import {
 	SyncScriptGeneratorSettings,
 	SyncScriptGeneratorSettingTab,
 } from "./settings";
-import { GeneratorView } from "./GeneratorView";
-import { GENERATOR_VIEW_TYPE } from "./constants";
-import { FetchGeneratorView } from "./FetchGeneratorView";
-import { FETCH_SCRIPT_GENERATOR_VIEW_TYPE } from "./constantsFetch";
+import { GeneratorView } from "./views/GeneratorView";
+import { GENERATOR_VIEW_TYPE } from "./models/constants";
+import { FetchGeneratorView } from "./views/FetchGeneratorView";
+import { FETCH_SCRIPT_GENERATOR_VIEW_TYPE } from "./models/constantsFetch";
 import { t } from "./lang/helpers";
 
 export default class SyncScriptGeneratorPlugin extends Plugin {
@@ -26,12 +26,12 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 
 		this.registerView(
 			GENERATOR_VIEW_TYPE,
-			(leaf) => new GeneratorView(leaf, this)
+			(leaf) => new GeneratorView(leaf, this),
 		);
 
 		this.registerView(
 			FETCH_SCRIPT_GENERATOR_VIEW_TYPE,
-			(leaf) => new FetchGeneratorView(leaf, this)
+			(leaf) => new FetchGeneratorView(leaf, this),
 		);
 
 		// This creates an icon in the left ribbon.
@@ -44,7 +44,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 				} else {
 					this.activateView();
 				}
-			}
+			},
 		);
 
 		// This creates an icon in the left ribbon for Fetch Generator.
@@ -57,7 +57,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 				} else {
 					this.activateFetchView();
 				}
-			}
+			},
 		);
 
 		// This adds a simple command that can be triggered anywhere
@@ -133,7 +133,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 
 		let leaf: WorkspaceLeaf | null = null;
 		const leaves = workspace.getLeavesOfType(
-			FETCH_SCRIPT_GENERATOR_VIEW_TYPE
+			FETCH_SCRIPT_GENERATOR_VIEW_TYPE,
 		);
 
 		if (leaves.length > 0) {
@@ -162,7 +162,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			(await this.loadData()) as Partial<SyncScriptGeneratorSettings>
+			(await this.loadData()) as Partial<SyncScriptGeneratorSettings>,
 		);
 	}
 

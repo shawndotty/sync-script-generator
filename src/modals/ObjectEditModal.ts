@@ -8,7 +8,7 @@ import {
 	setIcon,
 } from "obsidian";
 import { ArrayEditModal } from "./ArrayEditModal";
-import { t } from "./lang/helpers";
+import { t } from "../lang/helpers";
 
 interface ObjectItem {
 	id: string;
@@ -27,7 +27,7 @@ export class ObjectEditModal extends Modal {
 		app: App,
 		title: string,
 		data: Record<string, any>,
-		onSave: (result: Record<string, any>) => void
+		onSave: (result: Record<string, any>) => void,
 	) {
 		super(app);
 		this.title = title;
@@ -198,7 +198,7 @@ export class ObjectEditModal extends Modal {
 							(newArray) => {
 								item.value = newArray;
 								arrayInput.setValue(JSON.stringify(newArray));
-							}
+							},
 						).open();
 					});
 			} else if (item.type === "number") {

@@ -12,20 +12,20 @@ import {
 	FetchOption,
 	FetchFolderSetting,
 	FetchConfigPreset,
-} from "./types";
+} from "../types/types";
 import {
 	FETCH_OPTIONS,
 	FETCH_SCRIPT_GENERATOR_VIEW_TYPE,
-} from "./constantsFetch";
-import { ImportModal } from "./ImportModal";
-import { ScriptPreviewModal } from "./ScriptPreviewModal";
-import { FetchScriptEngine } from "./FetchScriptEngine";
-import { FolderPickerModal } from "./ui/pickers/folder-picker";
-import { FetchPresetLoadModal } from "./FetchPresetLoadModal";
-import { FetchPresetSaveModal } from "./FetchPresetSaveModal";
-import SyncScriptGeneratorPlugin from "./main";
-import { t } from "./lang/helpers";
-import { ObjectEditModal } from "./ObjectEditModal";
+} from "../models/constantsFetch";
+import { ImportModal } from "../modals/ImportModal";
+import { ScriptPreviewModal } from "../modals/ScriptPreviewModal";
+import { FetchScriptEngine } from "../processors/FetchScriptEngine";
+import { FolderPickerModal } from "../ui/pickers/folder-picker";
+import { FetchPresetLoadModal } from "../modals/FetchPresetLoadModal";
+import { FetchPresetSaveModal } from "../modals/FetchPresetSaveModal";
+import SyncScriptGeneratorPlugin from "../main";
+import { t } from "../lang/helpers";
+import { ObjectEditModal } from "../modals/ObjectEditModal";
 
 export class FetchGeneratorView extends ItemView {
 	platform: Platform = "Airtable";
@@ -100,7 +100,7 @@ export class FetchGeneratorView extends ItemView {
 		});
 		setIcon(
 			toggle,
-			this.platformListCollapsed ? "chevrons-right" : "chevrons-left"
+			this.platformListCollapsed ? "chevrons-right" : "chevrons-left",
 		);
 		toggle.onclick = () => {
 			const grid = container.closest(".sync-generator-grid");
@@ -159,7 +159,7 @@ export class FetchGeneratorView extends ItemView {
 		this.middleContainer.empty();
 		this.middleContainer.createEl("h2", {
 			text: `${this.platform} ${t(
-				"FETCH_GENERATOR_VIEW_SETTINGS_TITLE_SUFFIX"
+				"FETCH_GENERATOR_VIEW_SETTINGS_TITLE_SUFFIX",
 			)}`,
 		});
 
@@ -217,7 +217,7 @@ export class FetchGeneratorView extends ItemView {
 		tabs.forEach((tab) => {
 			const tabBtn = tabsContainer.createEl("button", {
 				text: `${tabNames[tab]} ${t(
-					"FETCH_GENERATOR_VIEW_SETTINGS_SUFFIX"
+					"FETCH_GENERATOR_VIEW_SETTINGS_SUFFIX",
 				)}`,
 				cls: "settings-tab-btn",
 			});
@@ -238,14 +238,14 @@ export class FetchGeneratorView extends ItemView {
 				(o) =>
 					o.level === "Root" &&
 					(o.platforms.includes(this.platform) ||
-						o.platforms.length === 0)
+						o.platforms.length === 0),
 			);
 			rootOptions.forEach((opt) => {
 				this.renderOption(
 					formContainer,
 					opt,
 					this.rootSettings,
-					"Root"
+					"Root",
 				);
 			});
 		}
@@ -255,7 +255,7 @@ export class FetchGeneratorView extends ItemView {
 				(o) =>
 					o.level === "Vault" &&
 					(o.platforms.includes(this.platform) ||
-						o.platforms.length === 0)
+						o.platforms.length === 0),
 			);
 
 			vaultOptions.forEach((opt) => {
@@ -263,7 +263,7 @@ export class FetchGeneratorView extends ItemView {
 					formContainer,
 					opt,
 					this.vaultSettings,
-					"Vault"
+					"Vault",
 				);
 			});
 		}
@@ -287,12 +287,12 @@ export class FetchGeneratorView extends ItemView {
 					"button",
 					{
 						text: t("FETCH_GENERATOR_VIEW_BTN_TOGGLE_ALL_FOLDERS"),
-					}
+					},
 				);
 				toggleAllButton.style.marginLeft = "8px";
 				toggleAllButton.onclick = () => {
 					const allCollapsed = this.folderSettings.every(
-						(folder) => folder.collapsed
+						(folder) => folder.collapsed,
 					);
 					this.folderSettings.forEach((folder) => {
 						folder.collapsed = !allCollapsed;
@@ -350,7 +350,7 @@ export class FetchGeneratorView extends ItemView {
 					.setName(t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_NAME"))
 					.addText((text) => {
 						text.setPlaceholder(
-							t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_PLACEHOLDER")
+							t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_PLACEHOLDER"),
 						)
 							.setValue(folder.targetFolderPath || "")
 							.onChange((val) => (folder.targetFolderPath = val));
@@ -358,10 +358,10 @@ export class FetchGeneratorView extends ItemView {
 							name: "targetFolderPath",
 							title: t("FETCH_GENERATOR_VIEW_TARGET_FOLDER_NAME"),
 							description: t(
-								"FETCH_GENERATOR_VIEW_TARGET_FOLDER_DESC"
+								"FETCH_GENERATOR_VIEW_TARGET_FOLDER_DESC",
 							),
 							example: t(
-								"FETCH_GENERATOR_VIEW_TARGET_FOLDER_EXAMPLE"
+								"FETCH_GENERATOR_VIEW_TARGET_FOLDER_EXAMPLE",
 							),
 							platforms: [this.platform],
 							level: "Folder",
@@ -381,7 +381,7 @@ export class FetchGeneratorView extends ItemView {
 										folder.targetFolderPath =
 											selectedFolder.path;
 										this.renderMiddleColumn();
-									}
+									},
 								).open();
 							});
 					});
@@ -390,7 +390,7 @@ export class FetchGeneratorView extends ItemView {
 					(o) =>
 						o.level === "Folder" &&
 						(o.platforms.includes(this.platform) ||
-							o.platforms.length === 0)
+							o.platforms.length === 0),
 				);
 
 				folderOptions.forEach((opt) => {
@@ -405,7 +405,7 @@ export class FetchGeneratorView extends ItemView {
 		container: HTMLElement,
 		opt: FetchOption,
 		target: any,
-		section: string
+		section: string,
 	) {
 		const s = new Setting(container).setName(opt.title || opt.name);
 
@@ -441,7 +441,7 @@ export class FetchGeneratorView extends ItemView {
 							(result) => {
 								target[opt.name] = result;
 								this.renderMiddleColumn();
-							}
+							},
 						).open();
 					});
 			});
@@ -451,7 +451,7 @@ export class FetchGeneratorView extends ItemView {
 					.setValue(
 						target[opt.name]
 							? JSON.stringify(target[opt.name], null, 2)
-							: ""
+							: "",
 					)
 					.onChange((val) => {
 						try {
@@ -467,7 +467,7 @@ export class FetchGeneratorView extends ItemView {
 				text.setValue(
 					target[opt.name] ||
 						(opt.defaultValue === "无" ? "" : opt.defaultValue) ||
-						""
+						"",
 				).onChange((val) => (target[opt.name] = val));
 				handleFocus(text.inputEl);
 			});
@@ -582,8 +582,8 @@ export class FetchGeneratorView extends ItemView {
 			new Notice(
 				t("FETCH_GENERATOR_VIEW_NOTICE_IMPORTED").replace(
 					"${file}",
-					file.basename
-				)
+					file.basename,
+				),
 			);
 
 			// Update UI list active state
@@ -610,13 +610,13 @@ export class FetchGeneratorView extends ItemView {
 			this.vaultSettings,
 			this.folderSettings,
 			this.plugin.settings.syncPlatform || "IOTO",
-			this.plugin.settings.scriptPrependContent || ""
+			this.plugin.settings.scriptPrependContent || "",
 		);
 		new ScriptPreviewModal(
 			this.app,
 			script,
 			this.platform,
-			this.importedFile
+			this.importedFile,
 		).open();
 	}
 
@@ -631,7 +631,7 @@ export class FetchGeneratorView extends ItemView {
 			this.app,
 			this.plugin.settings.fetchPresets || [],
 			currentSettings,
-			(preset) => this.savePreset(preset)
+			(preset) => this.savePreset(preset),
 		).open();
 	}
 
@@ -640,7 +640,7 @@ export class FetchGeneratorView extends ItemView {
 			this.app,
 			this.plugin.settings.fetchPresets || [],
 			(preset) => this.loadPreset(preset),
-			(presetId) => this.deletePreset(presetId)
+			(presetId) => this.deletePreset(presetId),
 		).open();
 	}
 
@@ -710,8 +710,8 @@ export class FetchGeneratorView extends ItemView {
 				new Notice(
 					t("FETCH_GENERATOR_VIEW_NOTICE_TEMPLATE_NOT_FOUND").replace(
 						"${path}",
-						templatePath
-					)
+						templatePath,
+					),
 				);
 				return;
 			}
@@ -721,8 +721,8 @@ export class FetchGeneratorView extends ItemView {
 			new Notice(
 				t("FETCH_GENERATOR_VIEW_NOTICE_LOAD_FAILED").replace(
 					"${error}",
-					String(error)
-				)
+					String(error),
+				),
 			);
 		}
 	}

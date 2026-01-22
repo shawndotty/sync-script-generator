@@ -1,5 +1,5 @@
-import { SyncOption } from "./types";
-import { t } from "./lang/helpers";
+import { SyncOption } from "../types/types";
+import { t } from "../lang/helpers";
 
 export const GENERATOR_VIEW_TYPE = "sync-script-generator-view";
 
@@ -368,7 +368,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		defaultValue: "true",
 		valueType: "boolean",
 		description: t(
-			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_VAULT_DESC"
+			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_VAULT_DESC",
 		),
 		example: t("ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_VAULT_EXAMPLE"),
 	},
@@ -1046,10 +1046,10 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		defaultValue: "true",
 		valueType: "boolean",
 		description: t(
-			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_DESC"
+			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_DESC",
 		),
 		example: t(
-			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_EXAMPLE"
+			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_EXAMPLE",
 		),
 	},
 	{

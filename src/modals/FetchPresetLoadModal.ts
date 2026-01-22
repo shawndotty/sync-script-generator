@@ -1,8 +1,8 @@
 import { App, Modal, ButtonComponent, Notice } from "obsidian";
-import { ConfigPreset, Platform } from "./types";
-import { t } from "./lang/helpers";
+import { FetchConfigPreset, Platform } from "../types/types";
+import { t } from "../lang/helpers";
 
-class PresetDeleteConfirmModal extends Modal {
+class FetchPresetDeleteConfirmModal extends Modal {
 	private message: string;
 	private onConfirm: () => void;
 
@@ -15,7 +15,7 @@ class PresetDeleteConfirmModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		contentEl.empty();
-		this.titleEl.setText(t("PRESET_MANAGER_TITLE"));
+		this.titleEl.setText(t("FETCH_PRESET_MANAGER_TITLE"));
 		contentEl.addClass("preset-manager-modal");
 
 		contentEl.createEl("p", {
@@ -26,11 +26,11 @@ class PresetDeleteConfirmModal extends Modal {
 		const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
 
 		new ButtonComponent(footer)
-			.setButtonText(t("PRESET_MANAGER_BTN_CLOSE"))
+			.setButtonText(t("FETCH_PRESET_MANAGER_BTN_CLOSE"))
 			.onClick(() => this.close());
 
 		new ButtonComponent(footer)
-			.setButtonText(t("PRESET_MANAGER_BTN_DELETE"))
+			.setButtonText(t("FETCH_PRESET_MANAGER_BTN_DELETE"))
 			.setWarning()
 			.setCta()
 			.onClick(() => {
@@ -40,16 +40,16 @@ class PresetDeleteConfirmModal extends Modal {
 	}
 }
 
-export class PresetLoadModal extends Modal {
-	private presets: ConfigPreset[];
-	private onLoadPreset: (preset: ConfigPreset) => void;
+export class FetchPresetLoadModal extends Modal {
+	private presets: FetchConfigPreset[];
+	private onLoadPreset: (preset: FetchConfigPreset) => void;
 	private onDeletePreset: (presetId: string) => void;
 
 	constructor(
 		app: App,
-		presets: ConfigPreset[],
-		onLoadPreset: (preset: ConfigPreset) => void,
-		onDeletePreset: (presetId: string) => void
+		presets: FetchConfigPreset[],
+		onLoadPreset: (preset: FetchConfigPreset) => void,
+		onDeletePreset: (presetId: string) => void,
 	) {
 		super(app);
 		this.presets = presets;
@@ -59,26 +59,29 @@ export class PresetLoadModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
-		this.modalEl.addClass("mod-preset-manager"); // Reusing style for now
-		contentEl.empty();
+		this.modalEl.addClass("mod-preset-manager");
+		this.titleEl.setText(t("FETCH_PRESET_MANAGER_TITLE"));
 
-		this.titleEl.setText(t("PRESET_MANAGER_LOAD_TITLE"));
-		contentEl.addClass("preset-manager-modal"); // Reusing style for now
+		contentEl.empty();
+		contentEl.addClass("preset-manager-modal");
 
 		const loadSection = contentEl.createDiv({
 			cls: "preset-load-section",
 		});
+		// loadSection.createEl("h3", {
+		// 	text: t("FETCH_PRESET_MANAGER_LOAD_TITLE"),
+		// });
 
 		if (this.presets.length === 0) {
 			loadSection.createEl("p", {
-				text: t("PRESET_MANAGER_LOAD_EMPTY"),
+				text: t("FETCH_PRESET_MANAGER_LOAD_EMPTY"),
 				cls: "preset-empty-message",
 			});
 		} else {
 			const presetsList = loadSection.createDiv({ cls: "presets-list" });
 
 			// Group presets by platform
-			const presetsByPlatform: Record<Platform, ConfigPreset[]> = {
+			const presetsByPlatform: Record<Platform, FetchConfigPreset[]> = {
 				Airtable: [],
 				Feishu: [],
 				Vika: [],
@@ -124,38 +127,41 @@ export class PresetLoadModal extends Modal {
 
 					const loadBtn = new ButtonComponent(presetActions);
 					loadBtn
-						.setButtonText(t("PRESET_MANAGER_BTN_LOAD"))
+						.setButtonText(t("FETCH_PRESET_MANAGER_BTN_LOAD"))
 						.setCta();
 					loadBtn.onClick(() => {
 						this.onLoadPreset(preset);
 						new Notice(
-							t("PRESET_MANAGER_NOTICE_LOADED").replace(
+							t("FETCH_PRESET_MANAGER_NOTICE_LOADED").replace(
 								"${name}",
-								preset.name
-							)
+								preset.name,
+							),
 						);
 						this.close();
 					});
 
 					const deleteBtn = new ButtonComponent(presetActions);
 					deleteBtn
-						.setButtonText(t("PRESET_MANAGER_BTN_DELETE"))
+						.setButtonText(t("FETCH_PRESET_MANAGER_BTN_DELETE"))
 						.setWarning();
 					deleteBtn.onClick(() => {
 						const message = t(
-							"PRESET_MANAGER_CONFIRM_DELETE"
+							"FETCH_PRESET_MANAGER_CONFIRM_DELETE",
 						).replace("${name}", preset.name);
 
-						new PresetDeleteConfirmModal(this.app, message, () => {
-							this.onDeletePreset(preset.id);
-							new Notice(
-								t("PRESET_MANAGER_NOTICE_DELETED").replace(
-									"${name}",
-									preset.name
-								)
-							);
-							this.close();
-						}).open();
+						new FetchPresetDeleteConfirmModal(
+							this.app,
+							message,
+							() => {
+								this.onDeletePreset(preset.id);
+								new Notice(
+									t(
+										"FETCH_PRESET_MANAGER_NOTICE_DELETED",
+									).replace("${name}", preset.name),
+								);
+								this.close();
+							},
+						).open();
 					});
 				});
 			});
@@ -164,7 +170,7 @@ export class PresetLoadModal extends Modal {
 		// Footer
 		// const footer = contentEl.createDiv({ cls: "preset-modal-footer" });
 		// new ButtonComponent(footer)
-		// 	.setButtonText(t("PRESET_MANAGER_BTN_CLOSE"))
+		// 	.setButtonText(t("FETCH_PRESET_MANAGER_BTN_CLOSE"))
 		// 	.onClick(() => this.close());
 	}
 

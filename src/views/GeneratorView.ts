@@ -7,18 +7,23 @@ import {
 	setIcon,
 	TFile,
 } from "obsidian";
-import { Platform, SyncOption, FolderSetting, ConfigPreset } from "./types";
-import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "./constants";
-import { ImportModal } from "./ImportModal";
-import { ScriptPreviewModal } from "./ScriptPreviewModal";
-import { ObjectEditModal } from "./ObjectEditModal";
-import { ArrayEditModal } from "./ArrayEditModal";
-import { ScriptEngine } from "./ScriptEngine";
-import { FolderPickerModal } from "./ui/pickers/folder-picker";
-import { PresetLoadModal } from "./PresetLoadModal";
-import { PresetSaveModal } from "./PresetSaveModal";
-import SyncScriptGeneratorPlugin from "./main";
-import { t } from "./lang/helpers";
+import {
+	Platform,
+	SyncOption,
+	FolderSetting,
+	ConfigPreset,
+} from "../types/types";
+import { SYNC_OPTIONS, GENERATOR_VIEW_TYPE } from "../models/constants";
+import { ImportModal } from "../modals/ImportModal";
+import { ScriptPreviewModal } from "../modals/ScriptPreviewModal";
+import { ObjectEditModal } from "../modals/ObjectEditModal";
+import { ArrayEditModal } from "../modals/ArrayEditModal";
+import { ScriptEngine } from "../processors/ScriptEngine";
+import { FolderPickerModal } from "../ui/pickers/folder-picker";
+import { PresetLoadModal } from "../modals/PresetLoadModal";
+import { PresetSaveModal } from "../modals/PresetSaveModal";
+import SyncScriptGeneratorPlugin from "../main";
+import { t } from "../lang/helpers";
 
 export class GeneratorView extends ItemView {
 	platform: Platform = "Airtable";
@@ -93,7 +98,7 @@ export class GeneratorView extends ItemView {
 		});
 		setIcon(
 			toggle,
-			this.platformListCollapsed ? "chevrons-right" : "chevrons-left"
+			this.platformListCollapsed ? "chevrons-right" : "chevrons-left",
 		);
 		toggle.onclick = () => {
 			const grid = container.closest(".sync-generator-grid");
@@ -226,14 +231,14 @@ export class GeneratorView extends ItemView {
 				(o) =>
 					o.level === "Root" &&
 					(o.platforms.includes(this.platform) ||
-						o.platforms.length === 0)
+						o.platforms.length === 0),
 			);
 			rootOptions.forEach((opt) => {
 				this.renderOption(
 					formContainer,
 					opt,
 					this.rootSettings,
-					"Root"
+					"Root",
 				);
 			});
 		}
@@ -243,7 +248,7 @@ export class GeneratorView extends ItemView {
 				(o) =>
 					o.level === "Vault" &&
 					(o.platforms.includes(this.platform) ||
-						o.platforms.length === 0)
+						o.platforms.length === 0),
 			).sort((a, b) => (a.groupOrder || 0) - (b.groupOrder || 0));
 
 			// Group options by group
@@ -305,7 +310,7 @@ export class GeneratorView extends ItemView {
 						groupContent,
 						opt,
 						this.vaultSettings,
-						"Vault"
+						"Vault",
 					);
 				});
 			});
@@ -330,12 +335,12 @@ export class GeneratorView extends ItemView {
 					"button",
 					{
 						text: t("FETCH_GENERATOR_VIEW_BTN_TOGGLE_ALL_FOLDERS"),
-					}
+					},
 				);
 				toggleAllButton.style.marginLeft = "8px";
 				toggleAllButton.onclick = () => {
 					const allCollapsed = this.folderSettings.every(
-						(folder) => folder.collapsed
+						(folder) => folder.collapsed,
 					);
 					this.folderSettings.forEach((folder) => {
 						folder.collapsed = !allCollapsed;
@@ -389,7 +394,7 @@ export class GeneratorView extends ItemView {
 					.setName(t("GENERATOR_VIEW_FOLDER_PATH_NAME"))
 					.addText((text) => {
 						text.setPlaceholder(
-							t("GENERATOR_VIEW_FOLDER_PATH_NAME")
+							t("GENERATOR_VIEW_FOLDER_PATH_NAME"),
 						)
 							.setValue(folder.folderName)
 							.onChange((val) => (folder.folderName = val));
@@ -415,7 +420,7 @@ export class GeneratorView extends ItemView {
 									(selectedFolder) => {
 										folder.folderName = selectedFolder.path;
 										this.renderMiddleColumn();
-									}
+									},
 								).open();
 							});
 					});
@@ -424,7 +429,7 @@ export class GeneratorView extends ItemView {
 					(o) =>
 						o.level === "Folder" &&
 						(o.platforms.includes(this.platform) ||
-							o.platforms.length === 0)
+							o.platforms.length === 0),
 				).sort((a, b) => (a.groupOrder || 0) - (b.groupOrder || 0));
 
 				// Group options by group
@@ -487,10 +492,10 @@ export class GeneratorView extends ItemView {
 								groupContent,
 								opt,
 								folder,
-								"Folder"
+								"Folder",
 							);
 						});
-					}
+					},
 				);
 			});
 		}
@@ -500,7 +505,7 @@ export class GeneratorView extends ItemView {
 		container: HTMLElement,
 		opt: SyncOption,
 		target: any,
-		section: string
+		section: string,
 	) {
 		const s = new Setting(container).setName(opt.title || opt.name);
 
@@ -543,7 +548,7 @@ export class GeneratorView extends ItemView {
 							(result) => {
 								target[opt.name] = result;
 								this.renderMiddleColumn();
-							}
+							},
 						).open();
 					});
 			});
@@ -553,7 +558,7 @@ export class GeneratorView extends ItemView {
 					.setValue(
 						target[opt.name]
 							? JSON.stringify(target[opt.name], null, 2)
-							: ""
+							: "",
 					)
 					.onChange((val) => {
 						try {
@@ -588,7 +593,7 @@ export class GeneratorView extends ItemView {
 							(result) => {
 								target[opt.name] = result;
 								this.renderMiddleColumn();
-							}
+							},
 						).open();
 					});
 			});
@@ -598,7 +603,7 @@ export class GeneratorView extends ItemView {
 					.setValue(
 						target[opt.name]
 							? JSON.stringify(target[opt.name], null, 2)
-							: ""
+							: "",
 					)
 					.onChange((val) => {
 						try {
@@ -614,7 +619,7 @@ export class GeneratorView extends ItemView {
 				text.setValue(
 					target[opt.name] ||
 						(opt.defaultValue === "无" ? "" : opt.defaultValue) ||
-						""
+						"",
 				).onChange((val) => (target[opt.name] = val));
 				handleFocus(text.inputEl);
 			});
@@ -688,7 +693,7 @@ export class GeneratorView extends ItemView {
 				Folder: t("GENERATOR_VIEW_TAB_FOLDER"),
 			};
 			badge.setText(
-				levelMap[this.activeOption.level] || this.activeOption.level
+				levelMap[this.activeOption.level] || this.activeOption.level,
 			);
 
 			wrapper.createEl("div", {
@@ -732,8 +737,8 @@ export class GeneratorView extends ItemView {
 			new Notice(
 				t("GENERATOR_VIEW_NOTICE_IMPORTED").replace(
 					"${file}",
-					file.basename
-				)
+					file.basename,
+				),
 			);
 
 			// Update UI list active state
@@ -760,13 +765,13 @@ export class GeneratorView extends ItemView {
 			this.vaultSettings,
 			this.folderSettings,
 			this.plugin.settings.syncPlatform || "IOTO",
-			this.plugin.settings.scriptPrependContent || ""
+			this.plugin.settings.scriptPrependContent || "",
 		);
 		new ScriptPreviewModal(
 			this.app,
 			script,
 			this.platform,
-			this.importedFile
+			this.importedFile,
 		).open();
 	}
 
@@ -782,7 +787,7 @@ export class GeneratorView extends ItemView {
 			this.app,
 			this.plugin.settings.presets || [],
 			currentSettings,
-			(preset) => this.savePreset(preset)
+			(preset) => this.savePreset(preset),
 		).open();
 	}
 
@@ -791,7 +796,7 @@ export class GeneratorView extends ItemView {
 			this.app,
 			this.plugin.settings.presets || [],
 			(preset) => this.loadPreset(preset),
-			(presetId) => this.deletePreset(presetId)
+			(presetId) => this.deletePreset(presetId),
 		).open();
 	}
 
@@ -827,7 +832,7 @@ export class GeneratorView extends ItemView {
 	async deletePreset(presetId: string) {
 		if (!this.plugin.settings.presets) return;
 		this.plugin.settings.presets = this.plugin.settings.presets.filter(
-			(p) => p.id !== presetId
+			(p) => p.id !== presetId,
 		);
 		await this.plugin.saveSettings();
 	}
@@ -863,8 +868,8 @@ export class GeneratorView extends ItemView {
 				new Notice(
 					t("GENERATOR_VIEW_NOTICE_TEMPLATE_NOT_FOUND").replace(
 						"${path}",
-						templatePath
-					)
+						templatePath,
+					),
 				);
 				return;
 			}
@@ -874,8 +879,8 @@ export class GeneratorView extends ItemView {
 			new Notice(
 				t("GENERATOR_VIEW_NOTICE_LOAD_FAILED").replace(
 					"${error}",
-					String(error)
-				)
+					String(error),
+				),
 			);
 		}
 	}

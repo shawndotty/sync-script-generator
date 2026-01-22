@@ -1,5 +1,5 @@
-import { Platform, FolderSetting } from "./types";
-import { SYNC_OPTIONS } from "./constants";
+import { Platform, FolderSetting } from "../types/types";
+import { SYNC_OPTIONS } from "../models/constants";
 import { Notice } from "obsidian";
 
 export class ScriptEngine {
@@ -9,7 +9,7 @@ export class ScriptEngine {
 		vaultSettings: Record<string, any>,
 		folderSettings: FolderSetting[],
 		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO",
-		prependContent: string = ""
+		prependContent: string = "",
 	): string {
 		let script = "";
 
@@ -58,7 +58,7 @@ export class ScriptEngine {
 			const pluginName =
 				syncPlatform === "IOTO" ? "ioto-settings" : "ob-sync-with-mdb";
 			script += `const {${rootVars.join(
-				", "
+				", ",
 			)}} = app.plugins.plugins[\"${pluginName}\"].settings;\n\n`;
 		}
 
@@ -66,7 +66,7 @@ export class ScriptEngine {
 
 		// Root Settings
 		const rootOptions = SYNC_OPTIONS.filter(
-			(o) => o.level === "Root" && o.platforms.includes(platform)
+			(o) => o.level === "Root" && o.platforms.includes(platform),
 		);
 		rootOptions.forEach((opt) => {
 			const varMapping: Record<string, string> = {
@@ -82,28 +82,28 @@ export class ScriptEngine {
 					platform === "Airtable"
 						? "airtableTableIDForSync"
 						: platform === "Feishu"
-						? "feishuTableIDForSync"
-						: platform === "Lark"
-						? "larkTableIDForSync"
-						: platform === "WPS"
-						? "wpsTableIDForSync"
-						: platform === "Ding"
-						? "dingTableIDForSync"
-						: "vikaTableIDForSync",
+							? "feishuTableIDForSync"
+							: platform === "Lark"
+								? "larkTableIDForSync"
+								: platform === "WPS"
+									? "wpsTableIDForSync"
+									: platform === "Ding"
+										? "dingTableIDForSync"
+										: "vikaTableIDForSync",
 				appID:
 					platform === "Feishu"
 						? "feishuAppIDForSync"
 						: platform === "Lark"
-						? "larkAppIDForSync"
-						: platform === "WPS"
-						? "wpsAppIDForSync"
-						: "dingAppIDForSync",
+							? "larkAppIDForSync"
+							: platform === "WPS"
+								? "wpsAppIDForSync"
+								: "dingAppIDForSync",
 				appSecret:
 					platform === "Feishu"
 						? "feishuAppSecretForSync"
 						: platform === "Lark"
-						? "larkAppSecretForSync"
-						: "dingAppSecretForSync",
+							? "larkAppSecretForSync"
+							: "dingAppSecretForSync",
 				defaultAppToken:
 					platform === "Feishu"
 						? "feishuBaseIDForSync"
@@ -115,8 +115,8 @@ export class ScriptEngine {
 					platform === "WPS"
 						? "wpsTableIDForSync"
 						: platform === "Ding"
-						? "dingTableIDForSync"
-						: "",
+							? "dingTableIDForSync"
+							: "",
 				defaultViewID: platform === "Ding" ? "dingViewIDForSync" : "",
 				userID: platform === "Ding" ? "dingUserIDForSync" : "",
 			};
@@ -144,7 +144,7 @@ export class ScriptEngine {
 		const vaultOptions = SYNC_OPTIONS.filter(
 			(o) =>
 				o.level === "Vault" &&
-				(o.platforms.includes(platform) || o.platforms.length === 0)
+				(o.platforms.includes(platform) || o.platforms.length === 0),
 		);
 		if (vaultOptions.length > 0) {
 			script += "\n    // Vault Settings\n";
@@ -211,7 +211,7 @@ export class ScriptEngine {
 						": " +
 						this.indentMultiline(
 							JSON.stringify(val, null, 4),
-							"        "
+							"        ",
 						) +
 						",\n";
 				}
@@ -226,7 +226,7 @@ export class ScriptEngine {
 			folderSettings.forEach((folder, i) => {
 				script += "        {\n";
 				const entries = Object.entries(folder).filter(
-					([key]) => !key.includes("collapsed")
+					([key]) => !key.includes("collapsed"),
 				);
 				entries.forEach(([key, val], j) => {
 					const renderedVal =
@@ -283,7 +283,7 @@ export class ScriptEngine {
 			const parsedPlatform = platformMatch[1] as Platform;
 			if (
 				["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"].includes(
-					parsedPlatform
+					parsedPlatform,
 				)
 			) {
 				platform = parsedPlatform;
@@ -297,7 +297,7 @@ export class ScriptEngine {
 		const varName = platform.toLowerCase();
 		const configBlockRegex = new RegExp(
 			`const ${varName}\\s*=\\s*\\{`,
-			"m"
+			"m",
 		);
 
 		const match = content.match(configBlockRegex);
@@ -320,13 +320,13 @@ export class ScriptEngine {
 							p1.replace(/"/g, '\\"').replace(/\n/g, "\\n") +
 							'"'
 						);
-					}
+					},
 				);
 
 				try {
 					// Parse the sanitized object string
 					const configObj = new Function(
-						"return " + sanitizedConfig
+						"return " + sanitizedConfig,
 					)();
 
 					// Extract Folder Settings (tables)
@@ -344,7 +344,7 @@ export class ScriptEngine {
 
 					// Extract Root Settings
 					const rootKeys = SYNC_OPTIONS.filter(
-						(o) => o.level === "Root"
+						(o) => o.level === "Root",
 					).map((o) => o.name);
 
 					for (const key in configObj) {
@@ -366,7 +366,7 @@ export class ScriptEngine {
 				} catch (e) {
 					console.error("Failed to parse configuration object", e);
 					new Notice(
-						"Warning: Could not parse configuration from template."
+						"Warning: Could not parse configuration from template.",
 					);
 				}
 			}

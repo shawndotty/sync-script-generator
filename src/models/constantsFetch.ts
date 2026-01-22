@@ -1,5 +1,5 @@
-import { FetchOption } from "./types";
-import { t } from "./lang/helpers";
+import { FetchOption } from "../types/types";
+import { t } from "../lang/helpers";
 
 export const FETCH_SCRIPT_GENERATOR_VIEW_TYPE = "fetch-script-generator-view";
 

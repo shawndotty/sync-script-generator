@@ -6,8 +6,12 @@ import {
 	Notice,
 	DropdownComponent,
 } from "obsidian";
-import { FetchConfigPreset, Platform, FetchScriptSettings } from "./types";
-import { t } from "./lang/helpers";
+import {
+	FetchConfigPreset,
+	Platform,
+	FetchScriptSettings,
+} from "../types/types";
+import { t } from "../lang/helpers";
 
 export class FetchPresetSaveModal extends Modal {
 	private presets: FetchConfigPreset[];
@@ -18,7 +22,7 @@ export class FetchPresetSaveModal extends Modal {
 		app: App,
 		presets: FetchConfigPreset[],
 		currentSettings: FetchScriptSettings,
-		onSavePreset: (preset: FetchConfigPreset) => void
+		onSavePreset: (preset: FetchConfigPreset) => void,
 	) {
 		super(app);
 		this.presets = presets;
@@ -59,7 +63,7 @@ export class FetchPresetSaveModal extends Modal {
 			"Ding",
 		];
 		platformDropdown.addOptions(
-			Object.fromEntries(platforms.map((p) => [p, p]))
+			Object.fromEntries(platforms.map((p) => [p, p])),
 		);
 		platformDropdown.setValue(this.currentSettings.platform);
 
@@ -84,7 +88,7 @@ export class FetchPresetSaveModal extends Modal {
 				platform: platformDropdown.getValue() as Platform,
 				rootSettings: { ...this.currentSettings.rootSettings },
 				folderSettings: JSON.parse(
-					JSON.stringify(this.currentSettings.folderSettings)
+					JSON.stringify(this.currentSettings.folderSettings),
 				), // Deep copy
 				createdAt: Date.now(),
 				updatedAt: Date.now(),
@@ -92,7 +96,7 @@ export class FetchPresetSaveModal extends Modal {
 
 			this.onSavePreset(preset);
 			new Notice(
-				t("FETCH_PRESET_MANAGER_NOTICE_SAVED").replace("${name}", name)
+				t("FETCH_PRESET_MANAGER_NOTICE_SAVED").replace("${name}", name),
 			);
 			this.close();
 		});

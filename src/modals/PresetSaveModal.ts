@@ -6,8 +6,8 @@ import {
 	Notice,
 	DropdownComponent,
 } from "obsidian";
-import { ConfigPreset, Platform, SyncScriptSettings } from "./types";
-import { t } from "./lang/helpers";
+import { ConfigPreset, Platform, SyncScriptSettings } from "../types/types";
+import { t } from "../lang/helpers";
 
 export class PresetSaveModal extends Modal {
 	private presets: ConfigPreset[];
@@ -18,7 +18,7 @@ export class PresetSaveModal extends Modal {
 		app: App,
 		presets: ConfigPreset[],
 		currentSettings: SyncScriptSettings,
-		onSavePreset: (preset: ConfigPreset) => void
+		onSavePreset: (preset: ConfigPreset) => void,
 	) {
 		super(app);
 		this.presets = presets;
@@ -57,7 +57,7 @@ export class PresetSaveModal extends Modal {
 			"Ding",
 		];
 		platformDropdown.addOptions(
-			Object.fromEntries(platforms.map((p) => [p, p]))
+			Object.fromEntries(platforms.map((p) => [p, p])),
 		);
 		platformDropdown.setValue(this.currentSettings.platform);
 
@@ -83,7 +83,7 @@ export class PresetSaveModal extends Modal {
 				rootSettings: { ...this.currentSettings.rootSettings },
 				vaultSettings: { ...this.currentSettings.vaultSettings },
 				folderSettings: JSON.parse(
-					JSON.stringify(this.currentSettings.folderSettings)
+					JSON.stringify(this.currentSettings.folderSettings),
 				), // Deep copy
 				createdAt: Date.now(),
 				updatedAt: Date.now(),
@@ -91,7 +91,7 @@ export class PresetSaveModal extends Modal {
 
 			this.onSavePreset(preset);
 			new Notice(
-				t("PRESET_MANAGER_NOTICE_SAVED").replace("${name}", name)
+				t("PRESET_MANAGER_NOTICE_SAVED").replace("${name}", name),
 			);
 			this.close();
 		});

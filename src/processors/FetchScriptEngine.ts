@@ -1,5 +1,5 @@
-import { Platform, FetchFolderSetting } from "./types";
-import { FETCH_OPTIONS } from "./constantsFetch";
+import { Platform, FetchFolderSetting } from "../types/types";
+import { FETCH_OPTIONS } from "../models/constantsFetch";
 import { Notice } from "obsidian";
 
 export class FetchScriptEngine {
@@ -9,7 +9,7 @@ export class FetchScriptEngine {
 		vaultSettings: Record<string, any>,
 		folderSettings: FetchFolderSetting[],
 		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO",
-		prependContent: string = ""
+		prependContent: string = "",
 	): string {
 		let script = "";
 		const varName = platform.toLowerCase();
@@ -58,7 +58,7 @@ export class FetchScriptEngine {
 			const pluginName =
 				syncPlatform === "IOTO" ? "ioto-settings" : "ob-sync-with-mdb";
 			script += `const {${rootVars.join(
-				", "
+				", ",
 			)}} = app.plugins.plugins[\"${pluginName}\"].settings;\n\n`;
 		}
 
@@ -66,7 +66,7 @@ export class FetchScriptEngine {
 
 		// Root Settings
 		const rootOptions = FETCH_OPTIONS.filter(
-			(o) => o.level === "Root" && o.platforms.includes(platform)
+			(o) => o.level === "Root" && o.platforms.includes(platform),
 		);
 		rootOptions.forEach((opt) => {
 			const varMapping: Record<string, string> = {
@@ -82,30 +82,30 @@ export class FetchScriptEngine {
 					platform === "Airtable"
 						? "airtableTableIDForFetch"
 						: platform === "Feishu"
-						? "feishuTableIDForFetch"
-						: platform === "Lark"
-						? "larkTableIDForFetch"
-						: platform === "WPS"
-						? "wpsTableIDForFetch"
-						: platform === "Ding"
-						? "dingTableIDForFetch"
-						: "vikaTableIDForFetch",
+							? "feishuTableIDForFetch"
+							: platform === "Lark"
+								? "larkTableIDForFetch"
+								: platform === "WPS"
+									? "wpsTableIDForFetch"
+									: platform === "Ding"
+										? "dingTableIDForFetch"
+										: "vikaTableIDForFetch",
 				appID:
 					platform === "Feishu"
 						? "feishuAppIDForFetch"
 						: platform === "Lark"
-						? "larkAppIDForFetch"
-						: platform === "WPS"
-						? "wpsAppIDForFetch"
-						: "dingAppIDForFetch",
+							? "larkAppIDForFetch"
+							: platform === "WPS"
+								? "wpsAppIDForFetch"
+								: "dingAppIDForFetch",
 				appSecret:
 					platform === "Feishu"
 						? "feishuAppSecretForFetch"
 						: platform === "Lark"
-						? "larkAppSecretForFetch"
-						: platform === "WPS"
-						? "wpsAppSecretForFetch"
-						: "dingAppSecretForFetch",
+							? "larkAppSecretForFetch"
+							: platform === "WPS"
+								? "wpsAppSecretForFetch"
+								: "dingAppSecretForFetch",
 				appKey: platform === "WPS" ? "wpsAppSecretForFetch" : "",
 				accessToken: platform === "WPS" ? "wpsUserTokenForFetch" : "",
 				defaultAppToken:
@@ -117,8 +117,8 @@ export class FetchScriptEngine {
 					platform === "WPS"
 						? "wpsTableIDForFetch"
 						: platform === "Ding"
-						? "dingTableIDForFetch"
-						: "",
+							? "dingTableIDForFetch"
+							: "",
 				defaultViewID: platform === "Ding" ? "dingViewIDForFetch" : "",
 				userID: platform === "Ding" ? "dingUserIDForFetch" : "",
 			};
@@ -146,7 +146,7 @@ export class FetchScriptEngine {
 		const vaultOptions = FETCH_OPTIONS.filter(
 			(o) =>
 				o.level === "Vault" &&
-				(o.platforms.includes(platform) || o.platforms.length === 0)
+				(o.platforms.includes(platform) || o.platforms.length === 0),
 		);
 		if (vaultOptions.length > 0) {
 			script += "\n    // Vault Settings\n";
@@ -200,7 +200,7 @@ export class FetchScriptEngine {
 						": " +
 						this.indentMultiline(
 							JSON.stringify(val, null, 4),
-							"        "
+							"        ",
 						) +
 						",\n";
 				}
@@ -215,7 +215,7 @@ export class FetchScriptEngine {
 			folderSettings.forEach((folder, i) => {
 				script += "        {\n";
 				const entries = Object.entries(folder).filter(
-					([key]) => !key.includes("collapsed")
+					([key]) => !key.includes("collapsed"),
 				);
 				entries.forEach(([key, val], j) => {
 					const renderedVal =
@@ -274,7 +274,7 @@ export class FetchScriptEngine {
 			const parsedPlatform = platformMatch[1] as Platform;
 			if (
 				["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"].includes(
-					parsedPlatform
+					parsedPlatform,
 				)
 			) {
 				platform = parsedPlatform;
@@ -288,7 +288,7 @@ export class FetchScriptEngine {
 		const varName = platform.toLowerCase();
 		const configBlockRegex = new RegExp(
 			`const ${varName}\\s*=\\s*\\{`,
-			"m"
+			"m",
 		);
 
 		const match = content.match(configBlockRegex);
@@ -311,13 +311,13 @@ export class FetchScriptEngine {
 							p1.replace(/"/g, '\\"').replace(/\n/g, "\\n") +
 							'"'
 						);
-					}
+					},
 				);
 
 				try {
 					// Parse the sanitized object string
 					const configObj = new Function(
-						"return " + sanitizedConfig
+						"return " + sanitizedConfig,
 					)();
 
 					// Extract Folder Settings (tables)
@@ -335,7 +335,7 @@ export class FetchScriptEngine {
 
 					// Extract Root Settings
 					const rootKeys = FETCH_OPTIONS.filter(
-						(o) => o.level === "Root"
+						(o) => o.level === "Root",
 					).map((o) => o.name);
 
 					for (const key in configObj) {
@@ -356,7 +356,7 @@ export class FetchScriptEngine {
 				} catch (e) {
 					console.error("Failed to parse configuration object", e);
 					new Notice(
-						"Warning: Could not parse configuration from template."
+						"Warning: Could not parse configuration from template.",
 					);
 				}
 			}
