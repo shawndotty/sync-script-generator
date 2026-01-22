@@ -81,7 +81,7 @@ export default {
 		'{\nProject: ["日常工作"],\nStatus: "Published",\nCourse: "Johnny学OB",\nVideoURL: "",\n内容概览: "",\nAuthor: "Johnny"\n}',
 	CUSTOM_FIELDS_FOLDER_TITLE: "自定义字段",
 	CUSTOM_FIELDS_OVERRIDE_MODE_FOLDER_DESC:
-		"是否使用同步文件夹下的设置的自定义字段覆盖库即设置中的自定义字段",
+		"是否使用同步文件夹下的设置的自定义字段覆盖库级设置中的自定义字段",
 	CUSTOM_FIELDS_OVERRIDE_MODE_FOLDER_EXAMPLE: "true",
 	CUSTOM_FIELDS_OVERRIDE_MODE_FOLDER_TITLE: "覆盖库级设置中的自定义字段",
 	CUSTOM_FIELDS_VAULT_DESC:
@@ -751,4 +751,10 @@ export default {
 	VIEW_ID_FOLDER_DING_TITLE: "视图ID",
 	BASIC_SETTINGS: "基本设置",
 	CONTENT: "内容",
+	SETTINGS_SYNC_TEMPLATE_FOLDER_NAME: "同步模板文件夹",
+	SETTINGS_SYNC_TEMPLATE_FOLDER_DESC: "同步时使用的模板文件夹路径",
+	SETTINGS_SYNC_TEMPLATE_FOLDER_PLACEHOLDER: "同步模板文件夹路径",
+	SETTINGS_FETCH_TEMPLATE_FOLDER_NAME: "获取模板文件夹",
+	SETTINGS_FETCH_TEMPLATE_FOLDER_DESC: "获取时使用的模板文件夹路径",
+	SETTINGS_FETCH_TEMPLATE_FOLDER_PLACEHOLDER: "获取模板文件夹路径",
 };

@@ -516,8 +516,8 @@
 .modal.mod-preset-manager {
     display: flex;
     flex-direction: column;
-    max-width: 840px;
-    width: 640px;
+    max-width: 640px;
+    width: 480px;
     max-height: 80vh;
 }
 
@@ -558,7 +558,7 @@
 
 .preset-manager-modal .preset-save-form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 12px;
     padding: 12px 0;
 }

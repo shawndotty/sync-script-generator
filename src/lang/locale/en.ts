@@ -839,4 +839,15 @@ export default {
 	VIEW_ID_FOLDER_DING_TITLE: "View ID",
 	BASIC_SETTINGS: "Basic Settings",
 	CONTENT: "Content",
+	SETTINGS_SYNC_TEMPLATE_FOLDER_NAME: "Sync Template Folder",
+	SETTINGS_SYNC_TEMPLATE_FOLDER_DESC:
+		"Folder path for synchronization templates",
+	SETTINGS_SYNC_TEMPLATE_FOLDER_PLACEHOLDER:
+		"Path to the synchronization template folder",
+	SETTINGS_FETCH_TEMPLATE_FOLDER_NAME: "Fetch Template Folder",
+	SETTINGS_FETCH_TEMPLATE_FOLDER_DESC: "Folder path for fetching templates",
+	SETTINGS_FETCH_TEMPLATE_FOLDER_PLACEHOLDER:
+		"Path to the fetch template folder",
+	PICKER_NO_FILES_FOUND: "No files found",
+	PICKER_NO_FOLDERS_FOUND: "No folders found",
 };

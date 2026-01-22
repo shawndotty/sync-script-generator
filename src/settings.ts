@@ -4,12 +4,15 @@ import { ConfigPreset, FetchConfigPreset, Platform } from "./types/types";
 import { ImportModal } from "./modals/ImportModal";
 import { t } from "./lang/helpers";
 import { TabbedSettings } from "ui/tabbed-settings";
+import { FolderPickerModal } from "ui/pickers/folder-picker";
 
 export interface SyncScriptGeneratorSettings {
 	mySetting: string;
 	presets: ConfigPreset[];
 	fetchPresets: FetchConfigPreset[];
 	syncPlatform: "IOTO" | "obSyncWithMDB";
+	syncTemplateFolder: string;
+	fetchTemplateFolder: string;
 	scriptPrependContent: string;
 	defaultSyncTemplateAirtable: string;
 	defaultSyncTemplateFeishu: string;
@@ -30,6 +33,8 @@ export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 	presets: [],
 	fetchPresets: [],
 	syncPlatform: "IOTO",
+	syncTemplateFolder: "",
+	fetchTemplateFolder: "",
 	scriptPrependContent: "",
 	defaultSyncTemplateAirtable: "",
 	defaultSyncTemplateFeishu: "",
@@ -174,6 +179,62 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
+			.setName(t("SETTINGS_SYNC_TEMPLATE_FOLDER_NAME"))
+			.setDesc(t("SETTINGS_SYNC_TEMPLATE_FOLDER_DESC"))
+			.addText((text) => {
+				text.setPlaceholder(
+					t("SETTINGS_SYNC_TEMPLATE_FOLDER_PLACEHOLDER"),
+				)
+					.setValue(this.plugin.settings.syncTemplateFolder || "")
+					.onChange(async (value) => {
+						this.plugin.settings.syncTemplateFolder = value;
+						await this.plugin.saveSettings();
+					});
+				text.inputEl.style.width = "100%";
+			})
+			.addButton((button) => {
+				button.setIcon("folder").onClick(() => {
+					new FolderPickerModal(
+						this.app,
+						(selectedFolder) => {
+							this.plugin.settings.syncTemplateFolder =
+								selectedFolder.path;
+							this.plugin.saveSettings();
+						},
+						["Templater", "Templates"],
+					).open();
+				});
+			});
+
+		new Setting(containerEl)
+			.setName(t("SETTINGS_FETCH_TEMPLATE_FOLDER_NAME"))
+			.setDesc(t("SETTINGS_FETCH_TEMPLATE_FOLDER_DESC"))
+			.addText((text) => {
+				text.setPlaceholder(
+					t("SETTINGS_FETCH_TEMPLATE_FOLDER_PLACEHOLDER"),
+				)
+					.setValue(this.plugin.settings.fetchTemplateFolder || "")
+					.onChange(async (value) => {
+						this.plugin.settings.fetchTemplateFolder = value;
+						await this.plugin.saveSettings();
+					});
+				text.inputEl.style.width = "100%";
+			})
+			.addButton((button) => {
+				button.setIcon("folder").onClick(() => {
+					new FolderPickerModal(
+						this.app,
+						(selectedFolder) => {
+							this.plugin.settings.fetchTemplateFolder =
+								selectedFolder.path;
+							this.plugin.saveSettings();
+						},
+						["Templater", "Templates"],
+					).open();
+				});
+			});
+
+		new Setting(containerEl)
 			.setName(t("SETTINGS_SCRIPT_PREPEND_CONTENT_NAME"))
 			.setDesc(t("SETTINGS_SCRIPT_PREPEND_CONTENT_DESC"))
 			.addTextArea((text) => {
@@ -230,19 +291,29 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				.addButton((button) => {
 					button
 						.setButtonText(t("SETTINGS_BTN_BROWSE"))
-						.setIcon("folder")
+						.setIcon("file")
 						.onClick(() => {
-							new ImportModal(this.app, async (file: TFile) => {
-								this.setTemplatePath(platform, file.path);
-								await this.plugin.saveSettings();
-								this.currentTabIndex = 1;
-								this.display(); // Refresh to show updated value
-							}).open();
+							new ImportModal(
+								this.app,
+								async (file: TFile) => {
+									this.setTemplatePath(platform, file.path);
+									await this.plugin.saveSettings();
+									this.currentTabIndex = 1;
+									this.display(); // Refresh to show updated value
+								},
+								[
+									platform,
+									"Sync",
+									this.plugin.settings.syncPlatform === "IOTO"
+										? "MyIOTO"
+										: "",
+								],
+							).open();
 						});
 				})
 				.addExtraButton((button) => {
 					button
-						.setIcon("cross")
+						.setIcon("refresh")
 						.setTooltip(t("SETTINGS_TOOLTIP_CLEAR"))
 						.onClick(async () => {
 							this.setTemplatePath(platform, "");
@@ -294,19 +365,32 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 				.addButton((button) => {
 					button
 						.setButtonText(t("SETTINGS_BTN_BROWSE"))
-						.setIcon("folder")
+						.setIcon("file")
 						.onClick(() => {
-							new ImportModal(this.app, async (file: TFile) => {
-								this.setFetchTemplatePath(platform, file.path);
-								await this.plugin.saveSettings();
-								this.currentTabIndex = 2;
-								this.display(); // Refresh to show updated value
-							}).open();
+							new ImportModal(
+								this.app,
+								async (file: TFile) => {
+									this.setFetchTemplatePath(
+										platform,
+										file.path,
+									);
+									await this.plugin.saveSettings();
+									this.currentTabIndex = 2;
+									this.display(); // Refresh to show updated value
+								},
+								[
+									platform,
+									"Fetch",
+									this.plugin.settings.syncPlatform === "IOTO"
+										? "MyIOTO"
+										: "",
+								],
+							).open();
 						});
 				})
 				.addExtraButton((button) => {
 					button
-						.setIcon("cross")
+						.setIcon("refresh")
 						.setTooltip(t("SETTINGS_TOOLTIP_CLEAR"))
 						.onClick(async () => {
 							this.setFetchTemplatePath(platform, "");
