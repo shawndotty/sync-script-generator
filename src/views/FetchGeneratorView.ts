@@ -564,7 +564,11 @@ export class FetchGeneratorView extends ItemView {
 	}
 
 	openImportModal() {
-		new ImportModal(this.app, (file) => this.importTemplate(file)).open();
+		new ImportModal(this.app, (file) => this.importTemplate(file), [
+			this.platform,
+			"Fetch",
+			this.plugin.settings.syncPlatform === "IOTO" ? "MyIOTO" : "",
+		]).open();
 	}
 
 	async importTemplate(file: TFile) {
