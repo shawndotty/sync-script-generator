@@ -200,6 +200,8 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 							this.plugin.settings.syncTemplateFolder =
 								selectedFolder.path;
 							this.plugin.saveSettings();
+							this.currentTabIndex = 0;
+							this.display();
 						},
 						["Templater", "Templates"],
 					).open();
@@ -228,6 +230,8 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 							this.plugin.settings.fetchTemplateFolder =
 								selectedFolder.path;
 							this.plugin.saveSettings();
+							this.currentTabIndex = 0;
+							this.display();
 						},
 						["Templater", "Templates"],
 					).open();

@@ -773,8 +773,10 @@ export class GeneratorView extends ItemView {
 		);
 		new ScriptPreviewModal(
 			this.app,
+			this.plugin.settings,
 			script,
 			this.platform,
+			"Sync",
 			this.importedFile,
 		).open();
 	}

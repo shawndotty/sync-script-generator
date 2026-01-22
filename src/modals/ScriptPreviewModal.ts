@@ -5,22 +5,37 @@ import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { defaultKeymap } from "@codemirror/commands";
 import { t } from "../lang/helpers";
+import { SyncScriptGeneratorSettings } from "settings";
 
 export class ScriptPreviewModal extends Modal {
 	private script: string;
 	private platform: string;
 	private importedFile: TFile | null;
+	private settings: SyncScriptGeneratorSettings;
+	private prefix: string;
+	private type: string;
 
 	constructor(
 		app: App,
+		settings: SyncScriptGeneratorSettings,
 		script: string,
 		platform: string,
+		type: string,
 		importedFile: TFile | null,
 	) {
 		super(app);
 		this.script = script;
 		this.platform = platform;
 		this.importedFile = importedFile;
+		this.settings = settings;
+		this.type = type;
+
+		this.prefix =
+			this.settings.syncPlatform === "IOTO"
+				? this.app.plugins.plugins["ioto-settings"].settings
+						.userTemplatePrefix || ""
+				: this.app.plugins.plugins["ob-sync-with-mdb"].settings
+						.userTemplatePrefix || "";
 	}
 
 	onOpen() {
@@ -90,9 +105,18 @@ export class ScriptPreviewModal extends Modal {
 								),
 							);
 						} else {
-							const fileName = `SyncScript-${
+							let fileName = "";
+							const fileNamePrefix = this.prefix
+								? `${this.prefix}-`
+								: "";
+							fileName = `${fileNamePrefix}TP-OB${this.type}${
 								this.platform
 							}-${Date.now()}.md`;
+							const folderPath =
+								this.type === "Sync"
+									? this.settings.syncTemplateFolder || ""
+									: this.settings.fetchTemplateFolder || "";
+							fileName = `${folderPath}/${fileName}`;
 							await this.app.vault.create(fileName, content);
 							new Notice(
 								t("SCRIPT_PREVIEW_NOTICE_SAVED").replace(

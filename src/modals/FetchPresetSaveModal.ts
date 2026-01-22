@@ -52,7 +52,6 @@ export class FetchPresetSaveModal extends Modal {
 		nameInput.setPlaceholder(t("FETCH_PRESET_MANAGER_SAVE_PLACEHOLDER"));
 
 		const platformDropdown = new DropdownComponent(saveContainer);
-		platformDropdown.selectEl.style.width = "100%";
 		platformDropdown.selectEl.style.marginBottom = "10px";
 		const platforms: Platform[] = [
 			"Airtable",

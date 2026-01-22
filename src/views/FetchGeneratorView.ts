@@ -618,8 +618,10 @@ export class FetchGeneratorView extends ItemView {
 		);
 		new ScriptPreviewModal(
 			this.app,
+			this.plugin.settings,
 			script,
 			this.platform,
+			"Fetch",
 			this.importedFile,
 		).open();
 	}
