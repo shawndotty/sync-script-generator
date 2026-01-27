@@ -763,4 +763,7 @@ export default {
 	ADDED: `已新增`,
 	TEMPLATES_TO_TEMPLATER_HOTKEYS: `模板到Templater熱鍵`,
 	TEMPLATES_ALREADY_EXIST: `所有模板已存在於Templater熱鍵中`,
+	SCRIPT_PREVIEW_BTN_ADD_HOTKEY: `點擊以添加快捷鍵`,
+	SCRIPT_PREVIEW_BTN_PRESS_HOTKEY: `按下快捷鍵`,
+	SCRIPT_PREVIEW_HOTKEY_CONFLICT: `快捷鍵衝突`,
 };

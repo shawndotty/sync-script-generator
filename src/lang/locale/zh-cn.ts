@@ -764,4 +764,7 @@ export default {
 	ADDED: `已添加`,
 	TEMPLATES_TO_TEMPLATER_HOTKEYS: `模板到Templater快捷键`,
 	TEMPLATES_ALREADY_EXIST: `所有模板已存在于Templater快捷键中`,
+	SCRIPT_PREVIEW_BTN_ADD_HOTKEY: `点击以添加快捷键`,
+	SCRIPT_PREVIEW_BTN_PRESS_HOTKEY: `按下快捷键`,
+	SCRIPT_PREVIEW_HOTKEY_CONFLICT: `快捷键冲突`,
 };

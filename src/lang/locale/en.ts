@@ -855,4 +855,7 @@ export default {
 	ADDED: `Added`,
 	TEMPLATES_TO_TEMPLATER_HOTKEYS: `templates to Templater hotkeys`,
 	TEMPLATES_ALREADY_EXIST: `All templates already exist in Templater hotkeys`,
+	SCRIPT_PREVIEW_BTN_ADD_HOTKEY: `Click to add hotkey`,
+	SCRIPT_PREVIEW_BTN_PRESS_HOTKEY: `Press hotkey`,
+	SCRIPT_PREVIEW_HOTKEY_CONFLICT: `Hotkey conflict`,
 };
