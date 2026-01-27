@@ -65,7 +65,23 @@ export class ScriptPreviewModal extends Modal {
 			parent: editorContainer,
 		});
 
-		new Setting(this.contentEl)
+		const previewSetting = new Setting(this.contentEl);
+		previewSetting.infoEl.hide();
+
+		if (!this.importedFile) {
+			previewSetting.addText(
+				(text) =>
+					(text
+						.setPlaceholder(this.templateName)
+						.setValue(this.templateName)
+						.onChange((value) => {
+							this.templateName = value;
+							this.makeTargetFilePath();
+						}).inputEl.style.width = "100%"),
+			);
+		}
+
+		previewSetting
 			.addButton((btn) => {
 				btn.setButtonText(t("SCRIPT_PREVIEW_BTN_MAXIMIZE")).onClick(
 					() => {
