@@ -14,6 +14,8 @@ export class ScriptPreviewModal extends Modal {
 	private settings: SyncScriptGeneratorSettings;
 	private prefix: string;
 	private type: string;
+	private templateName: string;
+	private targetFilePath: string;
 
 	constructor(
 		app: App,
@@ -36,6 +38,8 @@ export class ScriptPreviewModal extends Modal {
 						.userTemplatePrefix || ""
 				: this.app.plugins.plugins["ob-sync-with-mdb"].settings
 						.userTemplatePrefix || "";
+		this.makeTemplateName();
+		this.makeTargetFilePath();
 	}
 
 	onOpen() {
@@ -105,29 +109,43 @@ export class ScriptPreviewModal extends Modal {
 								),
 							);
 						} else {
-							let fileName = "";
-							const fileNamePrefix = this.prefix
-								? `${this.prefix}-`
-								: "";
-							fileName = `${fileNamePrefix}TP-OB${this.type}${
-								this.platform
-							}-${Date.now()}.md`;
-							const folderPath =
-								this.type === "Sync"
-									? this.settings.syncTemplateFolder || ""
-									: this.settings.fetchTemplateFolder || "";
-							fileName = `${folderPath}/${fileName}`;
-							await this.app.vault.create(fileName, content);
+							await this.app.vault.create(
+								this.targetFilePath,
+								content,
+							);
 							new Notice(
 								t("SCRIPT_PREVIEW_NOTICE_SAVED").replace(
 									"${file}",
-									fileName,
+									this.targetFilePath,
 								),
 							);
 						}
 						this.close();
 					});
 			});
+	}
+
+	makeTemplateName() {
+		if (this.importedFile) {
+			this.templateName = `${this.importedFile.basename}`;
+		} else {
+			const fileNamePrefix = this.prefix ? `${this.prefix}-` : "";
+			this.templateName = `${fileNamePrefix}TP-OB${this.type}${
+				this.platform
+			}-${Date.now()}`;
+		}
+	}
+
+	makeTargetFilePath() {
+		if (this.importedFile) {
+			this.targetFilePath = this.importedFile.path;
+		} else {
+			const folderPath =
+				this.type === "Sync"
+					? this.settings.syncTemplateFolder || ""
+					: this.settings.fetchTemplateFolder || "";
+			this.targetFilePath = `${folderPath}/${this.templateName}.md`;
+		}
 	}
 
 	onClose() {
