@@ -760,4 +760,8 @@ export default {
 	PICKER_NO_FILES_FOUND: "没有找到符合条件的文件",
 	PICKER_NO_FOLDERS_FOUND: "没有找到符合条件的文件夹",
 	GENERATOR_VIEW_CURRENT_FILE: "当前文件",
+	HOTKEY_APPLIED_SUCCESSFULLY: "成功为${commandId}添加了快捷键",
+	ADDED: `已添加`,
+	TEMPLATES_TO_TEMPLATER_HOTKEYS: `模板到Templater快捷键`,
+	TEMPLATES_ALREADY_EXIST: `所有模板已存在于Templater快捷键中`,
 };

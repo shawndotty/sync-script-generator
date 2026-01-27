@@ -759,4 +759,8 @@ export default {
 	PICKER_NO_FILES_FOUND: "沒有找到符合條件的文件",
 	PICKER_NO_FOLDERS_FOUND: "沒有找到符合條件的資料夾",
 	GENERATOR_VIEW_CURRENT_FILE: "當前文件",
+	HOTKEY_APPLIED_SUCCESSFULLY: "成功為${commandId}新增了熱鍵",
+	ADDED: `已新增`,
+	TEMPLATES_TO_TEMPLATER_HOTKEYS: `模板到Templater熱鍵`,
+	TEMPLATES_ALREADY_EXIST: `所有模板已存在於Templater熱鍵中`,
 };

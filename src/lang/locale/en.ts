@@ -851,4 +851,8 @@ export default {
 	PICKER_NO_FILES_FOUND: "No files found",
 	PICKER_NO_FOLDERS_FOUND: "No folders found",
 	GENERATOR_VIEW_CURRENT_FILE: "Current File",
+	HOTKEY_APPLIED_SUCCESSFULLY: "Hotkey applied successfully for ${commandId}",
+	ADDED: `Added`,
+	TEMPLATES_TO_TEMPLATER_HOTKEYS: `templates to Templater hotkeys`,
+	TEMPLATES_ALREADY_EXIST: `All templates already exist in Templater hotkeys`,
 };
