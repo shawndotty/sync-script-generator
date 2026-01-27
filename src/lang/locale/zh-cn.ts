@@ -759,4 +759,5 @@ export default {
 	SETTINGS_FETCH_TEMPLATE_FOLDER_PLACEHOLDER: "获取模板文件夹路径",
 	PICKER_NO_FILES_FOUND: "没有找到符合条件的文件",
 	PICKER_NO_FOLDERS_FOUND: "没有找到符合条件的文件夹",
+	GENERATOR_VIEW_CURRENT_FILE: "当前文件",
 };

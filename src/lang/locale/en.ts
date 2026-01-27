@@ -850,4 +850,5 @@ export default {
 		"Path to the fetch template folder",
 	PICKER_NO_FILES_FOUND: "No files found",
 	PICKER_NO_FOLDERS_FOUND: "No folders found",
+	GENERATOR_VIEW_CURRENT_FILE: "Current File",
 };
