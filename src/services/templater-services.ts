@@ -100,9 +100,7 @@ export class TemplaterServices {
 							await core.append_template_to_active_file(file);
 						} else {
 							// Fallback or log if method name is different
-							console.warn(
-								"Templater execution method not found",
-							);
+							new Notice("Templater execution method not found");
 						}
 					}
 				}

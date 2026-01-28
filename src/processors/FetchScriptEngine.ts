@@ -354,7 +354,7 @@ export class FetchScriptEngine {
 						}
 					}
 				} catch (e) {
-					console.error("Failed to parse configuration object", e);
+					// console.error("Failed to parse configuration object", e);
 					new Notice(
 						"Warning: Could not parse configuration from template.",
 					);

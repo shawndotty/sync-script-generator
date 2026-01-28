@@ -40,7 +40,7 @@ export class HotkeyService {
 				}
 			}
 		} catch (error) {
-			console.error("Failed to read hotkeys.json", error);
+			// console.error("Failed to read hotkeys.json", error);
 		}
 
 		return null;
@@ -77,7 +77,7 @@ export class HotkeyService {
 				}
 			}
 		} catch (error) {
-			console.error("Failed to check hotkey conflict", error);
+			// console.error("Failed to check hotkey conflict", error);
 		}
 		return false;
 	}
@@ -149,9 +149,9 @@ export class HotkeyService {
 								retryInterval,
 							);
 						} else {
-							console.warn(
-								`Command ${commandId} not found after ${maxRetries} attempts`,
-							);
+							// console.warn(
+							// 	`Command ${commandId} not found after ${maxRetries} attempts`,
+							// );
 							// Even if command is not found yet, save the config
 							hotkeyManager.save();
 						}
@@ -160,10 +160,10 @@ export class HotkeyService {
 					applyHotkey(0);
 				}
 			} catch (error) {
-				console.error("Failed to add hotkey via manager", error);
+				// console.error("Failed to add hotkey via manager", error);
 			}
 		} else {
-			console.error("HotkeyManager not available");
+			// console.error("HotkeyManager not available");
 		}
 	}
 }

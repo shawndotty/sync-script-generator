@@ -186,10 +186,10 @@ export class ScriptPreviewModal extends Modal {
 										key,
 									);
 								} catch (error) {
-									console.error(
-										"Failed to add hotkey",
-										error,
-									);
+									// console.error(
+									// 	"Failed to add hotkey",
+									// 	error,
+									// );
 								}
 							}
 						}

@@ -372,8 +372,6 @@ export class ScriptEngine {
 			}
 		}
 
-		console.dir({ platform, rootSettings, vaultSettings, folderSettings });
-
 		return { platform, rootSettings, vaultSettings, folderSettings };
 	}
 
