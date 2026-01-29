@@ -361,6 +361,9 @@
     transition: all 0.2s;
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
+    box-shadow: none;
+    font-size: var(--font-ui-medium);
+    height: auto;
 }
 
 .sync-generator-container .settings-tab-btn:hover,
