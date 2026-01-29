@@ -17,6 +17,7 @@ import { GENERATOR_VIEW_TYPE } from "./models/constants";
 import { FetchGeneratorView } from "./views/FetchGeneratorView";
 import { FETCH_SCRIPT_GENERATOR_VIEW_TYPE } from "./models/constantsFetch";
 import { t } from "./lang/helpers";
+import { IotoSettingsService } from "services/ioto-settings-services";
 
 export default class SyncScriptGeneratorPlugin extends Plugin {
 	settings: SyncScriptGeneratorSettings;
@@ -164,6 +165,28 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 			DEFAULT_SETTINGS,
 			(await this.loadData()) as Partial<SyncScriptGeneratorSettings>,
 		);
+
+		const iotoSettingsService = new IotoSettingsService(this.app);
+
+		// 统一获取 IOTO 设置，避免重复调用
+		if (iotoSettingsService.isAvailable()) {
+			const iotoSettings = iotoSettingsService.getSettings();
+			const base = iotoSettings?.extraFolder;
+			if (base) {
+				const paths = {
+					syncTemplateFolder: `${base}/IOTO/Templates/Templater/MyIOTO/${t("SYNC_TEMPLATE_FOLDER_NAME")}`,
+					fetchTemplateFolder: `${base}/IOTO/Templates/Templater/MyIOTO/${t("FETCH_TEMPLATE_FOLDER_NAME")}`,
+				} as const;
+
+				(Object.keys(paths) as Array<keyof typeof paths>).forEach(
+					(key) => {
+						if (!this.settings[key]) {
+							this.settings[key] = paths[key];
+						}
+					},
+				);
+			}
+		}
 	}
 
 	async saveSettings() {

@@ -858,4 +858,6 @@ export default {
 	SCRIPT_PREVIEW_BTN_ADD_HOTKEY: `Click to add hotkey`,
 	SCRIPT_PREVIEW_BTN_PRESS_HOTKEY: `Press hotkey`,
 	SCRIPT_PREVIEW_HOTKEY_CONFLICT: `Hotkey conflict`,
+	SYNC_TEMPLATE_FOLDER_NAME: "SyncTemplates",
+	FETCH_TEMPLATE_FOLDER_NAME: "SyncTemplates",
 };
