@@ -49,7 +49,7 @@ export default {
 		"When the input is empty, the default is:\n${larkAppSecretForSync}",
 	APP_SECRET_ROOT_LARK_TITLE: "Application Key",
 	APP_TOKEN_FOLDER_DESC:
-		"Synchronized folder, the appToken used during synchronization.\n\nIf the input is empty, the defaultAppToken will be used by default.\n\nIf you configure a value different from the defaultAppToken, you can synchronize the contents of different folders under the same OB library to different multi-dimensional tables in Feishu.",
+		"Synchronized folder, the appToken used during synchronization.\n\nIf the input is empty, the defaultAppToken will be used by default.\n\nIf you configure a value different from the defaultAppToken, you can synchronize the contents of different folders under the same OB vault to different multi-dimensional tables in Feishu.",
 	APP_TOKEN_FOLDER_EXAMPLE: "Translation not possible.",
 	APP_TOKEN_FOLDER_TITLE:
 		'Multidimensional table application Token (equivalent to Airtable"s Base ID)',
@@ -92,12 +92,12 @@ export default {
 		'Project: ["Daily Work"]\nStatus: "Published"\nCourse: "Johnny Learns OB"\nVideoURL: ""\nContent Overview: ""\nAuthor: "Johnny"',
 	CUSTOM_FIELDS_FOLDER_TITLE: "Custom Field",
 	CUSTOM_FIELDS_OVERRIDE_MODE_FOLDER_DESC:
-		"Whether to use the custom fields set in the sync folder to overwrite the custom fields set in the library settings",
+		"Whether to use the custom fields set in the sync folder to overwrite the custom fields set in the vault settings",
 	CUSTOM_FIELDS_OVERRIDE_MODE_FOLDER_EXAMPLE: "true",
 	CUSTOM_FIELDS_OVERRIDE_MODE_FOLDER_TITLE:
-		"Custom fields in the library-level settings are overridden",
+		"Custom fields in the vault-level settings are overridden",
 	CUSTOM_FIELDS_VAULT_DESC:
-		"Custom fields used when synchronizing all notes under the entire library.\n\nNote that the settings here will be inherited by other notes in the library.\n\nIf you set something here but do not want to use these settings in a certain folder,\n\nyou need to enable the option for that folder to override the library-level custom field settings.",
+		"Custom fields used when synchronizing all notes under the entire vault.\n\nNote that the settings here will be inherited by other notes in the vault.\n\nIf you set something here but do not want to use these settings in a certain folder,\n\nyou need to enable the option for that folder to override the vault-level custom field settings.",
 	CUSTOM_FIELDS_VAULT_EXAMPLE:
 		'Project: ["Daily Work"]\nStatus: "Published"\nCourse: "Johnny Learns OB"\nVideoURL: ""\nContent Overview: ""\nAuthor: "Johnny"',
 	CUSTOM_FIELDS_VAULT_TITLE: "Custom field",
@@ -262,7 +262,7 @@ export default {
 	EXTRACT_BLOCKS_FOLDER_TITLE:
 		"Extract the specified block to the specified field",
 	EXTRACT_BLOCKS_OVERRIDE_MODE_FOLDER_DESC:
-		"Whether to use the extraction block settings in the sync folder to override the extraction block settings at the library level",
+		"Whether to use the extraction block settings in the sync folder to override the extraction block settings at the vault level",
 	EXTRACT_BLOCKS_OVERRIDE_MODE_FOLDER_EXAMPLE: "true",
 	EXTRACT_BLOCKS_OVERRIDE_MODE_FOLDER_TITLE:
 		"Enable extraction block overwrite mode",
@@ -298,7 +298,7 @@ export default {
 		'highlights: "Doubtful points",\nitalics: "Place names",\nstrong: "Key points",\nunderlines: "Personal names",\ndeletions: "Delete",\ninlineCodes: "Inline code",\nsingleQuotes: "Quotation"',
 	EXTRACT_KEY_POINTS_FOLDER_TITLE: "Extract key points",
 	EXTRACT_KEY_POINTS_OVERRIDE_MODE_FOLDER_DESC:
-		"Whether to use the extraction settings from the synchronized folder to override the extraction settings at the library level.",
+		"Whether to use the extraction settings from the synchronized folder to override the extraction settings at the vault level.",
 	EXTRACT_KEY_POINTS_OVERRIDE_MODE_FOLDER_EXAMPLE: "true",
 	EXTRACT_KEY_POINTS_OVERRIDE_MODE_FOLDER_TITLE:
 		"Whether to fix the setting for extracting key points at the database level",
@@ -330,10 +330,10 @@ export default {
 	EXTRACT_SECTIONS_FOLDER_EXAMPLE: "Summary",
 	EXTRACT_SECTIONS_FOLDER_TITLE: "Extract chapter",
 	EXTRACT_SECTIONS_OVERRIDE_MODE_FOLDER_DESC:
-		"Whether to use the extract chapter configuration in the sync folder to override the extract chapter configuration in the library-level settings",
+		"Whether to use the extract chapter configuration in the sync folder to override the extract chapter configuration in the vault-level settings",
 	EXTRACT_SECTIONS_OVERRIDE_MODE_FOLDER_EXAMPLE: "true",
 	EXTRACT_SECTIONS_OVERRIDE_MODE_FOLDER_TITLE:
-		"Whether to extract chapter configuration in the library-level settings",
+		"Whether to extract chapter configuration in the vault-level settings",
 	EXTRACT_SECTIONS_VAULT_DESC:
 		"When synchronizing, the specified chapter content to be extracted.\n\nAttribute name: the title of the chapter.\nAttribute value: the field name in the multidimensional table where the corresponding chapter is to be stored.",
 	EXTRACT_SECTIONS_VAULT_EXAMPLE: "Summary",
@@ -363,7 +363,7 @@ export default {
 	EXTRACT_TAG_LINES_FOLDER_EXAMPLE: "FleetingNotes",
 	EXTRACT_TAG_LINES_FOLDER_TITLE: "Extract specified label rows",
 	EXTRACT_TAG_LINES_OVERRIDE_MODE_FOLDER_DESC:
-		"Whether to use the extraction tag configuration in the sync folder to override the extraction tag configuration in the library-level settings",
+		"Whether to use the extraction tag configuration in the sync folder to override the extraction tag configuration in the vault-level settings",
 	EXTRACT_TAG_LINES_OVERRIDE_MODE_FOLDER_EXAMPLE: "true",
 	EXTRACT_TAG_LINES_OVERRIDE_MODE_FOLDER_TITLE:
 		"Enable overwrite mode for extracting label rows",
@@ -591,7 +591,7 @@ export default {
 	FM_FETCH_FIELDS_FOLDER_TITLE:
 		"Obtain the fields of the note attribute area",
 	FM_FETCH_FIELDS_OVERRIDE_MODE_FOLDER_DESC:
-		"Whether to use the attribute in the sync folder to obtain field configuration and override the fmFetchFields setting in the library-level settings",
+		"Whether to use the attribute in the sync folder to obtain field configuration and override the fmFetchFields setting in the vault-level settings",
 	FM_FETCH_FIELDS_OVERRIDE_MODE_FOLDER_EXAMPLE: "true",
 	FM_FETCH_FIELDS_OVERRIDE_MODE_FOLDER_TITLE:
 		"Enable attribute acquisition field override mode",
@@ -620,7 +620,7 @@ export default {
 	GENERATOR_VIEW_FOLDER_PATH_EXAMPLE: "Example: MyVault/Projects/Active",
 	GENERATOR_VIEW_FOLDER_PATH_NAME: "Folder path",
 	GENERATOR_VIEW_GROUP_ADVANCED: "Advanced",
-	GENERATOR_VIEW_GROUP_BASIC: "Foundation",
+	GENERATOR_VIEW_GROUP_BASIC: "Basic",
 	GENERATOR_VIEW_GROUP_EXTRACT: "Extract",
 	GENERATOR_VIEW_GROUP_OTHER: "Others",
 	GENERATOR_VIEW_NOTICE_IMPORTED: "Settings have been imported from ${file}",
@@ -636,7 +636,7 @@ export default {
 	GENERATOR_VIEW_SETTINGS_SUFFIX: "Settings",
 	GENERATOR_VIEW_TAB_FOLDER: "Folder",
 	GENERATOR_VIEW_TAB_ROOT: "Necessary",
-	GENERATOR_VIEW_TAB_VAULT: "Library level",
+	GENERATOR_VIEW_TAB_VAULT: "Vault level",
 	GENERATOR_VIEW_TITLE: "Synchronous Script Generator",
 	GENERATOR_VIEW_TOOLTIP_EDIT_ARRAY: "Edit array",
 	GENERATOR_VIEW_TOOLTIP_EDIT_OBJECT: "Edit object",
