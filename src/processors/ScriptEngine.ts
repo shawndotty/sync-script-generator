@@ -230,7 +230,7 @@ export class ScriptEngine {
 				);
 				entries.forEach(([key, val], j) => {
 					const renderedVal =
-						typeof val === "string" && /^\$\{.*\}$/.test(val)
+						typeof val === "string" && /\$\{.*\}/.test(val)
 							? "`" + val + "`"
 							: JSON.stringify(val, null, 4);
 					script +=
