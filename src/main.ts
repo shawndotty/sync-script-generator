@@ -160,30 +160,40 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 	onunload() {}
 
 	async loadSettings() {
+		const loadedData = await this.loadData();
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			(await this.loadData()) as Partial<SyncScriptGeneratorSettings>,
+			loadedData as Partial<SyncScriptGeneratorSettings>,
 		);
 
-		const iotoSettingsService = new IotoSettingsService(this.app);
+		if (!loadedData) {
+			const iotoSettingsService = new IotoSettingsService(this.app);
 
-		// 统一获取 IOTO 设置，避免重复调用
-		if (iotoSettingsService.isAvailable()) {
-			const iotoSettings = iotoSettingsService.getSettings();
-			const base = iotoSettings?.extraFolder;
-			if (base) {
-				const paths = {
-					syncTemplateFolder: `${base}/IOTO/Templates/Templater/MyIOTO/${t("SYNC_TEMPLATE_FOLDER_NAME")}`,
-					fetchTemplateFolder: `${base}/IOTO/Templates/Templater/MyIOTO/${t("FETCH_TEMPLATE_FOLDER_NAME")}`,
-				} as const;
+			try {
+				// 统一获取 IOTO 设置，避免重复调用
+				if (iotoSettingsService.isAvailable()) {
+					const iotoSettings = iotoSettingsService.getSettings();
+					const base = iotoSettings?.extraFolder;
+					if (base) {
+						const paths = {
+							syncTemplateFolder: `${base}/IOTO/Templates/Templater/MyIOTO/${t("SYNC_TEMPLATE_FOLDER_NAME")}`,
+							fetchTemplateFolder: `${base}/IOTO/Templates/Templater/MyIOTO/${t("FETCH_TEMPLATE_FOLDER_NAME")}`,
+						} as const;
 
-				(Object.keys(paths) as Array<keyof typeof paths>).forEach(
-					(key) => {
-						if (!this.settings[key]) {
-							this.settings[key] = paths[key];
-						}
-					},
+						(
+							Object.keys(paths) as Array<keyof typeof paths>
+						).forEach((key) => {
+							if (!this.settings[key]) {
+								this.settings[key] = paths[key];
+							}
+						});
+					}
+				}
+			} catch (error) {
+				console.warn(
+					"Sync Script Generator: Failed to load IOTO Settings",
+					error,
 				);
 			}
 		}
