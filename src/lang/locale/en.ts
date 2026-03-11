@@ -952,28 +952,34 @@ export default {
 		"Synchronized folder, the Baserow tableID used during synchronization.\n\nWhen not using separation mode, both uploads and downloads will use the tableID.\n\nIf separation mode is used, the tableID is only used during uploads.",
 	TABLE_ID_FOLDER_BASEROW_EXAMPLE: "4654",
 	TABLE_ID_FOLDER_BASEROW_TITLE: "Table ID",
-	FETCH_API_URL_ROOT_BASEROW_TITLE: "Root segment of the API address",
+	FETCH_API_URL_ROOT_BASEROW_TITLE: "API address",
 	FETCH_API_URL_ROOT_BASEROW_DESC:
-		"The root segment of the API address for a privately deployed Baserow",
-	FETCH_API_URL_ROOT_BASEROW_EXAMPLE: "http://localhost/api/",
-	FETCH_API_URL_ROOT_VIKA_TITLE: "Root segment of the API address",
+		"API address of the privately deployed Baserow",
+	FETCH_API_URL_ROOT_BASEROW_EXAMPLE:
+		"You only need to set this when using a self-hosted deployment of Baserow.  \nEnter the corresponding URL based on your deployment configuration, for example:  \nhttp://localhost/api/",
+	FETCH_API_URL_ROOT_VIKA_TITLE: "API address",
 	FETCH_API_URL_ROOT_VIKA_DESC:
-		"The root segment of the API address for the privately deployed Vika (ApiTable)",
-	FETCH_API_URL_ROOT_VIKA_EXAMPLE: "http://localhost/fusion/v1/datasheets/",
+		"The root value of the API address for the privately deployed Vika (ApiTable)",
+	FETCH_API_URL_ROOT_VIKA_EXAMPLE:
+		"You only need to set this when using a self-hosted deployment of Apitable.\n\nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/fusion/v1/datasheets/",
 	API_URL_ROOT_BASEROW_TITLE: "Root segment of the API address",
 	API_URL_ROOT_BASEROW_DESC:
 		"The root segment of the API address for a privately deployed Baserow",
-	API_URL_ROOT_BASEROW_EXAMPLE: "http://localhost/api/",
+	API_URL_ROOT_BASEROW_EXAMPLE:
+		"You only need to set this when using a self-hosted deployment of Baserow.  \nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/api/",
 	API_URL_ROOT_VIKA_TITLE: "Root segment of the API address",
 	API_URL_ROOT_VIKA_DESC:
 		"The root segment of the API address for the privately deployed Vika (ApiTable)",
-	API_URL_ROOT_VIKA_EXAMPLE: "http://localhost/fusion/v1/datasheets/",
+	API_URL_ROOT_VIKA_EXAMPLE:
+		"You only need to set this when using a self-hosted deployment of Apitable.\n\nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/fusion/v1/datasheets/",
 	RECORD_URL_ROOT_BASEROW_TITLE: "Root segment of the data record address",
 	RECORD_URL_ROOT_BASEROW_DESC:
 		"The root segment of the data record address for a privately deployed Baserow",
-	RECORD_URL_ROOT_BASEROW_EXAMPLE: "http://localhost/",
+	RECORD_URL_ROOT_BASEROW_EXAMPLE:
+		"You only need to set this when using a self-hosted deployment of Baserow.  \nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/",
 	RECORD_URL_ROOT_VIKA_TITLE: "Root segment of the data record address",
 	RECORD_URL_ROOT_VIKA_DESC:
 		"The root segment of the data record address for privately deployed Vika (ApiTable)",
-	RECORD_URL_ROOT_VIKA_EXAMPLE: "http://localhost/workbench/",
+	RECORD_URL_ROOT_VIKA_EXAMPLE:
+		"You only need to set this when using a self-hosted deployment of Apitable.\n\nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/workbench/",
 };

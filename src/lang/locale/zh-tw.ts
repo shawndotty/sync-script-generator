@@ -849,23 +849,28 @@ export default {
 	TABLE_ID_FOLDER_BASEROW_DESC:
 		"同步資料夾，在同步時使用的Baserow的tableID。\n\n不使用分離模式時，上傳和下載都會使用tableID。\n\n如果使用分離模式，只有在上傳時使用tableID。",
 	TABLE_ID_FOLDER_BASEROW_EXAMPLE: "4654",
-	TABLE_ID_FOLDER_BASEROW_TITLE: "資料表ID",
-	FETCH_API_URL_ROOT_BASEROW_TITLE: "API地址的根值",
+	FETCH_API_URL_ROOT_BASEROW_TITLE: "API地址",
 	FETCH_API_URL_ROOT_BASEROW_DESC: "私有化部署的Baserow的API地址的根值",
-	FETCH_API_URL_ROOT_BASEROW_EXAMPLE: "http://localhost/api/",
-	FETCH_API_URL_ROOT_VIKA_TITLE: "API地址的根值",
+	FETCH_API_URL_ROOT_BASEROW_EXAMPLE:
+		"當你使用私有化部署的Baserow時，才需要設置  \n根據你部署時的配置，寫入對應的URL，比如：  \nhttp://localhost/api/",
+	FETCH_API_URL_ROOT_VIKA_TITLE: "API地址",
 	FETCH_API_URL_ROOT_VIKA_DESC: "私有化部署的Vika(ApiTable)的API地址的根值",
-	FETCH_API_URL_ROOT_VIKA_EXAMPLE: "http://localhost/fusion/v1/datasheets/",
-	API_URL_ROOT_BASEROW_TITLE: "API地址的根值",
+	FETCH_API_URL_ROOT_VIKA_EXAMPLE:
+		"當你使用私有化部署的Apitable時，才需要設置\n\n根據你部署時的配置，寫入對應的URL，比如：\n\nhttp://localhost/fusion/v1/datasheets/",
+	API_URL_ROOT_BASEROW_TITLE: "API地址",
 	API_URL_ROOT_BASEROW_DESC: "私有化部署的Baserow的API地址的根值",
-	API_URL_ROOT_BASEROW_EXAMPLE: "http://localhost/api/",
-	API_URL_ROOT_VIKA_TITLE: "API地址的根值",
+	API_URL_ROOT_BASEROW_EXAMPLE:
+		"當你使用私有化部署的Baserow時，才需要設置\n根據你部署時的配置，寫入對應的URL，比如：\n\nhttp://localhost/api/",
+	API_URL_ROOT_VIKA_TITLE: "API地址",
 	API_URL_ROOT_VIKA_DESC: "私有化部署的Vika(ApiTable)的API地址的根值",
-	API_URL_ROOT_VIKA_EXAMPLE: "http://localhost/fusion/v1/datasheets/",
+	API_URL_ROOT_VIKA_EXAMPLE:
+		"當你使用私有化部署的Apitable時，才需要設置\n\n根據你部署時的配置，寫入對應的URL，比如：\n\nhttp://localhost/fusion/v1/datasheets/",
 	RECORD_URL_ROOT_BASEROW_TITLE: "數據記錄地址的根值",
 	RECORD_URL_ROOT_BASEROW_DESC: "私有化部署的Baserow的數據記錄地址的根值",
-	RECORD_URL_ROOT_BASEROW_EXAMPLE: "http://localhost/",
+	RECORD_URL_ROOT_BASEROW_EXAMPLE:
+		"當你使用私有化部署的Baserow時，才需要設置  \n根據你部署時的配置，寫入對應的URL，比如：\n\nhttp://localhost/",
 	RECORD_URL_ROOT_VIKA_TITLE: "數據記錄地址的根值",
 	RECORD_URL_ROOT_VIKA_DESC: "私有化部署的Vika(ApiTable)的數據記錄地址的根值",
-	RECORD_URL_ROOT_VIKA_EXAMPLE: "http://localhost/workbench/",
+	RECORD_URL_ROOT_VIKA_EXAMPLE:
+		"當你使用私有化部署的Apitable時，才需要設置\n\n根據你部署時的配置，寫入對應的URL，比如：\n\nhttp://localhost/workbench/",
 };
