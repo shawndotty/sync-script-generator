@@ -146,10 +146,8 @@ export class ScriptEngine {
 			} else if (mappedVar) {
 				script +=
 					"    " + opt.name + ": `$" + "{" + mappedVar + "}`,\n";
-			} else {
-				let val = opt.defaultValue === "无" ? "" : opt.defaultValue;
-				script +=
-					"    " + opt.name + ": " + JSON.stringify(val) + ",\n";
+			} else if (opt.defaultValue && opt.defaultValue !== "无") {
+				script += `    ${opt.name}: ${JSON.stringify(opt.defaultValue)},\n`;
 			}
 		});
 
