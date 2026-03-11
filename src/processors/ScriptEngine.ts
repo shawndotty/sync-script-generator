@@ -78,11 +78,15 @@ export class ScriptEngine {
 				apiKey:
 					platform === "Airtable"
 						? "airtableAPIKeyForSync"
-						: "vikaAPIKeyForSync",
+						: platform === "Baserow"
+							? "baserowAPIKeyForSync"
+							: "vikaAPIKeyForSync",
 				defaultBaseID:
 					platform === "Airtable"
 						? "airtableBaseIDForSync"
-						: "dingBaseIDForSync",
+						: platform === "Baserow"
+							? "baserowBaseIDForSync"
+							: "dingBaseIDForSync",
 				defaultTableID:
 					platform === "Airtable"
 						? "airtableTableIDForSync"
@@ -94,7 +98,11 @@ export class ScriptEngine {
 									? "wpsTableIDForSync"
 									: platform === "Ding"
 										? "dingTableIDForSync"
-										: "vikaTableIDForSync",
+										: platform === "Vika"
+											? "vikaTableIDForSync"
+											: platform === "Baserow"
+												? "baserowTableIDForSync"
+												: "",
 				appID:
 					platform === "Feishu"
 						? "feishuAppIDForSync"

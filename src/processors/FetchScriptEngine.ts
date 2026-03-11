@@ -78,11 +78,15 @@ export class FetchScriptEngine {
 				apiKey:
 					platform === "Airtable"
 						? "airtableAPIKeyForFetch"
-						: "vikaAPIKeyForFetch",
+						: platform === "Baserow"
+							? "baserowAPIKeyForFetch"
+							: "vikaAPIKeyForFetch",
 				defaultBaseID:
 					platform === "Airtable"
 						? "airtableBaseIDForFetch"
-						: "dingBaseIDForFetch",
+						: platform === "Baserow"
+							? "baserowBaseIDForFetch"
+							: "dingBaseIDForFetch",
 				defaultTableID:
 					platform === "Airtable"
 						? "airtableTableIDForFetch"
@@ -94,7 +98,11 @@ export class FetchScriptEngine {
 									? "wpsTableIDForFetch"
 									: platform === "Ding"
 										? "dingTableIDForFetch"
-										: "vikaTableIDForFetch",
+										: platform === "Vika"
+											? "vikaTableIDForFetch"
+											: platform === "Baserow"
+												? "baserowTableIDForFetch"
+												: "",
 				appID:
 					platform === "Feishu"
 						? "feishuAppIDForFetch"

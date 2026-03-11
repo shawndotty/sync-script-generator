@@ -126,6 +126,7 @@ export class FetchGeneratorView extends ItemView {
 			"Lark",
 			"WPS",
 			"Ding",
+			"Baserow",
 		];
 
 		platforms.forEach((p) => {
