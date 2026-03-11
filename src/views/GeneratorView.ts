@@ -124,6 +124,7 @@ export class GeneratorView extends ItemView {
 			"Lark",
 			"WPS",
 			"Ding",
+			"Baserow",
 		];
 		platforms.forEach((p) => {
 			const label = this.platformListCollapsed ? p.charAt(0) : p;
@@ -862,6 +863,7 @@ export class GeneratorView extends ItemView {
 			Lark: "defaultSyncTemplateLark",
 			WPS: "defaultSyncTemplateWPS",
 			Ding: "defaultSyncTemplateDing",
+			Baserow: "defaultSyncTemplateBaserow",
 		};
 
 		const key = platformSettingsMap[this.platform];

@@ -18,7 +18,6 @@ export const FETCH_OPTIONS: FetchOption[] = [
 	},
 	{
 		name: "apiKey",
-
 		title: t("FETCH_API_KEY_ROOT_AIRTABLE_TITLE"),
 		platforms: ["Airtable"],
 		level: "Root",
@@ -27,6 +26,17 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		valueType: "string",
 		description: t("FETCH_API_KEY_ROOT_AIRTABLE_DESC"),
 		example: t("FETCH_API_KEY_ROOT_AIRTABLE_EXAMPLE"),
+	},
+	{
+		name: "apiKey",
+		title: t("FETCH_API_KEY_ROOT_BASEROW_TITLE"),
+		platforms: ["Baserow"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_API_KEY_ROOT_BASEROW_DESC"),
+		example: t("FETCH_API_KEY_ROOT_BASEROW_EXAMPLE"),
 	},
 	{
 		name: "apiKey",
@@ -175,6 +185,18 @@ export const FETCH_OPTIONS: FetchOption[] = [
 	{
 		name: "defaultBaseID",
 
+		title: t("FETCH_DEFAULT_BASE_ID_ROOT_BASEROW_TITLE"),
+		platforms: ["Baserow"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_DEFAULT_BASE_ID_ROOT_BASEROW_DESC"),
+		example: t("FETCH_DEFAULT_BASE_ID_ROOT_BASEROW_EXAMPLE"),
+	},
+	{
+		name: "defaultBaseID",
+
 		title: t("FETCH_DEFAULT_BASE_ID_ROOT_DING_TITLE"),
 		platforms: ["Ding"],
 		level: "Root",
@@ -231,6 +253,18 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		valueType: "string",
 		description: t("FETCH_DEFAULT_TABLE_ID_ROOT_AIRTABLE_DESC"),
 		example: t("FETCH_DEFAULT_TABLE_ID_ROOT_AIRTABLE_EXAMPLE"),
+	},
+	{
+		name: "defaultTableID",
+
+		title: t("FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_TITLE"),
+		platforms: ["Baserow"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_DESC"),
+		example: t("FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_EXAMPLE"),
 	},
 	{
 		name: "defaultTableID",
@@ -296,7 +330,15 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		name: "fieldsNames",
 
 		title: t("FETCH_VAULT_FIELDS_NAMES_TITLE"),
-		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
+		platforms: [
+			"Airtable",
+			"Baserow",
+			"Feishu",
+			"Vika",
+			"Lark",
+			"WPS",
+			"Ding",
+		],
 		level: "Vault",
 		required: false,
 		defaultValue: "{}",
@@ -308,7 +350,15 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		name: "sourceName",
 
 		title: t("FETCH_SOURCE_NAME_FOLDER_TITLE"),
-		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
+		platforms: [
+			"Airtable",
+			"Baserow",
+			"Feishu",
+			"Vika",
+			"Lark",
+			"WPS",
+			"Ding",
+		],
 		level: "Folder",
 		required: true,
 		defaultValue: "无",
@@ -320,7 +370,15 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		name: "targetFolderPath",
 
 		title: t("FETCH_TARGET_FOLDER_FOLDER_TITLE"),
-		platforms: ["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"],
+		platforms: [
+			"Airtable",
+			"Baserow",
+			"Feishu",
+			"Vika",
+			"Lark",
+			"WPS",
+			"Ding",
+		],
 		level: "Folder",
 		required: true,
 		defaultValue: "无",
@@ -331,7 +389,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 	{
 		name: "baseID",
 		title: t("FETCH_BASE_ID_FOLDER_AIRTABLE_TITLE"),
-		platforms: ["Airtable"],
+		platforms: ["Airtable", "Baserow"],
 		level: "Folder",
 		required: false,
 		defaultValue: "无",
@@ -355,7 +413,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		name: "tableID",
 
 		title: t("FETCH_TABLE_ID_FOLDER_TITLE"),
-		platforms: ["Airtable", "Vika", "Feishu", "Lark"],
+		platforms: ["Airtable", "Baserow", "Vika", "Feishu", "Lark"],
 		level: "Folder",
 		required: false,
 		defaultValue: "无",
@@ -367,7 +425,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		name: "viewID",
 
 		title: t("FETCH_VIEW_ID_FOLDER_TITLE"),
-		platforms: ["Airtable", "Vika", "Feishu"],
+		platforms: ["Airtable", "Baserow", "Vika", "Feishu"],
 		level: "Folder",
 		required: true,
 		defaultValue: "无",

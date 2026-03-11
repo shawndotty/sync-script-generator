@@ -860,4 +860,96 @@ export default {
 	SCRIPT_PREVIEW_HOTKEY_CONFLICT: `Hotkey conflict`,
 	SYNC_TEMPLATE_FOLDER_NAME: "SyncTemplates",
 	FETCH_TEMPLATE_FOLDER_NAME: "SyncTemplates",
+	API_KEY_ROOT_BASEROW_DESC:
+		"Sync using the API Key for Baserow.  \nThe Baserow API Key has been upgraded to a Personal Access Token.  \nYou can obtain your Personal Access Token at https://baserow.com/create/tokens.",
+	API_KEY_ROOT_BASEROW_EXAMPLE:
+		"When the input is empty, the default is:\n${baserowAPIKeyForSync}\n\nIf you enter it yourself, please obtain your Personal Access Token in Baserow now.",
+	API_KEY_ROOT_BASEROW_TITLE: "Baserow Database Token",
+	BASE_ID_FOLDER_BASEROW_DESC:
+		"Synchronized folder, the database ID used during synchronization.\n\nIf you configure a value different from defaultBaseID, you can synchronize the contents of different folders under the same OB database to different Bases in Baserow.",
+	BASE_ID_FOLDER_BASEROW_EXAMPLE: "456464",
+	BASE_ID_FOLDER_BASEROW_TITLE: "Database ID",
+	DEFAULT_BASE_ID_ROOT_BASEROW_DESC:
+		"The default Base ID used when syncing to Baserow.",
+	DEFAULT_BASE_ID_ROOT_BASEROW_EXAMPLE:
+		"When the input is empty, the default is:\n${baserowBaseIDForSync}",
+	DEFAULT_BASE_ID_ROOT_BASEROW_TITLE: "Default Base ID",
+	DEFAULT_TABLE_ID_ROOT_BASEROW_DESC:
+		"The default table ID used when syncing to Baserow.",
+	DEFAULT_TABLE_ID_ROOT_BASEROW_EXAMPLE:
+		"When the input is empty, the default is:\n${baserowTableIDForSync}",
+	DEFAULT_TABLE_ID_ROOT_BASEROW_TITLE: "Default table ID",
+	DOWNLOAD_BASE_ID_FOLDER_BASEROW_DESC:
+		"In separation mode, the database ID used when downloading data from Baserow.",
+	DOWNLOAD_BASE_ID_FOLDER_BASEROW_EXAMPLE: "45646",
+	DOWNLOAD_BASE_ID_FOLDER_BASEROW_TITLE:
+		"Database ID used for downloading data in separation mode",
+	DOWNLOAD_TABLE_ID_FOLDER_BASEROW_DESC:
+		"In separation mode, the data table ID used when downloading data from Baserow.",
+	DOWNLOAD_TABLE_ID_FOLDER_BASEROW_EXAMPLE: "Translation not possible.",
+	DOWNLOAD_TABLE_ID_FOLDER_BASEROW_TITLE:
+		"In separation mode, the data table ID used for downloading data",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_BASEROW_DESC:
+		"When extracting blocks from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in Baserow needs to be a multiple select field, or you can use a linked field that allows linking to multiple records.\n\ntrue: Store using text; the field in Baserow needs to be a multi-line text field.",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_BASEROW_EXAMPLE: "False",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_BASEROW_TITLE:
+		"Extract block as multi-line text",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_BASEROW_DESC:
+		"When extracting blocks from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in Baserow needs to be a multiple choice field or a linked field that allows association with multiple records.\n\ntrue: Store using text; the field in Baserow needs to be a multi-line text field.",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_BASEROW_EXAMPLE: "False",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_BASEROW_TITLE:
+		"Extract block as multi-line text",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_BASEROW_DESC:
+		"When extracting key points from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in Baserow needs to be a multiple select field or a linked field that allows association with multiple records.\ntrue: Store using text; the field in Baserow needs to be a multi-line text field.",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_BASEROW_EXAMPLE: "false",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_BASEROW_TITLE:
+		"Extract key points as multi-line text",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_BASEROW_DESC:
+		"When extracting key points from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in Baserow needs to be a multiple select field or a linked field that allows association with multiple records.\ntrue: Store using text; the field in Baserow needs to be a multi-line text field.",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_BASEROW_EXAMPLE: "false",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_BASEROW_TITLE:
+		"Extract key points as multi-line text",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_BASEROW_DESC:
+		"When extracting specified sections from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in Baserow needs to be a multiple select field or a linked field that allows association with multiple records.\n\ntrue: Store using text; the field in Baserow needs to be a multi-line text field.",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_BASEROW_EXAMPLE: "False",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_BASEROW_TITLE:
+		"Extract chapter as multi-line text",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_BASEROW_DESC:
+		"When extracting specified sections from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in Baserow needs to be a multiple select field or a linked field that allows association with multiple records.\n\ntrue: Store using text; the field in Baserow needs to be a multi-line text field.",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_BASEROW_EXAMPLE: "False",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_BASEROW_TITLE:
+		"Extract chapter as multi-line text",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_BASEROW_DESC:
+		"When extracting lines containing specified tags from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in Baserow needs to be a multiple select field or a linked field that allows linking to multiple records.\n\ntrue: Store using text; the field in Baserow needs to be a multi-line text field.",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_BASEROW_EXAMPLE: "False",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_BASEROW_TITLE:
+		"Extract the specified tag row as multi-line text",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_BASEROW_DESC:
+		"When extracting lines containing specified tags from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in Baserow needs to be a multiple select field or a linked field that allows linking to multiple records.\n\ntrue: Store using text; the field in Baserow needs to be a multi-line text field.",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_BASEROW_EXAMPLE: "false",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_BASEROW_TITLE:
+		"Extract the specified label row as multi-line text",
+	FETCH_API_KEY_ROOT_BASEROW_DESC:
+		"API Key used to retrieve data from Baserow.  \nThe Baserow API Key has been upgraded to a Personal Access Token.  \nYou can obtain your Personal Access Token at https://baserow.com/create/tokens.",
+	FETCH_API_KEY_ROOT_BASEROW_EXAMPLE:
+		"When the input is empty, the default is:\n${baserowAPIKeyForFetch}\n\nIf you enter it yourself, please obtain your Personal Access Token from Baserow now.",
+	FETCH_API_KEY_ROOT_BASEROW_TITLE: "Baserow Database Token",
+	FETCH_BASE_ID_FOLDER_BASEROW_DESC:
+		"The database ID of the data source. If it is empty, the default defaultBaseID will be used.",
+	FETCH_BASE_ID_FOLDER_BASEROW_EXAMPLE: "4564",
+	FETCH_BASE_ID_FOLDER_BASEROW_TITLE: "Database ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_BASEROW_DESC:
+		"The default Base ID used when retrieving data from Baserow.",
+	FETCH_DEFAULT_BASE_ID_ROOT_BASEROW_EXAMPLE:
+		"When the input is empty, the default is:\n${baserowBaseIDForFetch}",
+	FETCH_DEFAULT_BASE_ID_ROOT_BASEROW_TITLE: "Default Base ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_DESC:
+		"The default table ID used when retrieving data from Baserow.",
+	FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_EXAMPLE:
+		"When the input is empty, the default is:\n${baserowTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_TITLE: "Default data table ID",
+	TABLE_ID_FOLDER_BASEROW_DESC:
+		"Synchronized folder, the Baserow tableID used during synchronization.\n\nWhen not using separation mode, both uploads and downloads will use the tableID.\n\nIf separation mode is used, the tableID is only used during uploads.",
+	TABLE_ID_FOLDER_BASEROW_EXAMPLE: "4654",
+	TABLE_ID_FOLDER_BASEROW_TITLE: "Table ID",
 };

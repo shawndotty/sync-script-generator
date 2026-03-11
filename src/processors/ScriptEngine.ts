@@ -24,6 +24,11 @@ export class ScriptEngine {
 				"airtableBaseIDForSync",
 				"airtableTableIDForSync",
 			],
+			Baserow: [
+				"baserowAPIKeyForSync",
+				"baserowBaseIDForSync",
+				"baserowTableIDForSync",
+			],
 			Feishu: [
 				"feishuAppIDForSync",
 				"feishuAppSecretForSync",

@@ -14,7 +14,14 @@ declare module "obsidian" {
 	}
 }
 
-export type Platform = "Airtable" | "Feishu" | "Vika" | "Lark" | "WPS" | "Ding";
+export type Platform =
+	| "Airtable"
+	| "Feishu"
+	| "Vika"
+	| "Lark"
+	| "WPS"
+	| "Ding"
+	| "Baserow";
 
 export interface SyncOption {
 	name: string;

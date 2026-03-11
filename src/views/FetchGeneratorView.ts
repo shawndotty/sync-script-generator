@@ -702,6 +702,7 @@ export class FetchGeneratorView extends ItemView {
 			Lark: "defaultFetchTemplateLark",
 			WPS: "defaultFetchTemplateWPS",
 			Ding: "defaultFetchTemplateDing",
+			Baserow: "defaultFetchTemplateBaserow",
 		};
 
 		const key = platformSettingsMap[this.platform];

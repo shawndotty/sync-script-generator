@@ -23,6 +23,11 @@ export class FetchScriptEngine {
 				"airtableBaseIDForFetch",
 				"airtableTableIDForFetch",
 			],
+			Baserow: [
+				"baserowAPIKeyForFetch",
+				"baserowBaseIDForFetch",
+				"baserowTableIDForFetch",
+			],
 			Feishu: [
 				"feishuAppIDForFetch",
 				"feishuAppSecretForFetch",

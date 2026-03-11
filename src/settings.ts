@@ -26,6 +26,8 @@ export interface SyncScriptGeneratorSettings {
 	defaultFetchTemplateLark: string;
 	defaultFetchTemplateWPS: string;
 	defaultFetchTemplateDing: string;
+	defaultSyncTemplateBaserow: string;
+	defaultFetchTemplateBaserow: string;
 }
 
 export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
@@ -48,6 +50,8 @@ export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 	defaultFetchTemplateLark: "",
 	defaultFetchTemplateWPS: "",
 	defaultFetchTemplateDing: "",
+	defaultSyncTemplateBaserow: "",
+	defaultFetchTemplateBaserow: "",
 };
 
 export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
@@ -64,6 +68,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			| "defaultSyncTemplateLark"
 			| "defaultSyncTemplateWPS"
 			| "defaultSyncTemplateDing"
+			| "defaultSyncTemplateBaserow"
 		>
 	> = {
 		Airtable: "defaultSyncTemplateAirtable",
@@ -72,6 +77,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		Lark: "defaultSyncTemplateLark",
 		WPS: "defaultSyncTemplateWPS",
 		Ding: "defaultSyncTemplateDing",
+		Baserow: "defaultSyncTemplateBaserow",
 	};
 
 	private readonly fetchPlatformSettingsMap: Record<
@@ -84,6 +90,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			| "defaultFetchTemplateLark"
 			| "defaultFetchTemplateWPS"
 			| "defaultFetchTemplateDing"
+			| "defaultFetchTemplateBaserow"
 		>
 	> = {
 		Airtable: "defaultFetchTemplateAirtable",
@@ -92,6 +99,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		Lark: "defaultFetchTemplateLark",
 		WPS: "defaultFetchTemplateWPS",
 		Ding: "defaultFetchTemplateDing",
+		Baserow: "defaultFetchTemplateBaserow",
 	};
 
 	private readonly platforms: Platform[] = [
@@ -101,6 +109,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		"Lark",
 		"WPS",
 		"Ding",
+		"Baserow",
 	];
 
 	constructor(app: App, plugin: SyncScriptGeneratorPlugin) {

@@ -769,4 +769,86 @@ export default {
 	SCRIPT_PREVIEW_HOTKEY_CONFLICT: `快捷键冲突`,
 	SYNC_TEMPLATE_FOLDER_NAME: "同步模板",
 	FETCH_TEMPLATE_FOLDER_NAME: "同步模板",
+	API_KEY_ROOT_BASEROW_DESC:
+		"同步到Baserow使用的API Key。\nBaserow的API Key，已经升级为Personal Access Token。\n你可以在 https://baserow.com/create/tokens 获取你的 Personal Access Token。",
+	API_KEY_ROOT_BASEROW_EXAMPLE:
+		"输入为空时，默认使用：\n${baserowAPIKeyForSync}\n\n如果自行输入，请现在Baserow中获取你的Personal Acces Token",
+	API_KEY_ROOT_BASEROW_TITLE: "Baserow 数据库Token",
+	BASE_ID_FOLDER_BASEROW_DESC:
+		"同步文件夹，在同步时所使用的数据库ID。\n\n如果你配置了不同于defaultBaseID的值，则可以实现把同一个OB库下的不同文件夹的内容，同步到Baserow中不同的Base。",
+	BASE_ID_FOLDER_BASEROW_EXAMPLE: "456464",
+	BASE_ID_FOLDER_BASEROW_TITLE: "数据库ID",
+	DEFAULT_BASE_ID_ROOT_BASEROW_DESC: "同步到Baserow时，默认使用的Base ID。",
+	DEFAULT_BASE_ID_ROOT_BASEROW_EXAMPLE:
+		"输入为空时，默认使用：\n${baserowBaseIDForSync}",
+	DEFAULT_BASE_ID_ROOT_BASEROW_TITLE: "默认Base ID",
+	DEFAULT_TABLE_ID_ROOT_BASEROW_DESC: "同步到Baserow时，默认使用的数据表ID。",
+	DEFAULT_TABLE_ID_ROOT_BASEROW_EXAMPLE:
+		"输入为空时，默认使用：\n${baserowTableIDForSync}",
+	DEFAULT_TABLE_ID_ROOT_BASEROW_TITLE: "默认数据表ID",
+	DOWNLOAD_BASE_ID_FOLDER_BASEROW_DESC:
+		"分离模式下，从Baserow下载数据时，所使用的数据库ID。",
+	DOWNLOAD_BASE_ID_FOLDER_BASEROW_EXAMPLE: "45646",
+	DOWNLOAD_BASE_ID_FOLDER_BASEROW_TITLE: "分离模式下，下载数据使用的数据库ID",
+	DOWNLOAD_TABLE_ID_FOLDER_BASEROW_DESC:
+		"分离模式下，从Baserow下载数据时，使用的数据表ID。",
+	DOWNLOAD_TABLE_ID_FOLDER_BASEROW_EXAMPLE: "465465",
+	DOWNLOAD_TABLE_ID_FOLDER_BASEROW_TITLE:
+		"分离模式下，下载数据使用的数据表ID",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_BASEROW_DESC:
+		"从笔记中提取区块时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Baserow中的字段需要是多选字段，也可以用允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Baserow中的字段需要是多行文本字段",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_BASEROW_EXAMPLE: "false",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_BASEROW_TITLE: "提取区块为多行文本",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_BASEROW_DESC:
+		"从笔记中提取区块时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Baserow中的字段需要是多选或者允许关联多项记录的关联字段。\n\ntrue: 使用文本进行存储，Baserow中的字段需要是多行文本字段。",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_BASEROW_EXAMPLE: "false",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_BASEROW_TITLE: "提取区块为多行文本",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_BASEROW_DESC:
+		"从笔记中提取要点时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Baserow中的字段需要是多选或者允许关联多项记录的关联字段。\ntrue: 使用文本进行存储，Baserow中的字段需要是多行文本字段。",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_BASEROW_EXAMPLE: "false",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_BASEROW_TITLE: "提取要点为多行文本",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_BASEROW_DESC:
+		"从笔记中提取要点时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Baserow中的字段需要是多选或者允许关联多项记录的关联字段。\ntrue: 使用文本进行存储，Baserow中的字段需要是多行文本字段。",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_BASEROW_EXAMPLE: "false",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_BASEROW_TITLE: "提取要点为多行文本",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_BASEROW_DESC:
+		"从笔记中提取指定的章节（Sections）时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Baserow中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Baserow中的字段需要是多行文本字段",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_BASEROW_EXAMPLE: "false",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_BASEROW_TITLE: "提取章节为多行文本",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_BASEROW_DESC:
+		"从笔记中提取指定的章节（Sections）时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Baserow中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，Baserow中的字段需要是多行文本字段",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_BASEROW_EXAMPLE: "false",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_BASEROW_TITLE: "提取章节为多行文本",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_BASEROW_DESC:
+		"从笔记中提取包含指定标签的行时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Baserow中的字段需要是多选或者允许关联多项记录的关联字段。\n\ntrue: 使用文本进行存储，Baserow中的字段需要是多行文本字段。",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_BASEROW_EXAMPLE: "false",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_BASEROW_TITLE:
+		"把指定标签行提取为多行文本",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_BASEROW_DESC:
+		"从笔记中提取包含指定标签的行时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，Baserow中的字段需要是多选或者允许关联多项记录的关联字段。\n\ntrue: 使用文本进行存储，Baserow中的字段需要是多行文本字段。",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_BASEROW_EXAMPLE: "false",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_BASEROW_TITLE: "把指定标签行提取为多行文本",
+	FETCH_API_KEY_ROOT_BASEROW_DESC:
+		"从Baserow获取数据时使用的API Key。\nBaserow的API Key，已经升级为Personal Access Token。\n你可以在 https://baserow.com/create/tokens 获取你的 Personal Access Token。",
+	FETCH_API_KEY_ROOT_BASEROW_EXAMPLE:
+		"输入为空时，默认使用：\n${baserowAPIKeyForFetch}\n\n如果自行输入，请现在Baserow中获取你的Personal Acces Token",
+	FETCH_API_KEY_ROOT_BASEROW_TITLE: "Baserow 数据库Token",
+	FETCH_BASE_ID_FOLDER_BASEROW_DESC:
+		"数据源的数据库ID，如果为空，使用默认的defaultBaseID。",
+	FETCH_BASE_ID_FOLDER_BASEROW_EXAMPLE: "4564",
+	FETCH_BASE_ID_FOLDER_BASEROW_TITLE: "数据库ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_BASEROW_DESC:
+		"从Baserow获取数据时，默认使用的Base ID。",
+	FETCH_DEFAULT_BASE_ID_ROOT_BASEROW_EXAMPLE:
+		"输入为空时，默认使用：\n${baserowBaseIDForFetch}",
+	FETCH_DEFAULT_BASE_ID_ROOT_BASEROW_TITLE: "默认Base ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_DESC:
+		"从Baserow获取数据时，默认使用的数据表ID。",
+	FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_EXAMPLE:
+		"输入为空时，默认使用：\n${baserowTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_TITLE: "默认数据表ID",
+	TABLE_ID_FOLDER_BASEROW_DESC:
+		"同步文件夹，在同步时使用的Baserow的tableID。\n\n不使用分离模式时，上传和下载都会使用tableID。\n\n如果使用分离模式，只有在上传时使用tableID。",
+	TABLE_ID_FOLDER_BASEROW_EXAMPLE: "4654",
+	TABLE_ID_FOLDER_BASEROW_TITLE: "数据表ID",
 };
