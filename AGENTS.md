@@ -1,251 +1,105 @@
-# Obsidian community plugin
+# Sync Script Generator（Obsidian 插件）
 
-## Project overview
+## 项目定位
 
-- Target: Obsidian Community Plugin (TypeScript → bundled JavaScript).
-- Entry point: `main.ts` compiled to `main.js` and loaded by Obsidian.
-- Required release artifacts: `main.js`, `manifest.json`, and optional `styles.css`.
+- 插件 ID：`sync-script-generator`（见 `manifest.json`）
+- 目标：在 Obsidian 内生成/导入/管理用于 IOTO / OB Sync With MDB 的同步脚本（主要面向 Templater 模板脚本）。
+- 入口：`src/main.ts`（构建后产物为仓库根目录的 `main.js`，由 Obsidian 加载）
+- 发布/安装必要文件：`main.js`、`manifest.json`、`styles.css`
 
-## Environment & tooling
+## 开发与构建
 
-- Node.js: use current LTS (Node 18+ recommended).
-- **Package manager: npm** (required for this sample - `package.json` defines npm scripts and dependencies).
-- **Bundler: esbuild** (required for this sample - `esbuild.config.mjs` and build scripts depend on it). Alternative bundlers like Rollup or webpack are acceptable for other projects if they bundle all external dependencies into `main.js`.
-- Types: `obsidian` type definitions.
+### 环境
 
-**Note**: This sample project has specific technical dependencies on npm and esbuild. If you're creating a plugin from scratch, you can choose different tools, but you'll need to replace the build configuration accordingly.
+- Node.js：建议使用当前 LTS（本仓库 CI 使用 Node 20/22）
+- 包管理器：npm（`package-lock.json` 已存在）
+- 打包器：esbuild（配置：`esbuild.config.mjs`）
+- TypeScript：`tsconfig.json`（`npm run build` 会先执行 `tsc -noEmit -skipLibCheck` 做类型校验）
 
-### Install
+### 常用脚本（npm）
 
 ```bash
 npm install
-```
-
-### Dev (watch)
-
-```bash
 npm run dev
-```
-
-### Production build
-
-```bash
 npm run build
+npm run lint
 ```
 
-## Linting
+## 功能与架构概览
 
-- To use eslint install eslint from terminal: `npm install -g eslint`
-- To use eslint to analyze this project use this command: `eslint main.ts`
-- eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder: `eslint ./src/`
+### 插件入口与 UI
 
-## File & folder conventions
+- 插件生命周期：`src/main.ts`
+- 注册 2 个 View：
+    - Sync Generator：`sync-script-generator-view`（见 `src/models/constants.ts`）
+    - Fetch Generator：`fetch-script-generator-view`（见 `src/models/constantsFetch.ts`）
+- Ribbon 图标：
+    - `arrow-down-up`：打开 Sync Generator（Shift 点击会在新窗口打开）
+    - `arrow-down-to-line`：打开 Fetch Generator（Shift 点击会在新窗口打开）
+- 命令（Command ID 稳定，尽量不要改名）：
+    - `open-sync-script-generator`
+    - `open-fetch-script-generator`
 
-- **Organize code into multiple files**: Split functionality across separate modules rather than putting everything in `main.ts`.
-- Source lives in `src/`. Keep `main.ts` small and focused on plugin lifecycle (loading, unloading, registering commands).
-- **Example file structure**:
-  ```
-  src/
-    main.ts           # Plugin entry point, lifecycle management
-    settings.ts       # Settings interface and defaults
-    commands/         # Command implementations
-      command1.ts
-      command2.ts
-    ui/              # UI components, modals, views
-      modal.ts
-      view.ts
-    utils/           # Utility functions, helpers
-      helpers.ts
-      constants.ts
-    types.ts         # TypeScript interfaces and types
-  ```
-- **Do not commit build artifacts**: Never commit `node_modules/`, `main.js`, or other generated files to version control.
-- Keep the plugin small. Avoid large dependencies. Prefer browser-compatible packages.
-- Generated output should be placed at the plugin root or `dist/` depending on your build setup. Release artifacts must end up at the top level of the plugin folder in the vault (`main.js`, `manifest.json`, `styles.css`).
+### 两类生成器（Sync / Fetch）
 
-## Manifest rules (`manifest.json`)
+- 视图层（UI/交互）：
+    - `src/views/GeneratorView.ts`：同步脚本生成（支持 Root/Vault/Folder 三层配置、导入模板、预设管理、预览/生成）
+    - `src/views/FetchGeneratorView.ts`：拉取脚本生成（逻辑与 Sync 类似，但字段与生成方式不同）
+- 选项定义（字段列表、描述、默认值、适配平台）：
+    - `src/models/constants.ts`：`SYNC_OPTIONS`
+    - `src/models/constantsFetch.ts`：`FETCH_OPTIONS`
+- 脚本引擎（生成/解析）：
+    - `src/processors/ScriptEngine.ts`：Sync 生成与从模板解析配置
+    - `src/processors/FetchScriptEngine.ts`：Fetch 生成与从模板解析配置
 
-- Must include (non-exhaustive):  
-  - `id` (plugin ID; for local dev it should match the folder name)  
-  - `name`  
-  - `version` (Semantic Versioning `x.y.z`)  
-  - `minAppVersion`  
-  - `description`  
-  - `isDesktopOnly` (boolean)  
-  - Optional: `author`, `authorUrl`, `fundingUrl` (string or map)
-- Never change `id` after release. Treat it as stable API.
-- Keep `minAppVersion` accurate when using newer APIs.
-- Canonical requirements are coded here: https://github.com/obsidianmd/obsidian-releases/blob/master/.github/workflows/validate-plugin-entry.yml
+### 预览与导入
 
-## Testing
+- 预览 Modal（内置 CodeMirror，用于展示生成结果并提供写回/导出等操作）：`src/modals/ScriptPreviewModal.ts`
+- 导入模板（过滤 `Templates`/`Templater` 路径与 `.md` 文件）：`src/modals/ImportModal.ts`
+- 预设管理（Load/Save，包含删除确认）：`src/modals/PresetLoadModal.ts`、`src/modals/PresetSaveModal.ts` 及 Fetch 对应文件
 
-- Manual install for testing: copy `main.js`, `manifest.json`, `styles.css` (if any) to:
-  ```
-  <Vault>/.obsidian/plugins/<plugin-id>/
-  ```
-- Reload Obsidian and enable the plugin in **Settings → Community plugins**.
+### 设置与数据持久化
 
-## Commands & settings
+- 设置界面：`src/settings.ts`（Tabbed settings）
+- 存储：使用 `this.loadData()` / `this.saveData()` 存取插件设置
+- 关键设置项（节选）：
+    - `syncPlatform`: `"IOTO" | "obSyncWithMDB"`
+    - `syncTemplateFolder` / `fetchTemplateFolder`
+    - `scriptPrependContent`
+    - `presets` / `fetchPresets`
+    - 各平台默认模板路径（Sync 与 Fetch 各一组）
 
-- Any user-facing commands should be added via `this.addCommand(...)`.
-- If the plugin has configuration, provide a settings tab and sensible defaults.
-- Persist settings using `this.loadData()` / `this.saveData()`.
-- Use stable command IDs; avoid renaming once released.
+### 与其他插件的协作（重要）
 
-## Versioning & releases
+- IOTO Settings（用于首启时推导模板目录）：
+    - `src/services/ioto-settings-services.ts`
+    - `src/main.ts` 的 `loadSettings()`：若首次无数据，会尝试从 IOTO Settings 读取 `extraFolder` 并填充模板目录设置
+- Templater（可选增强）：用于模板命令/热键能力（不会打包进 `main.js`，运行时通过 Obsidian 插件系统访问）
+    - `src/services/templater-services.ts`：读取/修改 Templater 设置、注册模板命令
+    - `src/services/hotkey-services.ts`：读取/写入 `hotkeys.json` 以增加模板快捷键
 
-- Bump `version` in `manifest.json` (SemVer) and update `versions.json` to map plugin version → minimum app version.
-- Create a GitHub release whose tag exactly matches `manifest.json`'s `version`. Do not use a leading `v`.
-- Attach `manifest.json`, `main.js`, and `styles.css` (if present) to the release as individual assets.
-- After the initial release, follow the process to add/update your plugin in the community catalog as required.
+## 国际化（i18n）
 
-## Security, privacy, and compliance
+- 翻译入口：`src/lang/helpers.ts`（`t(key)`）
+- 语言包：`src/lang/locale/en.ts`、`zh-cn.ts`、`zh-tw.ts`
+- 新增 UI 文案时：先在 `en.ts` 增加 key，再补齐其他语言，避免运行时缺 key
 
-Follow Obsidian's **Developer Policies** and **Plugin Guidelines**. In particular:
+## 修改指南（面向协作者/Agent）
 
-- Default to local/offline operation. Only make network requests when essential to the feature.
-- No hidden telemetry. If you collect optional analytics or call third-party services, require explicit opt-in and document clearly in `README.md` and in settings.
-- Never execute remote code, fetch and eval scripts, or auto-update plugin code outside of normal releases.
-- Minimize scope: read/write only what's necessary inside the vault. Do not access files outside the vault.
-- Clearly disclose any external services used, data sent, and risks.
-- Respect user privacy. Do not collect vault contents, filenames, or personal information unless absolutely necessary and explicitly consented.
-- Avoid deceptive patterns, ads, or spammy notifications.
-- Register and clean up all DOM, app, and interval listeners using the provided `register*` helpers so the plugin unloads safely.
+- 新增/修改字段（option）时，通常需要同步改动：
+    - `SYNC_OPTIONS` / `FETCH_OPTIONS`
+    - `ScriptEngine.generate/parse` 或 `FetchScriptEngine.generate/parse`
+    - 对应 View 的表单渲染与默认值逻辑
+    - locale 文案 key
+- 新增平台（Platform）时，通常需要同步改动：
+    - `src/types/types.ts` 的 `Platform` 联合类型
+    - 两个 View 的平台列表
+    - 两个 Engine 的 root 变量映射与调用方法名（`tp.user.ObSync${Platform}`）
+- 从模板解析配置目前通过 `new Function("return " + sanitizedConfig)()` 执行本地字符串（仅来自用户选择/导入的模板内容）；修改相关逻辑时避免扩大执行面，严禁引入任何远程代码路径
 
-## UX & copy guidelines (for UI text, commands, settings)
+## 版本与发布
 
-- Prefer sentence case for headings, buttons, and titles.
-- Use clear, action-oriented imperatives in step-by-step copy.
-- Use **bold** to indicate literal UI labels. Prefer "select" for interactions.
-- Use arrow notation for navigation: **Settings → Community plugins**.
-- Keep in-app strings short, consistent, and free of jargon.
-
-## Performance
-
-- Keep startup light. Defer heavy work until needed.
-- Avoid long-running tasks during `onload`; use lazy initialization.
-- Batch disk access and avoid excessive vault scans.
-- Debounce/throttle expensive operations in response to file system events.
-
-## Coding conventions
-
-- TypeScript with `"strict": true` preferred.
-- **Keep `main.ts` minimal**: Focus only on plugin lifecycle (onload, onunload, addCommand calls). Delegate all feature logic to separate modules.
-- **Split large files**: If any file exceeds ~200-300 lines, consider breaking it into smaller, focused modules.
-- **Use clear module boundaries**: Each file should have a single, well-defined responsibility.
-- Bundle everything into `main.js` (no unbundled runtime deps).
-- Avoid Node/Electron APIs if you want mobile compatibility; set `isDesktopOnly` accordingly.
-- Prefer `async/await` over promise chains; handle errors gracefully.
-
-## Mobile
-
-- Where feasible, test on iOS and Android.
-- Don't assume desktop-only behavior unless `isDesktopOnly` is `true`.
-- Avoid large in-memory structures; be mindful of memory and storage constraints.
-
-## Agent do/don't
-
-**Do**
-- Add commands with stable IDs (don't rename once released).
-- Provide defaults and validation in settings.
-- Write idempotent code paths so reload/unload doesn't leak listeners or intervals.
-- Use `this.register*` helpers for everything that needs cleanup.
-
-**Don't**
-- Introduce network calls without an obvious user-facing reason and documentation.
-- Ship features that require cloud services without clear disclosure and explicit opt-in.
-- Store or transmit vault contents unless essential and consented.
-
-## Common tasks
-
-### Organize code across multiple files
-
-**main.ts** (minimal, lifecycle only):
-```ts
-import { Plugin } from "obsidian";
-import { MySettings, DEFAULT_SETTINGS } from "./settings";
-import { registerCommands } from "./commands";
-
-export default class MyPlugin extends Plugin {
-  settings: MySettings;
-
-  async onload() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-    registerCommands(this);
-  }
-}
-```
-
-**settings.ts**:
-```ts
-export interface MySettings {
-  enabled: boolean;
-  apiKey: string;
-}
-
-export const DEFAULT_SETTINGS: MySettings = {
-  enabled: true,
-  apiKey: "",
-};
-```
-
-**commands/index.ts**:
-```ts
-import { Plugin } from "obsidian";
-import { doSomething } from "./my-command";
-
-export function registerCommands(plugin: Plugin) {
-  plugin.addCommand({
-    id: "do-something",
-    name: "Do something",
-    callback: () => doSomething(plugin),
-  });
-}
-```
-
-### Add a command
-
-```ts
-this.addCommand({
-  id: "your-command-id",
-  name: "Do the thing",
-  callback: () => this.doTheThing(),
-});
-```
-
-### Persist settings
-
-```ts
-interface MySettings { enabled: boolean }
-const DEFAULT_SETTINGS: MySettings = { enabled: true };
-
-async onload() {
-  this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-  await this.saveData(this.settings);
-}
-```
-
-### Register listeners safely
-
-```ts
-this.registerEvent(this.app.workspace.on("file-open", f => { /* ... */ }));
-this.registerDomEvent(window, "resize", () => { /* ... */ });
-this.registerInterval(window.setInterval(() => { /* ... */ }, 1000));
-```
-
-## Troubleshooting
-
-- Plugin doesn't load after build: ensure `main.js` and `manifest.json` are at the top level of the plugin folder under `<Vault>/.obsidian/plugins/<plugin-id>/`. 
-- Build issues: if `main.js` is missing, run `npm run build` or `npm run dev` to compile your TypeScript source code.
-- Commands not appearing: verify `addCommand` runs after `onload` and IDs are unique.
-- Settings not persisting: ensure `loadData`/`saveData` are awaited and you re-render the UI after changes.
-- Mobile-only issues: confirm you're not using desktop-only APIs; check `isDesktopOnly` and adjust.
-
-## References
-
-- Obsidian sample plugin: https://github.com/obsidianmd/obsidian-sample-plugin
-- API documentation: https://docs.obsidian.md
-- Developer policies: https://docs.obsidian.md/Developer+policies
-- Plugin guidelines: https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines
-- Style guide: https://help.obsidian.md/style-guide
+- 版本号：`manifest.json` 与 `package.json` 保持一致
+- `versions.json`：维护 “插件版本 → 最低 Obsidian 版本”
+- `npm run version`：运行 `version-bump.mjs` 并 `git add manifest.json versions.json`
+- Release 附件：`main.js`、`manifest.json`、`styles.css`（tag 必须等于版本号且不要加 `v` 前缀）
