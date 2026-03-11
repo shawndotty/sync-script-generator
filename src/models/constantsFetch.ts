@@ -51,6 +51,28 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		example: t("FETCH_API_KEY_ROOT_VIKA_EXAMPLE"),
 	},
 	{
+		name: "apiUrlRoot",
+		title: t("FETCH_API_URL_ROOT_BASEROW_TITLE"),
+		platforms: ["Baserow"],
+		level: "Root",
+		required: false,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_API_URL_ROOT_BASEROW_DESC"),
+		example: t("FETCH_API_URL_ROOT_BASEROW_EXAMPLE"),
+	},
+	{
+		name: "apiUrlRoot",
+		title: t("FETCH_API_URL_ROOT_VIKA_TITLE"),
+		platforms: ["Vika"],
+		level: "Root",
+		required: false,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_API_URL_ROOT_VIKA_DESC"),
+		example: t("FETCH_API_URL_ROOT_VIKA_EXAMPLE"),
+	},
+	{
 		name: "appID",
 
 		title: t("FETCH_APP_ID_ROOT_FEISHU_TITLE"),
