@@ -88,6 +88,7 @@ export class FetchPresetLoadModal extends Modal {
 				Lark: [],
 				WPS: [],
 				Ding: [],
+				Baserow: [],
 			};
 
 			this.presets.forEach((preset) => {

@@ -85,6 +85,7 @@ export class PresetLoadModal extends Modal {
 				Lark: [],
 				WPS: [],
 				Ding: [],
+				Baserow: [],
 			};
 
 			this.presets.forEach((preset) => {
