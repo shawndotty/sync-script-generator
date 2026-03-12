@@ -861,10 +861,10 @@ export default {
 	SYNC_TEMPLATE_FOLDER_NAME: "SyncTemplates",
 	FETCH_TEMPLATE_FOLDER_NAME: "SyncTemplates",
 	API_KEY_ROOT_BASEROW_DESC:
-		"Sync using the API Key for Baserow.  \nThe Baserow API Key has been upgraded to a Personal Access Token.  \nYou can obtain your Personal Access Token at https://baserow.com/create/tokens.",
+		"Sync to Baserow using the API Key.\nCreate it in My Settings -> Database Token.",
 	API_KEY_ROOT_BASEROW_EXAMPLE:
-		"When the input is empty, the default is:\n${baserowAPIKeyForSync}\n\nIf you enter it yourself, please obtain your Personal Access Token in Baserow now.",
-	API_KEY_ROOT_BASEROW_TITLE: "Baserow Database Token",
+		"When the input is empty, the default is:\n${baserowAPIKeyForSync}\n\nIf you enter it yourself, please obtain your API Token from Baserow now.",
+	API_KEY_ROOT_BASEROW_TITLE: "API Token",
 	BASE_ID_FOLDER_BASEROW_DESC:
 		"Synchronized folder, the database ID used during synchronization.\n\nIf you configure a value different from defaultBaseID, you can synchronize the contents of different folders under the same OB database to different Bases in Baserow.",
 	BASE_ID_FOLDER_BASEROW_EXAMPLE: "456464",
@@ -930,10 +930,10 @@ export default {
 	EXTRACT_TAG_LINES_AS_TEXT_VAULT_BASEROW_TITLE:
 		"Extract the specified label row as multi-line text",
 	FETCH_API_KEY_ROOT_BASEROW_DESC:
-		"API Key used to retrieve data from Baserow.  \nThe Baserow API Key has been upgraded to a Personal Access Token.  \nYou can obtain your Personal Access Token at https://baserow.com/create/tokens.",
+		"Sync to Baserow using the API Key.\nCreate it in My Settings -> Database Token.",
 	FETCH_API_KEY_ROOT_BASEROW_EXAMPLE:
-		"When the input is empty, the default is:\n${baserowAPIKeyForFetch}\n\nIf you enter it yourself, please obtain your Personal Access Token from Baserow now.",
-	FETCH_API_KEY_ROOT_BASEROW_TITLE: "Baserow Database Token",
+		"When the input is empty, the default is:\n${baserowAPIKeyForFetch}\n\nIf you wish to enter it yourself, please obtain your API Token from Baserow now.",
+	FETCH_API_KEY_ROOT_BASEROW_TITLE: "API Token",
 	FETCH_BASE_ID_FOLDER_BASEROW_DESC:
 		"The database ID of the data source. If it is empty, the default defaultBaseID will be used.",
 	FETCH_BASE_ID_FOLDER_BASEROW_EXAMPLE: "4564",

@@ -770,10 +770,10 @@ export default {
 	SYNC_TEMPLATE_FOLDER_NAME: "同步模板",
 	FETCH_TEMPLATE_FOLDER_NAME: "同步模板",
 	API_KEY_ROOT_BASEROW_DESC:
-		"同步到Baserow使用的API Key。\nBaserow的API Key，已经升级为Personal Access Token。\n你可以在 https://baserow.com/create/tokens 获取你的 Personal Access Token。",
+		"同步到Baserow使用的API Key。\n在My Settings->Database Token中创建。",
 	API_KEY_ROOT_BASEROW_EXAMPLE:
-		"输入为空时，默认使用：\n${baserowAPIKeyForSync}\n\n如果自行输入，请现在Baserow中获取你的Personal Acces Token",
-	API_KEY_ROOT_BASEROW_TITLE: "Baserow 数据库Token",
+		"输入为空时，默认使用：\n${baserowAPIKeyForSync}\n\n如果自行输入，请现在Baserow中获取你的API Token",
+	API_KEY_ROOT_BASEROW_TITLE: "API Token",
 	BASE_ID_FOLDER_BASEROW_DESC:
 		"同步文件夹，在同步时所使用的数据库ID。\n\n如果你配置了不同于defaultBaseID的值，则可以实现把同一个OB库下的不同文件夹的内容，同步到Baserow中不同的Base。",
 	BASE_ID_FOLDER_BASEROW_EXAMPLE: "456464",
@@ -829,10 +829,10 @@ export default {
 	EXTRACT_TAG_LINES_AS_TEXT_VAULT_BASEROW_EXAMPLE: "false",
 	EXTRACT_TAG_LINES_AS_TEXT_VAULT_BASEROW_TITLE: "把指定标签行提取为多行文本",
 	FETCH_API_KEY_ROOT_BASEROW_DESC:
-		"从Baserow获取数据时使用的API Key。\nBaserow的API Key，已经升级为Personal Access Token。\n你可以在 https://baserow.com/create/tokens 获取你的 Personal Access Token。",
+		"同步到Baserow使用的API Key。\n在My Settings->Database Token中创建。",
 	FETCH_API_KEY_ROOT_BASEROW_EXAMPLE:
-		"输入为空时，默认使用：\n${baserowAPIKeyForFetch}\n\n如果自行输入，请现在Baserow中获取你的Personal Acces Token",
-	FETCH_API_KEY_ROOT_BASEROW_TITLE: "Baserow 数据库Token",
+		"输入为空时，默认使用：\n${baserowAPIKeyForFetch}\n\n如果自行输入，请现在Baserow中获取你的API Token",
+	FETCH_API_KEY_ROOT_BASEROW_TITLE: "API Token",
 	FETCH_BASE_ID_FOLDER_BASEROW_DESC:
 		"数据源的数据库ID，如果为空，使用默认的defaultBaseID。",
 	FETCH_BASE_ID_FOLDER_BASEROW_EXAMPLE: "4564",
