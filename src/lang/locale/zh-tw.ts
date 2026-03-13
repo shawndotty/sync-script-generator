@@ -873,4 +873,97 @@ export default {
 	RECORD_URL_ROOT_VIKA_DESC: "私有化部署的Vika(ApiTable)的數據記錄地址的根值",
 	RECORD_URL_ROOT_VIKA_EXAMPLE:
 		"當你使用私有化部署的Apitable時，才需要設置\n\n根據你部署時的配置，寫入對應的URL，比如：\n\nhttp://localhost/workbench/",
+	API_KEY_ROOT_NOCODB_DESC:
+		"同步到NocoDB使用的API Key。\n在My Settings->Database Token中創建。",
+	API_KEY_ROOT_NOCODB_EXAMPLE:
+		"輸入為空時，預設使用：\n${nocodbAPIKeyForSync}\n\n如果自行輸入，請在NocoDB中獲取你的API Token",
+	API_KEY_ROOT_NOCODB_TITLE: "API Token",
+	BASE_ID_FOLDER_NOCODB_DESC:
+		"同步資料夾，在同步時所使用的資料庫ID。\n\n如果你配置了不同於defaultBaseID的值，則可以實現把同一個OB庫下的不同資料夾的內容，同步到NocoDB中不同的Base。",
+	BASE_ID_FOLDER_NOCODB_EXAMPLE: "456464",
+	BASE_ID_FOLDER_NOCODB_TITLE: "資料庫ID",
+	DEFAULT_BASE_ID_ROOT_NOCODB_DESC: "同步到NocoDB時，預設使用的Base ID。",
+	DEFAULT_BASE_ID_ROOT_NOCODB_EXAMPLE:
+		"輸入為空時，預設使用：\n${nocodbBaseIDForSync}",
+	DEFAULT_BASE_ID_ROOT_NOCODB_TITLE: "預設Base ID",
+	DEFAULT_TABLE_ID_ROOT_NOCODB_DESC: "同步到NocoDB時，預設使用的資料表ID。",
+	DEFAULT_TABLE_ID_ROOT_NOCODB_EXAMPLE:
+		"輸入為空時，預設使用：\n${nocodbTableIDForSync}",
+	DEFAULT_TABLE_ID_ROOT_NOCODB_TITLE: "預設資料表ID",
+	DOWNLOAD_BASE_ID_FOLDER_NOCODB_DESC:
+		"分離模式下，從NocoDB下載數據時，所使用的數據庫ID。",
+	DOWNLOAD_BASE_ID_FOLDER_NOCODB_EXAMPLE: "45646",
+	DOWNLOAD_BASE_ID_FOLDER_NOCODB_TITLE: "分離模式下，下載數據使用的數據庫ID",
+	DOWNLOAD_TABLE_ID_FOLDER_NOCODB_DESC:
+		"分離模式下，從NocoDB下載數據時，使用的數據表ID。",
+	DOWNLOAD_TABLE_ID_FOLDER_NOCODB_EXAMPLE: "465465",
+	DOWNLOAD_TABLE_ID_FOLDER_NOCODB_TITLE: "分離模式下，下載數據使用的數據表ID",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_NOCODB_DESC:
+		"從筆記中提取區塊時，是否將提取的內容作為文本在資料庫中儲存。\n\nfalse: 使用陣列進行儲存，NocoDB中的欄位需要是多選欄位，也可以用允許關聯多項記錄的關聯欄位\n\ntrue: 使用文本進行儲存，NocoDB中的欄位需要是多行文本欄位",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "錯誤",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_NOCODB_TITLE: "提取區塊為多行文本",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_NOCODB_DESC:
+		"從筆記中提取區塊時，是否將提取的內容作為文本在資料庫中儲存。\n\nfalse: 使用陣列進行儲存，NocoDB中的欄位需要是多選或者允許關聯多項記錄的關聯欄位。\n\ntrue: 使用文本進行儲存，NocoDB中的欄位需要是多行文本欄位。",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_NOCODB_EXAMPLE: "錯誤",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_NOCODB_TITLE: "提取區塊為多行文本",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_NOCODB_DESC:
+		"從筆記中提取要點時，是否將提取的內容作為文本在資料庫中存儲。\n\nfalse: 使用數組進行存儲，NocoDB中的欄位需要是多選或者允許關聯多項記錄的關聯欄位。\ntrue: 使用文本進行存儲，NocoDB中的欄位需要是多行文本欄位。",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "錯誤",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_NOCODB_TITLE: "提取要點為多行文本",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_NOCODB_DESC:
+		"從筆記中提取要點時，是否將提取的內容作為文本在資料庫中儲存。\n\nfalse: 使用陣列進行儲存，NocoDB中的欄位需要是多選或者允許關聯多項記錄的關聯欄位。\ntrue: 使用文本進行儲存，NocoDB中的欄位需要是多行文本欄位。",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_NOCODB_EXAMPLE: "錯誤",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_NOCODB_TITLE: "提取要點為多行文本",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_NOCODB_DESC:
+		"從筆記中提取指定的章節（Sections）時，是否將提取的內容作為文本在資料庫中存儲。\n\nfalse：使用數組進行存儲，NocoDB中的欄位需要是多選或者允許關聯多項記錄的關聯欄位\n\ntrue：使用文本進行存儲，NocoDB中的欄位需要是多行文本欄位",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "錯誤",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_NOCODB_TITLE: "提取章節為多行文本",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_NOCODB_DESC:
+		"從筆記中提取指定的章節（Sections）時，是否將提取的內容作為文本在資料庫中存儲。\n\nfalse：使用數組進行存儲，NocoDB中的欄位需要是多選或者允許關聯多項記錄的關聯欄位\n\ntrue：使用文本進行存儲，NocoDB中的欄位需要是多行文本欄位",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_NOCODB_EXAMPLE: "錯誤",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_NOCODB_TITLE: "提取章節為多行文本",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_NOCODB_DESC:
+		"從筆記中提取包含指定標籤的行時，是否將提取的內容作為文本在資料庫中儲存。\n\nfalse: 使用陣列進行儲存，NocoDB中的欄位需要是多選或者允許關聯多項記錄的關聯欄位。\n\ntrue: 使用文本進行儲存，NocoDB中的欄位需要是多行文本欄位。",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "錯誤",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_NOCODB_TITLE: "把指定標籤行提取為多行文本",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_NOCODB_DESC:
+		"從筆記中提取包含指定標籤的行時，是否將提取的內容作為文本在資料庫中儲存。\n\nfalse: 使用陣列進行儲存，NocoDB中的欄位需要是多選或者允許關聯多項記錄的關聯欄位。\n\ntrue: 使用文本進行儲存，NocoDB中的欄位需要是多行文本欄位。",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_NOCODB_EXAMPLE: "錯誤",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_NOCODB_TITLE: "把指定標籤行提取為多行文本",
+	FETCH_API_KEY_ROOT_NOCODB_DESC:
+		"同步到NocoDB使用的API Key。\n在My Settings->Database Token中創建。",
+	FETCH_API_KEY_ROOT_NOCODB_EXAMPLE:
+		"輸入為空時，預設使用：\n${nocodbAPIKeyForFetch}\n\n如果自行輸入，請在NocoDB中獲取你的API Token",
+	FETCH_API_KEY_ROOT_NOCODB_TITLE: "API Token",
+	FETCH_BASE_ID_FOLDER_NOCODB_DESC:
+		"數據源的數據庫ID，如果為空，使用預設的defaultBaseID。",
+	FETCH_BASE_ID_FOLDER_NOCODB_EXAMPLE: "4564",
+	FETCH_BASE_ID_FOLDER_NOCODB_TITLE: "資料庫ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_DESC:
+		"從NocoDB獲取數據時，默認使用的Base ID。",
+	FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_EXAMPLE:
+		"輸入為空時，預設使用：\n${nocodbBaseIDForFetch}",
+	FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_TITLE: "預設Base ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_DESC:
+		"從NocoDB獲取數據時，默認使用的數據表ID。",
+	FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_EXAMPLE:
+		"輸入為空時，預設使用：\n${nocodbTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_TITLE: "預設資料表ID",
+	TABLE_ID_FOLDER_NOCODB_DESC:
+		"同步資料夾，在同步時使用的NocoDB的tableID。\n\n不使用分離模式時，上傳和下載都會使用tableID。\n\n如果使用分離模式，只有在上傳時使用tableID。",
+	TABLE_ID_FOLDER_NOCODB_EXAMPLE: "4654",
+	TABLE_ID_FOLDER_NOCODB_TITLE: "資料表ID",
+	FETCH_BASE_URL_ROOT_NOCODB_TITLE: "API地址",
+	FETCH_BASE_URL_ROOT_NOCODB_DESC: "私有化部署的NocoDB的API地址",
+	FETCH_BASE_URL_ROOT_NOCODB_EXAMPLE:
+		"當你使用私有化部署的NocoDB時，才需要設置\n根據你部署時的配置，寫入對應的URL，比如：\nhttp://localhost/api/",
+	BASE_URL_ROOT_NOCODB_TITLE: "API地址",
+	BASE_URL_ROOT_NOCODB_DESC: "私有化部署的NocoDB的API地址",
+	BASE_URL_ROOT_NOCODB_EXAMPLE:
+		"當你使用私有化部署的NocoDB時，才需要設置\n根據你部署時的配置，寫入對應的URL，比如：\n\nhttp://localhost/api/",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_TITLE: "數據記錄地址的根值",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_DESC:
+		"私有化部署的NocoDB的數據記錄地址的根值",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_EXAMPLE:
+		"當你使用私有化部署的NocoDB時，才需要設置  \n根據你部署時的配置，寫入對應的URL，比如：\n\nhttp://localhost/",
 };

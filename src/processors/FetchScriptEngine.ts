@@ -56,6 +56,11 @@ export class FetchScriptEngine {
 				"dingViewIDForFetch",
 				"dingUserIDForFetch",
 			],
+			NocoDB: [
+				"nocodbAPIKeyForFetch",
+				"nocodbBaseIDForFetch",
+				"nocodbTableIDForFetch",
+			],
 		};
 
 		const rootVars = platformRootVars[platform] || [];

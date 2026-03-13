@@ -31,6 +31,18 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	{
 		name: "apiKey",
 		group: "",
+		title: t("API_KEY_ROOT_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("API_KEY_ROOT_NOCODB_DESC"),
+		example: t("API_KEY_ROOT_NOCODB_EXAMPLE"),
+	},
+	{
+		name: "apiKey",
+		group: "",
 		title: t("API_KEY_ROOT_BASEROW_TITLE"),
 		platforms: ["Baserow"],
 		level: "Root",
@@ -173,6 +185,18 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		example: t("DEFAULT_APP_TOKEN_ROOT_LARK_EXAMPLE"),
 	},
 	{
+		name: "defaultProjectID",
+		group: "",
+		title: t("DEFAULT_PROJECT_ID_ROOT_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("DEFAULT_PROJECT_ID_ROOT_NOCODB_DESC"),
+		example: t("DEFAULT_PROJECT_ID_ROOT_NOCODB_EXAMPLE"),
+	},
+	{
 		name: "defaultBaseID",
 		group: "",
 		title: t("DEFAULT_BASE_ID_ROOT_AIRTABLE_TITLE"),
@@ -183,6 +207,18 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		valueType: "string",
 		description: t("DEFAULT_BASE_ID_ROOT_AIRTABLE_DESC"),
 		example: t("DEFAULT_BASE_ID_ROOT_AIRTABLE_EXAMPLE"),
+	},
+	{
+		name: "defaultBaseID",
+		group: "",
+		title: t("DEFAULT_BASE_ID_ROOT_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("DEFAULT_BASE_ID_ROOT_NOCODB_DESC"),
+		example: t("DEFAULT_BASE_ID_ROOT_NOCODB_EXAMPLE"),
 	},
 	{
 		name: "defaultBaseID",
@@ -271,6 +307,18 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	{
 		name: "defaultTableID",
 		group: "",
+		title: t("DEFAULT_TABLE_ID_ROOT_BASEROW_TITLE"),
+		platforms: ["Baserow"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("DEFAULT_TABLE_ID_ROOT_BASEROW_DESC"),
+		example: t("DEFAULT_TABLE_ID_ROOT_BASEROW_EXAMPLE"),
+	},
+	{
+		name: "defaultTableID",
+		group: "",
 		title: t("DEFAULT_TABLE_ID_ROOT_FEISHU_TITLE"),
 		platforms: ["Feishu"],
 		level: "Root",
@@ -336,6 +384,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -357,6 +406,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -369,6 +419,18 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		valueType: "string",
 		description: t("CONTENT_FETCH_FIELD_VAULT_DESC"),
 		example: t("CONTENT_FETCH_FIELD_VAULT_EXAMPLE"),
+	},
+	{
+		name: "baseUrl",
+		group: "",
+		title: t("BASE_URL_ROOT_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
+		level: "Root",
+		required: false,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("BASE_URL_ROOT_NOCODB_DESC"),
+		example: t("BASE_URL_ROOT_NOCODB_EXAMPLE"),
 	},
 	{
 		name: "apiUrlRoot",
@@ -426,6 +488,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -447,6 +510,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -468,6 +532,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -489,6 +554,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -512,6 +578,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -543,7 +610,15 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		group: "Extract",
 		groupOrder: 3,
 		title: t("EXTRACT_BLOCKS_AS_TEXT_VAULT_TITLE"),
-		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding", "Baserow"],
+		platforms: [
+			"Vika",
+			"Feishu",
+			"Lark",
+			"WPS",
+			"Ding",
+			"Baserow",
+			"NocoDB",
+		],
 		level: "Vault",
 		required: false,
 		defaultValue: "true",
@@ -559,6 +634,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -590,7 +666,15 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		group: "Extract",
 		groupOrder: 3,
 		title: t("EXTRACT_KEY_POINTS_AS_TEXT_VAULT_TITLE"),
-		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding", "Baserow"],
+		platforms: [
+			"Vika",
+			"Feishu",
+			"Lark",
+			"WPS",
+			"Ding",
+			"Baserow",
+			"NocoDB",
+		],
 		level: "Vault",
 		required: false,
 		defaultValue: "true",
@@ -606,6 +690,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -624,7 +709,15 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		group: "Extract",
 		groupOrder: 3,
 		title: t("EXTRACT_SECTIONS_AS_TEXT_VAULT_TITLE"),
-		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding", "Baserow"],
+		platforms: [
+			"Vika",
+			"Feishu",
+			"Lark",
+			"WPS",
+			"Ding",
+			"Baserow",
+			"NocoDB",
+		],
 		level: "Vault",
 		required: false,
 		defaultValue: "true",
@@ -653,6 +746,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -671,7 +765,15 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		group: "Extract",
 		groupOrder: 3,
 		title: t("EXTRACT_TAG_LINES_AS_TEXT_VAULT_TITLE"),
-		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding", "Baserow"],
+		platforms: [
+			"Vika",
+			"Feishu",
+			"Lark",
+			"WPS",
+			"Ding",
+			"Baserow",
+			"NocoDB",
+		],
 		level: "Vault",
 		required: false,
 		defaultValue: "true",
@@ -700,6 +802,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -721,6 +824,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -742,6 +846,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -763,6 +868,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -784,6 +890,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -805,6 +912,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -826,6 +934,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -847,6 +956,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -868,6 +978,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -889,6 +1000,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -910,6 +1022,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -931,6 +1044,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -978,6 +1092,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1129,6 +1244,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1150,6 +1266,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1171,6 +1288,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1192,6 +1310,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1369,6 +1488,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1390,6 +1510,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1411,6 +1532,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1436,6 +1558,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1467,7 +1590,15 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		group: "Extract",
 		groupOrder: 3,
 		title: t("EXTRACT_BLOCKS_AS_TEXT_FOLDER_TITLE"),
-		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding", "Baserow"],
+		platforms: [
+			"Vika",
+			"Feishu",
+			"Lark",
+			"WPS",
+			"Ding",
+			"Baserow",
+			"NocoDB",
+		],
 		level: "Folder",
 		required: false,
 		defaultValue: "true",
@@ -1483,6 +1614,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1504,6 +1636,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1535,7 +1668,15 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		group: "Extract",
 		groupOrder: 3,
 		title: t("EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_TITLE"),
-		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding", "Baserow"],
+		platforms: [
+			"Vika",
+			"Feishu",
+			"Lark",
+			"WPS",
+			"Ding",
+			"Baserow",
+			"NocoDB",
+		],
 		level: "Folder",
 		required: false,
 		defaultValue: "true",
@@ -1551,6 +1692,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1572,6 +1714,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1590,7 +1733,15 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		group: "Extract",
 		groupOrder: 3,
 		title: t("EXTRACT_SECTIONS_AS_TEXT_FOLDER_TITLE"),
-		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding", "Baserow"],
+		platforms: [
+			"Vika",
+			"Feishu",
+			"Lark",
+			"WPS",
+			"Ding",
+			"Baserow",
+			"NocoDB",
+		],
 		level: "Folder",
 		required: false,
 		defaultValue: "true",
@@ -1619,6 +1770,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1640,6 +1792,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1658,7 +1811,15 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		group: "Extract",
 		groupOrder: 3,
 		title: t("EXTRACT_TAG_LINES_AS_TEXT_FOLDER_TITLE"),
-		platforms: ["Vika", "Feishu", "Lark", "WPS", "Ding", "Baserow"],
+		platforms: [
+			"Vika",
+			"Feishu",
+			"Lark",
+			"WPS",
+			"Ding",
+			"Baserow",
+			"NocoDB",
+		],
 		level: "Folder",
 		required: false,
 		defaultValue: "true",
@@ -1687,6 +1848,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1708,6 +1870,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1729,6 +1892,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1750,6 +1914,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1771,6 +1936,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1792,6 +1958,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1813,6 +1980,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1834,6 +2002,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1855,6 +2024,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1876,6 +2046,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1897,6 +2068,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1918,6 +2090,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1939,6 +2112,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1960,6 +2134,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -1981,6 +2156,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",

@@ -89,6 +89,7 @@ export class FetchPresetLoadModal extends Modal {
 				WPS: [],
 				Ding: [],
 				Baserow: [],
+				NocoDB: [],
 			};
 
 			this.presets.forEach((preset) => {

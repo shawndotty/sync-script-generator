@@ -704,6 +704,7 @@ export class FetchGeneratorView extends ItemView {
 			WPS: "defaultFetchTemplateWPS",
 			Ding: "defaultFetchTemplateDing",
 			Baserow: "defaultFetchTemplateBaserow",
+			NocoDB: "defaultFetchTemplateNocoDB",
 		};
 
 		const key = platformSettingsMap[this.platform];

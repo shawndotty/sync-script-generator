@@ -86,6 +86,7 @@ export class PresetLoadModal extends Modal {
 				WPS: [],
 				Ding: [],
 				Baserow: [],
+				NocoDB: [],
 			};
 
 			this.presets.forEach((preset) => {

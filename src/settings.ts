@@ -28,6 +28,8 @@ export interface SyncScriptGeneratorSettings {
 	defaultFetchTemplateDing: string;
 	defaultSyncTemplateBaserow: string;
 	defaultFetchTemplateBaserow: string;
+	defaultSyncTemplateNocoDB: string;
+	defaultFetchTemplateNocoDB: string;
 }
 
 export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
@@ -52,6 +54,8 @@ export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 	defaultFetchTemplateDing: "",
 	defaultSyncTemplateBaserow: "",
 	defaultFetchTemplateBaserow: "",
+	defaultSyncTemplateNocoDB: "",
+	defaultFetchTemplateNocoDB: "",
 };
 
 export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
@@ -69,6 +73,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			| "defaultSyncTemplateWPS"
 			| "defaultSyncTemplateDing"
 			| "defaultSyncTemplateBaserow"
+			| "defaultSyncTemplateNocoDB"
 		>
 	> = {
 		Airtable: "defaultSyncTemplateAirtable",
@@ -78,6 +83,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		WPS: "defaultSyncTemplateWPS",
 		Ding: "defaultSyncTemplateDing",
 		Baserow: "defaultSyncTemplateBaserow",
+		NocoDB: "defaultSyncTemplateNocoDB",
 	};
 
 	private readonly fetchPlatformSettingsMap: Record<
@@ -91,6 +97,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			| "defaultFetchTemplateWPS"
 			| "defaultFetchTemplateDing"
 			| "defaultFetchTemplateBaserow"
+			| "defaultFetchTemplateNocoDB"
 		>
 	> = {
 		Airtable: "defaultFetchTemplateAirtable",
@@ -100,6 +107,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		WPS: "defaultFetchTemplateWPS",
 		Ding: "defaultFetchTemplateDing",
 		Baserow: "defaultFetchTemplateBaserow",
+		NocoDB: "defaultFetchTemplateNocoDB",
 	};
 
 	private readonly platforms: Platform[] = [

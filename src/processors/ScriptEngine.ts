@@ -29,6 +29,12 @@ export class ScriptEngine {
 				"baserowBaseIDForSync",
 				"baserowTableIDForSync",
 			],
+			NocoDB: [
+				"nocodbAPIKeyForSync",
+				"nocodbProjectIDForSync",
+				"nocodbBaseIDForSync",
+				"nocodbTableIDForSync",
+			],
 			Feishu: [
 				"feishuAppIDForSync",
 				"feishuAppSecretForSync",

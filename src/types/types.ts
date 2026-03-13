@@ -21,7 +21,8 @@ export type Platform =
 	| "Lark"
 	| "WPS"
 	| "Ding"
-	| "Baserow";
+	| "Baserow"
+	| "NocoDB";
 
 export interface SyncOption {
 	name: string;

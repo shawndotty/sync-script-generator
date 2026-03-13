@@ -864,6 +864,7 @@ export class GeneratorView extends ItemView {
 			WPS: "defaultSyncTemplateWPS",
 			Ding: "defaultSyncTemplateDing",
 			Baserow: "defaultSyncTemplateBaserow",
+			NocoDB: "defaultSyncTemplateNocoDB",
 		};
 
 		const key = platformSettingsMap[this.platform];

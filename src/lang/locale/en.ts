@@ -982,4 +982,110 @@ export default {
 		"The root segment of the data record address for privately deployed Vika (ApiTable)",
 	RECORD_URL_ROOT_VIKA_EXAMPLE:
 		"You only need to set this when using a self-hosted deployment of Apitable.\n\nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/workbench/",
+	API_KEY_ROOT_NOCODB_DESC:
+		"Sync to the API Key used by NocoDB.\nCreate it in My Settings -> Database Token.",
+	API_KEY_ROOT_NOCODB_EXAMPLE:
+		"When the input is empty, the default is:\n${nocodbAPIKeyForSync}\n\nIf you wish to enter it yourself, please obtain your API Token from NocoDB now.",
+	API_KEY_ROOT_NOCODB_TITLE: "API Token",
+	BASE_ID_FOLDER_NOCODB_DESC:
+		"Synchronized folder, the database ID used during synchronization.\n\nIf you configure a value different from defaultBaseID, you can synchronize the contents of different folders under the same OB database to different Bases in NocoDB.",
+	BASE_ID_FOLDER_NOCODB_EXAMPLE: "456464",
+	BASE_ID_FOLDER_NOCODB_TITLE: "Database ID",
+	DEFAULT_BASE_ID_ROOT_NOCODB_DESC:
+		"The default Base ID used when syncing to NocoDB.",
+	DEFAULT_BASE_ID_ROOT_NOCODB_EXAMPLE:
+		"When the input is empty, the default is:\n${nocodbBaseIDForSync}",
+	DEFAULT_BASE_ID_ROOT_NOCODB_TITLE: "Default Base ID",
+	DEFAULT_TABLE_ID_ROOT_NOCODB_DESC:
+		"The default table ID used when syncing to NocoDB.",
+	DEFAULT_TABLE_ID_ROOT_NOCODB_EXAMPLE:
+		"When the input is empty, the default is:\n${nocodbTableIDForSync}",
+	DEFAULT_TABLE_ID_ROOT_NOCODB_TITLE: "Default data table ID",
+	DOWNLOAD_BASE_ID_FOLDER_NOCODB_DESC:
+		"In separation mode, the database ID used when downloading data from NocoDB.",
+	DOWNLOAD_BASE_ID_FOLDER_NOCODB_EXAMPLE: "45646",
+	DOWNLOAD_BASE_ID_FOLDER_NOCODB_TITLE:
+		"Database ID used for downloading data in separation mode",
+	DOWNLOAD_TABLE_ID_FOLDER_NOCODB_DESC:
+		"In separation mode, the data table ID used when downloading data from NocoDB.",
+	DOWNLOAD_TABLE_ID_FOLDER_NOCODB_EXAMPLE: "Translation not possible.",
+	DOWNLOAD_TABLE_ID_FOLDER_NOCODB_TITLE:
+		"In separation mode, the data table ID used for downloading data",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_NOCODB_DESC:
+		"When extracting blocks from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in NocoDB needs to be a multi-select field, or you can use a relation field that allows linking multiple records.\n\ntrue: Store using text; the field in NocoDB needs to be a multi-line text field.",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "False",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_NOCODB_TITLE:
+		"Extract block as multi-line text",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_NOCODB_DESC:
+		"When extracting blocks from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in NocoDB needs to be a multi-select or a relational field that allows linking multiple records.\n\ntrue: Store using text; the field in NocoDB needs to be a multi-line text field.",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_NOCODB_EXAMPLE: "False",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_NOCODB_TITLE:
+		"Extract block as multiline text",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_NOCODB_DESC:
+		"When extracting key points from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in NocoDB needs to be a multi-select or a relation field that allows linking multiple records.\ntrue: Store using text; the field in NocoDB needs to be a multi-line text field.",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "False",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_NOCODB_TITLE:
+		"Extract key points as multi-line text",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_NOCODB_DESC:
+		"When extracting key points from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in NocoDB needs to be a multi-select field or a relational field that allows linking multiple records.\ntrue: Store using text; the field in NocoDB needs to be a multi-line text field.",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_NOCODB_EXAMPLE: "False",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_NOCODB_TITLE:
+		"Extract key points as multi-line text",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_NOCODB_DESC:
+		"When extracting specified sections from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in NocoDB needs to be a multi-select or a relation field that allows linking multiple records.\n\ntrue: Store using text; the field in NocoDB needs to be a multi-line text field.",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "false",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_NOCODB_TITLE:
+		"Extract chapter as multi-line text",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_NOCODB_DESC:
+		"When extracting specified sections from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in NocoDB needs to be a multi-select or a relational field that allows linking multiple records.\n\ntrue: Store using text; the field in NocoDB needs to be a multi-line text field.",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_NOCODB_EXAMPLE: "false",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_NOCODB_TITLE:
+		"Extract chapter as multi-line text",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_NOCODB_DESC:
+		"When extracting lines containing specified tags from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in NocoDB needs to be a multi-select or a relation field that allows associating multiple records.\n\ntrue: Store using text; the field in NocoDB needs to be a multi-line text field.",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "false",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_NOCODB_TITLE:
+		"Extract the specified label row as multi-line text",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_NOCODB_DESC:
+		"When extracting lines containing specified tags from notes, should the extracted content be stored as text in the database?\n\nfalse: Store using an array; the field in NocoDB needs to be a multi-select or a relation field that allows associating multiple records.\n\ntrue: Store using text; the field in NocoDB needs to be a multi-line text field.",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_NOCODB_EXAMPLE: "False",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_NOCODB_TITLE:
+		"Extract the specified tag row as multi-line text",
+	FETCH_API_KEY_ROOT_NOCODB_DESC:
+		"Sync to the API Key used by NocoDB.\nCreate it in My Settings -> Database Token.",
+	FETCH_API_KEY_ROOT_NOCODB_EXAMPLE:
+		"When the input is empty, the default is:\n${nocodbAPIKeyForFetch}\n\nIf you enter it yourself, please obtain your API Token from NocoDB now.",
+	FETCH_API_KEY_ROOT_NOCODB_TITLE: "API Token",
+	FETCH_BASE_ID_FOLDER_NOCODB_DESC:
+		"The database ID of the data source. If it is empty, the default defaultBaseID will be used.",
+	FETCH_BASE_ID_FOLDER_NOCODB_EXAMPLE: "4564",
+	FETCH_BASE_ID_FOLDER_NOCODB_TITLE: "Database ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_DESC:
+		"The default Base ID used when retrieving data from NocoDB.",
+	FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_EXAMPLE:
+		"When the input is empty, the default is:\n${nocodbBaseIDForFetch}",
+	FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_TITLE: "Default Base ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_DESC:
+		"The default table ID used when retrieving data from NocoDB.",
+	FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_EXAMPLE:
+		"When the input is empty, the default is:\n${nocodbTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_TITLE: "Default data table ID",
+	TABLE_ID_FOLDER_NOCODB_DESC:
+		"Synchronized folder, the NocoDB tableID used during synchronization.\n\nWhen not using separation mode, both uploading and downloading use the tableID.\n\nIf separation mode is used, the tableID is only used during uploading.",
+	TABLE_ID_FOLDER_NOCODB_EXAMPLE: "4654",
+	TABLE_ID_FOLDER_NOCODB_TITLE: "Table ID",
+	FETCH_BASE_URL_ROOT_NOCODB_TITLE: "API address",
+	FETCH_BASE_URL_ROOT_NOCODB_DESC: "API address of self-hosted NocoDB",
+	FETCH_BASE_URL_ROOT_NOCODB_EXAMPLE:
+		"You only need to set this when using a self-hosted deployment of NocoDB.  \nEnter the corresponding URL based on your deployment configuration, for example:  \nhttp://localhost/api/",
+	BASE_URL_ROOT_NOCODB_TITLE: "API address",
+	BASE_URL_ROOT_NOCODB_DESC: "API address of the privately deployed NocoDB",
+	BASE_URL_ROOT_NOCODB_EXAMPLE:
+		"You only need to set this when using a self-hosted deployment of NocoDB.  \nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/api/",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_TITLE:
+		"Root value of the data record address",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_DESC:
+		"The root value of the data record address for a privately deployed NocoDB",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_EXAMPLE:
+		"You only need to set this up when using a self-hosted deployment of NocoDB.  \nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/",
 };

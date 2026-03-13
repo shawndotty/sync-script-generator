@@ -40,6 +40,17 @@ export const FETCH_OPTIONS: FetchOption[] = [
 	},
 	{
 		name: "apiKey",
+		title: t("FETCH_API_KEY_ROOT_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_API_KEY_ROOT_NOCODB_DESC"),
+		example: t("FETCH_API_KEY_ROOT_NOCODB_EXAMPLE"),
+	},
+	{
+		name: "apiKey",
 
 		title: t("FETCH_API_KEY_ROOT_VIKA_TITLE"),
 		platforms: ["Vika"],
@@ -197,6 +208,18 @@ export const FETCH_OPTIONS: FetchOption[] = [
 	{
 		name: "defaultBaseID",
 
+		title: t("FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_DESC"),
+		example: t("FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_EXAMPLE"),
+	},
+	{
+		name: "defaultBaseID",
+
 		title: t("FETCH_DEFAULT_BASE_ID_ROOT_DING_TITLE"),
 		platforms: ["Ding"],
 		level: "Root",
@@ -265,6 +288,18 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		valueType: "string",
 		description: t("FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_DESC"),
 		example: t("FETCH_DEFAULT_TABLE_ID_ROOT_BASEROW_EXAMPLE"),
+	},
+	{
+		name: "defaultTableID",
+
+		title: t("FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_DESC"),
+		example: t("FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_EXAMPLE"),
 	},
 	{
 		name: "defaultTableID",
@@ -349,12 +384,24 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		example: t("FETCH_API_URL_ROOT_VIKA_EXAMPLE"),
 	},
 	{
+		name: "baseUrl",
+		title: t("FETCH_BASE_URL_ROOT_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
+		level: "Root",
+		required: false,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_BASE_URL_ROOT_NOCODB_DESC"),
+		example: t("FETCH_BASE_URL_ROOT_NOCODB_EXAMPLE"),
+	},
+	{
 		name: "fieldsNames",
 
 		title: t("FETCH_VAULT_FIELDS_NAMES_TITLE"),
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -375,6 +422,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -395,6 +443,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		platforms: [
 			"Airtable",
 			"Baserow",
+			"NocoDB",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -411,7 +460,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 	{
 		name: "baseID",
 		title: t("FETCH_BASE_ID_FOLDER_AIRTABLE_TITLE"),
-		platforms: ["Airtable", "Baserow"],
+		platforms: ["Airtable"],
 		level: "Folder",
 		required: false,
 		defaultValue: "无",
@@ -420,8 +469,29 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		example: t("FETCH_BASE_ID_FOLDER_AIRTABLE_EXAMPLE"),
 	},
 	{
+		name: "baseID",
+		title: t("FETCH_BASE_ID_FOLDER_BASEROW_TITLE"),
+		platforms: ["Baserow"],
+		level: "Folder",
+		required: false,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_BASE_ID_FOLDER_BASEROW_DESC"),
+		example: t("FETCH_BASE_ID_FOLDER_BASEROW_EXAMPLE"),
+	},
+	{
+		name: "baseID",
+		title: t("FETCH_BASE_ID_FOLDER_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
+		level: "Folder",
+		required: false,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("FETCH_BASE_ID_FOLDER_NOCODB_DESC"),
+		example: t("FETCH_BASE_ID_FOLDER_NOCODB_EXAMPLE"),
+	},
+	{
 		name: "appToken",
-
 		title: t("FETCH_APP_TOKEN_FOLDER_TITLE"),
 		platforms: ["Feishu", "Lark"],
 		level: "Folder",
@@ -447,7 +517,7 @@ export const FETCH_OPTIONS: FetchOption[] = [
 		name: "viewID",
 
 		title: t("FETCH_VIEW_ID_FOLDER_TITLE"),
-		platforms: ["Airtable", "Baserow", "Vika", "Feishu"],
+		platforms: ["Airtable", "Baserow", "Vika", "Feishu", "Lark", "NocoDB"],
 		level: "Folder",
 		required: true,
 		defaultValue: "无",

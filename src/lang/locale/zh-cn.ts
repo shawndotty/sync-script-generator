@@ -875,4 +875,97 @@ export default {
 	RECORD_URL_ROOT_VIKA_DESC: "私有化部署的Vika(ApiTable)的数据记录地址的根值",
 	RECORD_URL_ROOT_VIKA_EXAMPLE:
 		"当你使用私有化部署的Apitable时，才需要设置\n\n根据你部署时的配置，写入对应的URL，比如：\n\nhttp://localhost/workbench/",
+	API_KEY_ROOT_NOCODB_DESC:
+		"同步到NocoDB使用的API Key。\n在My Settings->Database Token中创建。",
+	API_KEY_ROOT_NOCODB_EXAMPLE:
+		"输入为空时，默认使用：\n${nocodbAPIKeyForSync}\n\n如果自行输入，请现在NocoDB中获取你的API Token",
+	API_KEY_ROOT_NOCODB_TITLE: "API Token",
+	BASE_ID_FOLDER_NOCODB_DESC:
+		"同步文件夹，在同步时所使用的数据库ID。\n\n如果你配置了不同于defaultBaseID的值，则可以实现把同一个OB库下的不同文件夹的内容，同步到NocoDB中不同的Base。",
+	BASE_ID_FOLDER_NOCODB_EXAMPLE: "456464",
+	BASE_ID_FOLDER_NOCODB_TITLE: "数据库ID",
+	DEFAULT_BASE_ID_ROOT_NOCODB_DESC: "同步到NocoDB时，默认使用的Base ID。",
+	DEFAULT_BASE_ID_ROOT_NOCODB_EXAMPLE:
+		"输入为空时，默认使用：\n${nocodbBaseIDForSync}",
+	DEFAULT_BASE_ID_ROOT_NOCODB_TITLE: "默认Base ID",
+	DEFAULT_TABLE_ID_ROOT_NOCODB_DESC: "同步到NocoDB时，默认使用的数据表ID。",
+	DEFAULT_TABLE_ID_ROOT_NOCODB_EXAMPLE:
+		"输入为空时，默认使用：\n${nocodbTableIDForSync}",
+	DEFAULT_TABLE_ID_ROOT_NOCODB_TITLE: "默认数据表ID",
+	DOWNLOAD_BASE_ID_FOLDER_NOCODB_DESC:
+		"分离模式下，从NocoDB下载数据时，所使用的数据库ID。",
+	DOWNLOAD_BASE_ID_FOLDER_NOCODB_EXAMPLE: "45646",
+	DOWNLOAD_BASE_ID_FOLDER_NOCODB_TITLE: "分离模式下，下载数据使用的数据库ID",
+	DOWNLOAD_TABLE_ID_FOLDER_NOCODB_DESC:
+		"分离模式下，从NocoDB下载数据时，使用的数据表ID。",
+	DOWNLOAD_TABLE_ID_FOLDER_NOCODB_EXAMPLE: "465465",
+	DOWNLOAD_TABLE_ID_FOLDER_NOCODB_TITLE: "分离模式下，下载数据使用的数据表ID",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_NOCODB_DESC:
+		"从笔记中提取区块时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，NocoDB中的字段需要是多选字段，也可以用允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，NocoDB中的字段需要是多行文本字段",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "false",
+	EXTRACT_BLOCKS_AS_TEXT_FOLDER_NOCODB_TITLE: "提取区块为多行文本",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_NOCODB_DESC:
+		"从笔记中提取区块时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，NocoDB中的字段需要是多选或者允许关联多项记录的关联字段。\n\ntrue: 使用文本进行存储，NocoDB中的字段需要是多行文本字段。",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_NOCODB_EXAMPLE: "false",
+	EXTRACT_BLOCKS_AS_TEXT_VAULT_NOCODB_TITLE: "提取区块为多行文本",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_NOCODB_DESC:
+		"从笔记中提取要点时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，NocoDB中的字段需要是多选或者允许关联多项记录的关联字段。\ntrue: 使用文本进行存储，NocoDB中的字段需要是多行文本字段。",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "false",
+	EXTRACT_KEY_POINTS_AS_TEXT_FOLDER_NOCODB_TITLE: "提取要点为多行文本",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_NOCODB_DESC:
+		"从笔记中提取要点时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，NocoDB中的字段需要是多选或者允许关联多项记录的关联字段。\ntrue: 使用文本进行存储，NocoDB中的字段需要是多行文本字段。",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_NOCODB_EXAMPLE: "false",
+	EXTRACT_KEY_POINTS_AS_TEXT_VAULT_NOCODB_TITLE: "提取要点为多行文本",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_NOCODB_DESC:
+		"从笔记中提取指定的章节（Sections）时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，NocoDB中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，NocoDB中的字段需要是多行文本字段",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "false",
+	EXTRACT_SECTIONS_AS_TEXT_FOLDER_NOCODB_TITLE: "提取章节为多行文本",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_NOCODB_DESC:
+		"从笔记中提取指定的章节（Sections）时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，NocoDB中的字段需要是多选或者允许关联多项记录的关联字段\n\ntrue: 使用文本进行存储，NocoDB中的字段需要是多行文本字段",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_NOCODB_EXAMPLE: "false",
+	EXTRACT_SECTIONS_AS_TEXT_VAULT_NOCODB_TITLE: "提取章节为多行文本",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_NOCODB_DESC:
+		"从笔记中提取包含指定标签的行时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，NocoDB中的字段需要是多选或者允许关联多项记录的关联字段。\n\ntrue: 使用文本进行存储，NocoDB中的字段需要是多行文本字段。",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_NOCODB_EXAMPLE: "false",
+	EXTRACT_TAG_LINES_AS_TEXT_FOLDER_NOCODB_TITLE: "把指定标签行提取为多行文本",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_NOCODB_DESC:
+		"从笔记中提取包含指定标签的行时，是否将提取的内容作为文本在数据库中存储。\n\nfalse: 使用数组进行存储，NocoDB中的字段需要是多选或者允许关联多项记录的关联字段。\n\ntrue: 使用文本进行存储，NocoDB中的字段需要是多行文本字段。",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_NOCODB_EXAMPLE: "false",
+	EXTRACT_TAG_LINES_AS_TEXT_VAULT_NOCODB_TITLE: "把指定标签行提取为多行文本",
+	FETCH_API_KEY_ROOT_NOCODB_DESC:
+		"同步到NocoDB使用的API Key。\n在My Settings->Database Token中创建。",
+	FETCH_API_KEY_ROOT_NOCODB_EXAMPLE:
+		"输入为空时，默认使用：\n${nocodbAPIKeyForFetch}\n\n如果自行输入，请现在NocoDB中获取你的API Token",
+	FETCH_API_KEY_ROOT_NOCODB_TITLE: "API Token",
+	FETCH_BASE_ID_FOLDER_NOCODB_DESC:
+		"数据源的数据库ID，如果为空，使用默认的defaultBaseID。",
+	FETCH_BASE_ID_FOLDER_NOCODB_EXAMPLE: "4564",
+	FETCH_BASE_ID_FOLDER_NOCODB_TITLE: "数据库ID",
+	FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_DESC:
+		"从NocoDB获取数据时，默认使用的Base ID。",
+	FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_EXAMPLE:
+		"输入为空时，默认使用：\n${nocodbBaseIDForFetch}",
+	FETCH_DEFAULT_BASE_ID_ROOT_NOCODB_TITLE: "默认Base ID",
+	FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_DESC:
+		"从NocoDB获取数据时，默认使用的数据表ID。",
+	FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_EXAMPLE:
+		"输入为空时，默认使用：\n${nocodbTableIDForFetch}",
+	FETCH_DEFAULT_TABLE_ID_ROOT_NOCODB_TITLE: "默认数据表ID",
+	TABLE_ID_FOLDER_NOCODB_DESC:
+		"同步文件夹，在同步时使用的NocoDB的tableID。\n\n不使用分离模式时，上传和下载都会使用tableID。\n\n如果使用分离模式，只有在上传时使用tableID。",
+	TABLE_ID_FOLDER_NOCODB_EXAMPLE: "4654",
+	TABLE_ID_FOLDER_NOCODB_TITLE: "数据表ID",
+	FETCH_BASE_URL_ROOT_NOCODB_TITLE: "API地址",
+	FETCH_BASE_URL_ROOT_NOCODB_DESC: "私有化部署的NocoDB的API地址",
+	FETCH_BASE_URL_ROOT_NOCODB_EXAMPLE:
+		"当你使用私有化部署的NocoDB时，才需要设置\n根据你部署时的配置，写入对应的URL，比如：\nhttp://localhost/api/",
+	BASE_URL_ROOT_NOCODB_TITLE: "API地址",
+	BASE_URL_ROOT_NOCODB_DESC: "私有化部署的NocoDB的API地址",
+	BASE_URL_ROOT_NOCODB_EXAMPLE:
+		"当你使用私有化部署的NocoDB时，才需要设置\n根据你部署时的配置，写入对应的URL，比如：\n\nhttp://localhost/api/",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_TITLE: "数据记录地址的根值",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_DESC:
+		"私有化部署的NocoDB的数据记录地址的根值",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_EXAMPLE:
+		"当你使用私有化部署的NocoDB时，才需要设置\n根据你部署时的配置，写入对应的URL，比如：\n\nhttp://localhost/",
 };
