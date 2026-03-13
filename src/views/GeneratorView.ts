@@ -125,6 +125,7 @@ export class GeneratorView extends ItemView {
 			"WPS",
 			"Ding",
 			"Baserow",
+			"NocoDB",
 		];
 		platforms.forEach((p) => {
 			const label = this.platformListCollapsed ? p.charAt(0) : p;

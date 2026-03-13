@@ -127,6 +127,7 @@ export class FetchGeneratorView extends ItemView {
 			"WPS",
 			"Ding",
 			"Baserow",
+			"NocoDB",
 		];
 
 		platforms.forEach((p) => {

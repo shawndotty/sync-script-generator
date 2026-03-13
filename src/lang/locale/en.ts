@@ -1082,10 +1082,8 @@ export default {
 	BASE_URL_ROOT_NOCODB_DESC: "API address of the privately deployed NocoDB",
 	BASE_URL_ROOT_NOCODB_EXAMPLE:
 		"You only need to set this when using a self-hosted deployment of NocoDB.  \nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/api/",
-	DEFAULT_PROJECT_ID_ROOT_NOCODB_TITLE:
-		"Root value of the data record address",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_TITLE: "Default Project ID",
 	DEFAULT_PROJECT_ID_ROOT_NOCODB_DESC:
-		"The root value of the data record address for a privately deployed NocoDB",
-	DEFAULT_PROJECT_ID_ROOT_NOCODB_EXAMPLE:
-		"You only need to set this up when using a self-hosted deployment of NocoDB.  \nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/",
+		"The default Project ID used when syncing to NocoDB.",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_EXAMPLE: "123456",
 };

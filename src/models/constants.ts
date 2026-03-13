@@ -307,14 +307,14 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	{
 		name: "defaultTableID",
 		group: "",
-		title: t("DEFAULT_TABLE_ID_ROOT_BASEROW_TITLE"),
-		platforms: ["Baserow"],
+		title: t("DEFAULT_TABLE_ID_ROOT_NOCODB_TITLE"),
+		platforms: ["NocoDB"],
 		level: "Root",
 		required: true,
 		defaultValue: "无",
 		valueType: "string",
-		description: t("DEFAULT_TABLE_ID_ROOT_BASEROW_DESC"),
-		example: t("DEFAULT_TABLE_ID_ROOT_BASEROW_EXAMPLE"),
+		description: t("DEFAULT_TABLE_ID_ROOT_NOCODB_DESC"),
+		example: t("DEFAULT_TABLE_ID_ROOT_NOCODB_EXAMPLE"),
 	},
 	{
 		name: "defaultTableID",

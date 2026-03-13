@@ -963,9 +963,8 @@ export default {
 	BASE_URL_ROOT_NOCODB_DESC: "私有化部署的NocoDB的API地址",
 	BASE_URL_ROOT_NOCODB_EXAMPLE:
 		"当你使用私有化部署的NocoDB时，才需要设置\n根据你部署时的配置，写入对应的URL，比如：\n\nhttp://localhost/api/",
-	DEFAULT_PROJECT_ID_ROOT_NOCODB_TITLE: "数据记录地址的根值",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_TITLE: "默认Project ID",
 	DEFAULT_PROJECT_ID_ROOT_NOCODB_DESC:
-		"私有化部署的NocoDB的数据记录地址的根值",
-	DEFAULT_PROJECT_ID_ROOT_NOCODB_EXAMPLE:
-		"当你使用私有化部署的NocoDB时，才需要设置\n根据你部署时的配置，写入对应的URL，比如：\n\nhttp://localhost/",
+		"同步到NocoDB时，默认使用的Project ID。",
+	DEFAULT_PROJECT_ID_ROOT_NOCODB_EXAMPLE: "123456",
 };

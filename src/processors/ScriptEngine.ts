@@ -87,12 +87,16 @@ export class ScriptEngine {
 						: platform === "Baserow"
 							? "baserowAPIKeyForSync"
 							: "vikaAPIKeyForSync",
+				defaultProjectID:
+					platform === "NocoDB" ? "nocodbProjectIDForSync" : "",
 				defaultBaseID:
 					platform === "Airtable"
 						? "airtableBaseIDForSync"
 						: platform === "Baserow"
 							? "baserowBaseIDForSync"
-							: "dingBaseIDForSync",
+							: platform === "NocoDB"
+								? "nocodbBaseIDForSync"
+								: "dingBaseIDForSync",
 				defaultTableID:
 					platform === "Airtable"
 						? "airtableTableIDForSync"
@@ -108,7 +112,9 @@ export class ScriptEngine {
 											? "vikaTableIDForSync"
 											: platform === "Baserow"
 												? "baserowTableIDForSync"
-												: "",
+												: platform === "NocoDB"
+													? "nocodbTableIDForSync"
+													: "",
 				appID:
 					platform === "Feishu"
 						? "feishuAppIDForSync"

@@ -91,7 +91,9 @@ export class FetchScriptEngine {
 						? "airtableBaseIDForFetch"
 						: platform === "Baserow"
 							? "baserowBaseIDForFetch"
-							: "dingBaseIDForFetch",
+							: platform === "NocoDB"
+								? "nocodbBaseIDForFetch"
+								: "dingBaseIDForFetch",
 				defaultTableID:
 					platform === "Airtable"
 						? "airtableTableIDForFetch"
@@ -107,7 +109,9 @@ export class FetchScriptEngine {
 											? "vikaTableIDForFetch"
 											: platform === "Baserow"
 												? "baserowTableIDForFetch"
-												: "",
+												: platform === "NocoDB"
+													? "nocodbTableIDForFetch"
+													: "",
 				appID:
 					platform === "Feishu"
 						? "feishuAppIDForFetch"
