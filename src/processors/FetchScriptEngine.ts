@@ -79,70 +79,66 @@ export class FetchScriptEngine {
 			(o) => o.level === "Root" && o.platforms.includes(platform),
 		);
 		rootOptions.forEach((opt) => {
+			const pick = (m: Partial<Record<string, string>>) =>
+				m[platform] ?? "";
 			const varMapping: Record<string, string> = {
-				apiKey:
-					platform === "Airtable"
-						? "airtableAPIKeyForFetch"
-						: platform === "Baserow"
-							? "baserowAPIKeyForFetch"
-							: "vikaAPIKeyForFetch",
-				defaultBaseID:
-					platform === "Airtable"
-						? "airtableBaseIDForFetch"
-						: platform === "Baserow"
-							? "baserowBaseIDForFetch"
-							: platform === "NocoDB"
-								? "nocodbBaseIDForFetch"
-								: "dingBaseIDForFetch",
-				defaultTableID:
-					platform === "Airtable"
-						? "airtableTableIDForFetch"
-						: platform === "Feishu"
-							? "feishuTableIDForFetch"
-							: platform === "Lark"
-								? "larkTableIDForFetch"
-								: platform === "WPS"
-									? "wpsTableIDForFetch"
-									: platform === "Ding"
-										? "dingTableIDForFetch"
-										: platform === "Vika"
-											? "vikaTableIDForFetch"
-											: platform === "Baserow"
-												? "baserowTableIDForFetch"
-												: platform === "NocoDB"
-													? "nocodbTableIDForFetch"
-													: "",
-				appID:
-					platform === "Feishu"
-						? "feishuAppIDForFetch"
-						: platform === "Lark"
-							? "larkAppIDForFetch"
-							: platform === "WPS"
-								? "wpsAppIDForFetch"
-								: "dingAppIDForFetch",
-				appSecret:
-					platform === "Feishu"
-						? "feishuAppSecretForFetch"
-						: platform === "Lark"
-							? "larkAppSecretForFetch"
-							: platform === "WPS"
-								? "wpsAppSecretForFetch"
-								: "dingAppSecretForFetch",
-				appKey: platform === "WPS" ? "wpsAppSecretForFetch" : "",
-				accessToken: platform === "WPS" ? "wpsUserTokenForFetch" : "",
-				defaultAppToken:
-					platform === "Feishu"
-						? "feishuBaseIDForFetch"
-						: "larkBaseIDForFetch",
-				defaultFileID: platform === "WPS" ? "wpsBaseIDForFetch" : "",
-				defaultSheetID:
-					platform === "WPS"
-						? "wpsTableIDForFetch"
-						: platform === "Ding"
-							? "dingTableIDForFetch"
-							: "",
-				defaultViewID: platform === "Ding" ? "dingViewIDForFetch" : "",
-				userID: platform === "Ding" ? "dingUserIDForFetch" : "",
+				apiKey: pick({
+					Airtable: "airtableAPIKeyForFetch",
+					Baserow: "baserowAPIKeyForFetch",
+					NocoDB: "nocodbAPIKeyForFetch",
+					Vika: "vikaAPIKeyForFetch",
+				}),
+				defaultBaseID: pick({
+					Airtable: "airtableBaseIDForFetch",
+					Baserow: "baserowBaseIDForFetch",
+					NocoDB: "nocodbBaseIDForFetch",
+					Ding: "dingBaseIDForFetch",
+				}),
+				defaultTableID: pick({
+					Airtable: "airtableTableIDForFetch",
+					Feishu: "feishuTableIDForFetch",
+					Lark: "larkTableIDForFetch",
+					WPS: "wpsTableIDForFetch",
+					Ding: "dingTableIDForFetch",
+					Vika: "vikaTableIDForFetch",
+					Baserow: "baserowTableIDForFetch",
+					NocoDB: "nocodbTableIDForFetch",
+				}),
+				appID: pick({
+					Feishu: "feishuAppIDForFetch",
+					Lark: "larkAppIDForFetch",
+					WPS: "wpsAppIDForFetch",
+					Ding: "dingAppIDForFetch",
+				}),
+				appSecret: pick({
+					Feishu: "feishuAppSecretForFetch",
+					Lark: "larkAppSecretForFetch",
+					WPS: "wpsAppSecretForFetch",
+					Ding: "dingAppSecretForFetch",
+				}),
+				appKey: pick({
+					WPS: "wpsAppSecretForFetch",
+				}),
+				accessToken: pick({
+					WPS: "wpsUserTokenForFetch",
+				}),
+				defaultAppToken: pick({
+					Feishu: "feishuBaseIDForFetch",
+					Lark: "larkBaseIDForFetch",
+				}),
+				defaultFileID: pick({
+					WPS: "wpsBaseIDForFetch",
+				}),
+				defaultSheetID: pick({
+					WPS: "wpsTableIDForFetch",
+					Ding: "dingTableIDForFetch",
+				}),
+				defaultViewID: pick({
+					Ding: "dingViewIDForFetch",
+				}),
+				userID: pick({
+					Ding: "dingUserIDForFetch",
+				}),
 			};
 			const mappedVar = varMapping[opt.name];
 

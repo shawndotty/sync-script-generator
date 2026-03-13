@@ -80,71 +80,70 @@ export class ScriptEngine {
 			(o) => o.level === "Root" && o.platforms.includes(platform),
 		);
 		rootOptions.forEach((opt) => {
+			const pick = (m: Partial<Record<string, string>>) =>
+				m[platform] ?? "";
 			const varMapping: Record<string, string> = {
-				apiKey:
-					platform === "Airtable"
-						? "airtableAPIKeyForSync"
-						: platform === "Baserow"
-							? "baserowAPIKeyForSync"
-							: "vikaAPIKeyForSync",
-				defaultProjectID:
-					platform === "NocoDB" ? "nocodbProjectIDForSync" : "",
-				defaultBaseID:
-					platform === "Airtable"
-						? "airtableBaseIDForSync"
-						: platform === "Baserow"
-							? "baserowBaseIDForSync"
-							: platform === "NocoDB"
-								? "nocodbBaseIDForSync"
-								: "dingBaseIDForSync",
-				defaultTableID:
-					platform === "Airtable"
-						? "airtableTableIDForSync"
-						: platform === "Feishu"
-							? "feishuTableIDForSync"
-							: platform === "Lark"
-								? "larkTableIDForSync"
-								: platform === "WPS"
-									? "wpsTableIDForSync"
-									: platform === "Ding"
-										? "dingTableIDForSync"
-										: platform === "Vika"
-											? "vikaTableIDForSync"
-											: platform === "Baserow"
-												? "baserowTableIDForSync"
-												: platform === "NocoDB"
-													? "nocodbTableIDForSync"
-													: "",
-				appID:
-					platform === "Feishu"
-						? "feishuAppIDForSync"
-						: platform === "Lark"
-							? "larkAppIDForSync"
-							: platform === "WPS"
-								? "wpsAppIDForSync"
-								: "dingAppIDForSync",
-				appSecret:
-					platform === "Feishu"
-						? "feishuAppSecretForSync"
-						: platform === "Lark"
-							? "larkAppSecretForSync"
-							: "dingAppSecretForSync",
-				defaultAppToken:
-					platform === "Feishu"
-						? "feishuBaseIDForSync"
-						: "larkBaseIDForSync",
-				appKey: platform === "WPS" ? "wpsAppSecretForSync" : "",
-				accessToken: platform === "WPS" ? "wpsUserTokenForSync" : "",
-				defaultFileID: platform === "WPS" ? "wpsBaseIDForSync" : "",
-				defaultSheetID:
-					platform === "WPS"
-						? "wpsTableIDForSync"
-						: platform === "Ding"
-							? "dingTableIDForSync"
-							: "",
-				defaultViewID: platform === "Ding" ? "dingViewIDForSync" : "",
-				userID: platform === "Ding" ? "dingUserIDForSync" : "",
+				apiKey: pick({
+					Airtable: "airtableAPIKeyForSync",
+					Baserow: "baserowAPIKeyForSync",
+					Vika: "vikaAPIKeyForSync",
+					NocoDB: "nocodbAPIKeyForSync",
+				}),
+				defaultProjectID: pick({
+					NocoDB: "nocodbProjectIDForSync",
+				}),
+				defaultBaseID: pick({
+					Airtable: "airtableBaseIDForSync",
+					Baserow: "baserowBaseIDForSync",
+					NocoDB: "nocodbBaseIDForSync",
+					Ding: "dingBaseIDForSync",
+				}),
+				defaultTableID: pick({
+					Airtable: "airtableTableIDForSync",
+					Feishu: "feishuTableIDForSync",
+					Lark: "larkTableIDForSync",
+					WPS: "wpsTableIDForSync",
+					Ding: "dingTableIDForSync",
+					Vika: "vikaTableIDForSync",
+					Baserow: "baserowTableIDForSync",
+					NocoDB: "nocodbTableIDForSync",
+				}),
+				appID: pick({
+					Feishu: "feishuAppIDForSync",
+					Lark: "larkAppIDForSync",
+					WPS: "wpsAppIDForSync",
+					Ding: "dingAppIDForSync",
+				}),
+				appSecret: pick({
+					Feishu: "feishuAppSecretForSync",
+					Lark: "larkAppSecretForSync",
+					Ding: "dingAppSecretForSync",
+				}),
+				defaultAppToken: pick({
+					Feishu: "feishuBaseIDForSync",
+					Lark: "larkBaseIDForSync",
+				}),
+				appKey: pick({
+					WPS: "wpsAppSecretForSync",
+				}),
+				accessToken: pick({
+					WPS: "wpsUserTokenForSync",
+				}),
+				defaultFileID: pick({
+					WPS: "wpsBaseIDForSync",
+				}),
+				defaultSheetID: pick({
+					WPS: "wpsTableIDForSync",
+					Ding: "dingTableIDForSync",
+				}),
+				defaultViewID: pick({
+					Ding: "dingViewIDForSync",
+				}),
+				userID: pick({
+					Ding: "dingUserIDForSync",
+				}),
 			};
+
 			const mappedVar = varMapping[opt.name];
 
 			const userVal = rootSettings[opt.name];
