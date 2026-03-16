@@ -310,9 +310,16 @@ export class ScriptEngine {
 		if (platformMatch && platformMatch[1]) {
 			const parsedPlatform = platformMatch[1] as Platform;
 			if (
-				["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"].includes(
-					parsedPlatform,
-				)
+				[
+					"Airtable",
+					"Feishu",
+					"Vika",
+					"Lark",
+					"WPS",
+					"Ding",
+					"Baserow",
+					"NocoDB",
+				].includes(parsedPlatform)
 			) {
 				platform = parsedPlatform;
 			}
