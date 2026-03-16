@@ -340,6 +340,19 @@
     max-height: 95vh;
 }
 
+/* Relationship Diagram Modal */
+
+.modal.mod-relationship-diagram {
+    max-width: 900px;
+    width: 900px;
+}
+
+.modal.mod-relationship-diagram .mermaid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 /* Settings Tabs */
 .sync-generator-container .settings-tabs,
 .modal.mod-preset-manager .settings-tabs {
