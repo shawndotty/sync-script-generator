@@ -89,7 +89,7 @@ export class ScriptEngine {
 					Vika: "vikaAPIKeyForSync",
 					NocoDB: "nocodbAPIKeyForSync",
 				}),
-				defaultProjectID: pick({
+				defaultWorkspaceID: pick({
 					NocoDB: "nocodbProjectIDForSync",
 				}),
 				defaultBaseID: pick({
