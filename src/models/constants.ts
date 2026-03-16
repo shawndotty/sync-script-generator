@@ -440,7 +440,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		],
 		level: "Vault",
 		required: false,
-		defaultValue: "Content",
+		defaultValue: t("CONTENT"),
 		valueType: "string",
 		description: t("CONTENT_FETCH_FIELD_VAULT_DESC"),
 		example: t("CONTENT_FETCH_FIELD_VAULT_EXAMPLE"),

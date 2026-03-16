@@ -14,7 +14,7 @@ interface ObjectItem {
 	id: string;
 	key: string;
 	value: any;
-	type: "string" | "number" | "boolean" | "array";
+	type: "string" | "number" | "boolean" | "array" | "date" | "datetime";
 }
 
 export class ObjectEditModal extends Modal {
@@ -38,10 +38,15 @@ export class ObjectEditModal extends Modal {
 
 	private parseDataToItems(data: Record<string, any>): ObjectItem[] {
 		return Object.entries(data).map(([key, value]) => {
-			let type: "string" | "number" | "boolean" | "array" = "string";
+			let type: ObjectItem["type"] = "string";
 			if (Array.isArray(value)) type = "array";
+			else if (value instanceof Date) type = "datetime";
 			else if (typeof value === "boolean") type = "boolean";
 			else if (typeof value === "number") type = "number";
+			else if (typeof value === "string") {
+				if (this.isDateOnlyString(value)) type = "date";
+				else if (this.isDatetimeString(value)) type = "datetime";
+			}
 
 			return {
 				id: Math.random().toString(36).substr(2, 9),
@@ -50,6 +55,65 @@ export class ObjectEditModal extends Modal {
 				type,
 			};
 		});
+	}
+
+	private isDateOnlyString(value: string): boolean {
+		return /^\d{4}-\d{2}-\d{2}$/.test(value);
+	}
+
+	private isDatetimeString(value: string): boolean {
+		return /^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/.test(value);
+	}
+
+	private pad2(num: number): string {
+		return String(num).padStart(2, "0");
+	}
+
+	private formatDateInputValueFromDate(date: Date): string {
+		return `${date.getFullYear()}-${this.pad2(date.getMonth() + 1)}-${this.pad2(
+			date.getDate(),
+		)}`;
+	}
+
+	private formatDatetimeLocalInputValueFromDate(date: Date): string {
+		return `${this.formatDateInputValueFromDate(date)}T${this.pad2(
+			date.getHours(),
+		)}:${this.pad2(date.getMinutes())}`;
+	}
+
+	private toDateInputValue(value: unknown): string {
+		if (value instanceof Date)
+			return this.formatDateInputValueFromDate(value);
+
+		if (typeof value === "string") {
+			if (this.isDateOnlyString(value)) return value;
+			if (this.isDatetimeString(value)) return value.slice(0, 10);
+
+			const parsed = new Date(value);
+			if (!Number.isNaN(parsed.getTime())) {
+				return this.formatDateInputValueFromDate(parsed);
+			}
+		}
+
+		return "";
+	}
+
+	private toDatetimeLocalInputValue(value: unknown): string {
+		if (value instanceof Date)
+			return this.formatDatetimeLocalInputValueFromDate(value);
+
+		if (typeof value === "string") {
+			if (this.isDatetimeString(value))
+				return value.replace(" ", "T").slice(0, 16);
+			if (this.isDateOnlyString(value)) return `${value}T00:00`;
+
+			const parsed = new Date(value);
+			if (!Number.isNaN(parsed.getTime())) {
+				return this.formatDatetimeLocalInputValueFromDate(parsed);
+			}
+		}
+
+		return "";
 	}
 
 	onOpen() {
@@ -132,6 +196,8 @@ export class ObjectEditModal extends Modal {
 					number: t("OBJECT_EDIT_TYPE_NUMBER"),
 					boolean: t("OBJECT_EDIT_TYPE_BOOLEAN"),
 					array: t("OBJECT_EDIT_TYPE_ARRAY"),
+					date: t("OBJECT_EDIT_TYPE_DATE"),
+					datetime: t("OBJECT_EDIT_TYPE_DATETIME"),
 				})
 				.setValue(item.type)
 				.onChange((val) => {
@@ -139,16 +205,26 @@ export class ObjectEditModal extends Modal {
 						| "string"
 						| "number"
 						| "boolean"
-						| "array";
+						| "array"
+						| "date"
+						| "datetime";
 					if (newType !== item.type) {
 						item.type = newType;
 						// Reset value to default for new type
 						if (newType === "array") item.value = [];
 						else if (newType === "boolean") item.value = false;
 						else if (newType === "number") item.value = 0;
+						else if (newType === "date")
+							item.value = this.formatDateInputValueFromDate(
+								new Date(),
+							);
+						else if (newType === "datetime")
+							item.value =
+								this.formatDatetimeLocalInputValueFromDate(
+									new Date(),
+								);
 						else item.value = "";
 
-						// Re-render this row or whole list? Re-rendering list is safer/easier
 						this.renderItems(container);
 					}
 				});
@@ -211,6 +287,26 @@ export class ObjectEditModal extends Modal {
 					.setValue(String(item.value))
 					.onChange((val) => {
 						item.value = Number(val);
+					});
+			} else if (item.type === "date") {
+				const dateInput = new TextComponent(valueContainer);
+				dateInput.inputEl.type = "date";
+				dateInput.inputEl.addClass("object-edit-value");
+				dateInput.inputEl.style.width = "100%";
+				dateInput
+					.setValue(this.toDateInputValue(item.value))
+					.onChange((val) => {
+						item.value = val;
+					});
+			} else if (item.type === "datetime") {
+				const datetimeInput = new TextComponent(valueContainer);
+				datetimeInput.inputEl.type = "datetime-local";
+				datetimeInput.inputEl.addClass("object-edit-value");
+				datetimeInput.inputEl.style.width = "100%";
+				datetimeInput
+					.setValue(this.toDatetimeLocalInputValue(item.value))
+					.onChange((val) => {
+						item.value = val;
 					});
 			} else {
 				// String
