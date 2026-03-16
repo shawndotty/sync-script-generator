@@ -56,6 +56,14 @@ export function graphToMermaid(
 	lines.push("  end");
 
 	let edgeCount = 0;
+	// 记录边索引与原始边的映射，以便后续交互
+	// 由于 linkStyle 是按顺序的，我们给每条边加一个 class 来标记它的索引
+	// 但 linkStyle 只能按索引加样式，不能加 class。
+	// Mermaid 支持 `linkStyle 3 stroke:red;` 但不支持直接加 class 到 path。
+	// 不过，我们可以通过 click 事件或 callback 注入？不支持。
+	// 备选方案：我们在 modal 中通过 querySelectorAll(".edgePath") 拿到所有边，顺序与这里的一致。
+	// 关键是保证这里的循环顺序与 modal 中的逻辑一致。
+
 	graph.edges.forEach((e) => {
 		const folderRaw = e.from.startsWith("folder:") ? e.from : e.to;
 		const remoteRaw = e.from.startsWith("remote:") ? e.from : e.to;
@@ -79,13 +87,14 @@ export function graphToMermaid(
 	});
 
 	// 添加一个隐形的布局约束（Folder -> Remote），确保分组在 LR 布局下保持 Vault 在左、Remote 在右
+	// 使用 ~~~ 隐形连接，它不会生成 visible edge path，也不会影响 graph.edges 的索引对应
+	// 这样可以避免 edgeIndices 错位
 	const firstFolder = graph.nodes.find((n) => n.type === "folder");
 	const firstRemote = graph.nodes.find((n) => n.type === "remote");
 	if (firstFolder && firstRemote) {
 		const layoutFrom = sanitizeId(firstFolder.id);
 		const layoutTo = sanitizeId(firstRemote.id);
-		lines.push(`  ${layoutFrom} --> ${layoutTo}`);
-		lines.push(`  linkStyle ${edgeCount} stroke:transparent,opacity:0;`);
+		lines.push(`  ${layoutFrom} ~~~ ${layoutTo}`);
 	}
 
 	// 添加交互样式类

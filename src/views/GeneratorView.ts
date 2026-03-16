@@ -534,7 +534,7 @@ export class GeneratorView extends ItemView {
 		const mermaid = graphToMermaid(graph, { platformLabel: true });
 		const defaultFolder = this.plugin.settings.syncTemplateFolder || "";
 		const title = t("diagram.title.sync");
-		new RelationshipDiagramModal(this.app, title, mermaid, {
+		new RelationshipDiagramModal(this.app, title, mermaid, graph, {
 			defaultFolder,
 			defaultFileName: `Sync-Relations-${this.platform}`,
 		}).open();

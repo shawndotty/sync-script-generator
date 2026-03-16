@@ -431,7 +431,7 @@ export class FetchGeneratorView extends ItemView {
 		const mermaid = graphToMermaid(graph, { platformLabel: true });
 		const defaultFolder = this.plugin.settings.fetchTemplateFolder || "";
 		const title = t("diagram.title.fetch");
-		new RelationshipDiagramModal(this.app, title, mermaid, {
+		new RelationshipDiagramModal(this.app, title, mermaid, graph, {
 			defaultFolder,
 			defaultFileName: `Fetch-Relations-${this.platform}`,
 		}).open();

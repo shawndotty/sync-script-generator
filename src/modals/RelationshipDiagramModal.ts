@@ -1,8 +1,10 @@
 import { App, Modal, Setting, Notice, MarkdownRenderer } from "obsidian";
 import { t } from "../lang/helpers";
+import { RelationshipGraph } from "../models/relationship";
 
 export class RelationshipDiagramModal extends Modal {
 	private mermaidText: string;
+	private graph: RelationshipGraph;
 	private titleText: string;
 	private targetFileName: string;
 	private targetFolder: string;
@@ -11,11 +13,13 @@ export class RelationshipDiagramModal extends Modal {
 		app: App,
 		titleText: string,
 		mermaidText: string,
+		graph: RelationshipGraph,
 		options?: { defaultFolder?: string; defaultFileName?: string },
 	) {
 		super(app);
 		this.titleText = titleText;
 		this.mermaidText = mermaidText;
+		this.graph = graph;
 		this.targetFolder = options?.defaultFolder || "";
 		this.targetFileName =
 			options?.defaultFileName ||
@@ -146,32 +150,69 @@ export class RelationshipDiagramModal extends Modal {
 		svg.classList.add("interaction-active");
 		targetNode.classList.add("active");
 
-		// Mermaid SVG 结构中，edgePaths 位于 .edgePaths 组，且 id 通常形如 L_start_end_index
-		// 尝试根据 id 匹配相关边
-		// 节点 ID: 例如 folder_0____IOTO
-		// 边 ID: L_folder_0____IOTO_remote_Airtable_1234_0 (示例)
-		// 因此可以简单查找包含节点 ID 的边路径
-
 		const targetId = targetNode.id;
 		if (!targetId) return;
 
-		const edges = svg.querySelectorAll(".edgePaths .edgePath");
-		edges.forEach((edge) => {
-			if (edge.id.includes(targetId)) {
-				edge.classList.add("active");
-				// 尝试高亮另一端的节点
-				// 从 edge id 中解析出另一端 id 比较困难，因为 id 可能包含下划线
-				// 但我们可以反过来遍历所有节点，看该边是否包含其 id
-				const allNodes = svg.querySelectorAll(".node");
-				allNodes.forEach((otherNode) => {
-					if (
-						otherNode.id &&
-						otherNode.id !== targetId &&
-						edge.id.includes(otherNode.id)
-					) {
-						otherNode.classList.add("active");
-					}
-				});
+		// 反向查找：根据 DOM ID 还原原始 Graph Node ID
+		const originalNode = this.graph.nodes.find(
+			(n) => sanitizeId(n.id) === targetId,
+		);
+
+		if (!originalNode) {
+			return;
+		}
+
+		// 查找与该节点相连的所有边（入边和出边）
+		const relatedEdges = this.graph.edges.filter(
+			(e) => e.from === originalNode.id || e.to === originalNode.id,
+		);
+
+		// 收集相关联的节点 ID（原始 ID）
+		const relatedNodeIds = new Set<string>();
+		relatedEdges.forEach((e) => {
+			if (e.from === originalNode.id) relatedNodeIds.add(e.to);
+			else relatedNodeIds.add(e.from);
+		});
+
+		// 将原始 ID 转换为 DOM ID
+		const relatedDomIds = new Set<string>();
+		relatedNodeIds.forEach((nid) => {
+			relatedDomIds.add(sanitizeId(nid));
+		});
+
+		// 高亮关联的节点
+		const allNodes = svg.querySelectorAll(".node");
+		allNodes.forEach((node) => {
+			if (relatedDomIds.has(node.id)) {
+				node.classList.add("active");
+			}
+		});
+
+		// 高亮关联的边：基于索引匹配
+		// 1. 计算关联边在 graph.edges 中的索引
+		const edgeIndices = new Set<number>();
+		this.graph.edges.forEach((e, index) => {
+			if (e.from === originalNode.id || e.to === originalNode.id) {
+				edgeIndices.add(index);
+			}
+		});
+
+		// 2. 找到 DOM 中的所有 edgePath
+		// 注意：Mermaid 渲染的 edgePath 顺序通常与定义的顺序一致
+		// 但如果使用了 subgraph，可能会影响 DOM 结构顺序？
+		// 实测 flowchart LR 中 edgePaths 都在一个 <g class="edgePaths"> 容器内，顺序通常是添加顺序。
+		// 唯一的变数是 invisible link (~~~) 是否生成 path。
+		// 在 Mermaid 10+ 中，~~~ 通常不会生成 visible path，或者生成 opacity:0 的 path。
+		// 我们在 mermaid.ts 中把 invisible link 放在了最后。
+		// 所以前面的 edgePath 应该一一对应 graph.edges。
+
+		const allEdgePaths = svg.querySelectorAll(".edgePaths .edgePath");
+
+		allEdgePaths.forEach((path, index) => {
+			// graph.edges 的长度应该 <= allEdgePaths.length
+			// 如果有隐形边生成了 path，它会在最后。
+			if (edgeIndices.has(index)) {
+				path.classList.add("active");
 			}
 		});
 	}
@@ -182,4 +223,8 @@ export class RelationshipDiagramModal extends Modal {
 			el.classList.remove("active"),
 		);
 	}
+}
+
+function sanitizeId(s: string): string {
+	return s.replace(/[^a-zA-Z0-9_]/g, "_");
 }
