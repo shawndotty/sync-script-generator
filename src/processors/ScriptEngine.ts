@@ -11,11 +11,15 @@ export class ScriptEngine {
 		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO",
 		prependContent: string = "",
 	): string {
+		const varName = platform.toLowerCase();
 		let script = "";
 
 		script += prependContent + "\n\n";
 
-		const varName = platform.toLowerCase();
+		script += `/*\n`;
+		script += `** type: sync\n`;
+		script += `** for: ${varName}\n`;
+		script += `*/\n\n`;
 
 		// Root variables mapping
 		const platformRootVars: Record<Platform, string[]> = {
@@ -31,7 +35,7 @@ export class ScriptEngine {
 			],
 			NocoDB: [
 				"nocodbAPIKeyForSync",
-				"nocodbProjectIDForSync",
+				"nocodbWorkspaceIDForSync",
 				"nocodbBaseIDForSync",
 				"nocodbTableIDForSync",
 			],
@@ -90,7 +94,7 @@ export class ScriptEngine {
 					NocoDB: "nocodbAPIKeyForSync",
 				}),
 				defaultWorkspaceID: pick({
-					NocoDB: "nocodbProjectIDForSync",
+					NocoDB: "nocodbWorkspaceIDForSync",
 				}),
 				defaultBaseID: pick({
 					Airtable: "airtableBaseIDForSync",
@@ -285,12 +289,7 @@ export class ScriptEngine {
 			varName +
 			");\n";
 
-		// 格式化缩进：保留原有缩进结构，整体向右缩进 4 格
-		const formatted = script
-			.trim()
-			.split("\n")
-			.map((line) => (line ? "    " + line : ""))
-			.join("\n");
+		const formatted = script.trim();
 		return "<%*\n" + formatted + "\n_%>";
 	}
 
@@ -382,6 +381,8 @@ export class ScriptEngine {
 						(o) => o.level === "Root",
 					).map((o) => o.name);
 
+					console.dir(rootKeys);
+
 					for (const key in configObj) {
 						if (key === "tables" || key === "syncSettings")
 							continue;
@@ -406,6 +407,8 @@ export class ScriptEngine {
 				}
 			}
 		}
+
+		console.dir({ platform, rootSettings, vaultSettings, folderSettings });
 
 		return { platform, rootSettings, vaultSettings, folderSettings };
 	}

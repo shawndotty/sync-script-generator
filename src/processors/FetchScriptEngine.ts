@@ -11,10 +11,15 @@ export class FetchScriptEngine {
 		syncPlatform: "IOTO" | "obSyncWithMDB" = "IOTO",
 		prependContent: string = "",
 	): string {
-		let script = "";
 		const varName = platform.toLowerCase();
+		let script = "";
 
 		script += prependContent + "\n\n";
+
+		script += `/*\n`;
+		script += `** type: fetch\n`;
+		script += `** for: ${varName}\n`;
+		script += `*/\n\n`;
 
 		// Root variables mapping
 		const platformRootVars: Record<Platform, string[]> = {
@@ -264,11 +269,8 @@ export class FetchScriptEngine {
 			");\n";
 
 		// 格式化缩进：保留原有缩进结构，整体向右缩进 4 格
-		const formatted = script
-			.trim()
-			.split("\n")
-			.map((line) => (line ? "    " + line : ""))
-			.join("\n");
+		// 去除首尾空白字符即可，无需额外处理空行
+		const formatted = script.trim();
 		return "<%*\n" + formatted + "\n_%>";
 	}
 
@@ -289,9 +291,16 @@ export class FetchScriptEngine {
 		if (platformMatch && platformMatch[1]) {
 			const parsedPlatform = platformMatch[1] as Platform;
 			if (
-				["Airtable", "Feishu", "Vika", "Lark", "WPS", "Ding"].includes(
-					parsedPlatform,
-				)
+				[
+					"Airtable",
+					"Feishu",
+					"Vika",
+					"Lark",
+					"WPS",
+					"Ding",
+					"Baserow",
+					"NocoDB",
+				].includes(parsedPlatform)
 			) {
 				platform = parsedPlatform;
 			}
