@@ -171,8 +171,6 @@ export class RelationshipDiagramModal extends Modal {
 			targetId.includes(sanitizeId(n.id)),
 		);
 
-		console.dir(originalNode);
-
 		if (!originalNode) {
 			return;
 		}
@@ -182,16 +180,12 @@ export class RelationshipDiagramModal extends Modal {
 			(e) => e.from === originalNode.id || e.to === originalNode.id,
 		);
 
-		console.dir(relatedEdges);
-
 		// 收集相关联的节点 ID（原始 ID）
 		const relatedNodeIds = new Set<string>();
 		relatedEdges.forEach((e) => {
 			if (e.from === originalNode.id) relatedNodeIds.add(e.to);
 			else relatedNodeIds.add(e.from);
 		});
-
-		console.dir(relatedNodeIds);
 
 		// 将原始 ID 转换为 DOM ID
 		const relatedDomIds = new Set<string>();
@@ -200,12 +194,16 @@ export class RelationshipDiagramModal extends Modal {
 		});
 
 		// 高亮关联的节点（本次修改：移除高亮邻居节点，只高亮当前节点）
-		// const allNodes = svg.querySelectorAll(".node");
-		// allNodes.forEach((node) => {
-		// 	if (relatedDomIds.has(node.id)) {
-		// 		node.classList.add("active");
-		// 	}
-		// });
+		const allNodes = svg.querySelectorAll(".node");
+		allNodes.forEach((node) => {
+			// 如果 node.id 包含 relatedDomIds 中的任意一个 id，则添加 active 类
+			const shouldActive = Array.from(relatedDomIds).some((id) =>
+				node.id.includes(id),
+			);
+			if (shouldActive) {
+				node.classList.add("active");
+			}
+		});
 
 		// 高亮关联的边：基于索引匹配
 		// 1. 计算关联边在 graph.edges 中的索引
@@ -215,8 +213,6 @@ export class RelationshipDiagramModal extends Modal {
 				edgeIndices.add(index);
 			}
 		});
-
-		console.dir(edgeIndices);
 
 		// 2. 找到 DOM 中的所有 edge 元素
 		// Mermaid 的 edge 通常直接位于 .edgePaths 容器下，可能是 path 或 g
