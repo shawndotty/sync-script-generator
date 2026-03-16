@@ -381,8 +381,6 @@ export class ScriptEngine {
 						(o) => o.level === "Root",
 					).map((o) => o.name);
 
-					console.dir(rootKeys);
-
 					for (const key in configObj) {
 						if (key === "tables" || key === "syncSettings")
 							continue;
@@ -407,8 +405,6 @@ export class ScriptEngine {
 				}
 			}
 		}
-
-		console.dir({ platform, rootSettings, vaultSettings, folderSettings });
 
 		return { platform, rootSettings, vaultSettings, folderSettings };
 	}

@@ -521,7 +521,6 @@ export class GeneratorView extends ItemView {
 	}
 
 	openRelationshipDiagram() {
-		console.log(this.platform, this.rootSettings, this.folderSettings);
 		const graph = buildSyncGraphFromState(
 			this.platform,
 			this.rootSettings,

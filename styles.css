@@ -365,30 +365,56 @@
 }
 
 /* Mermaid Interaction Styles */
-.modal.mod-relationship-diagram .mermaid svg.interaction-active .node,
-.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePath,
-.modal.mod-relationship-diagram .mermaid svg.interaction-active .cluster {
-    opacity: 0.1;
+/* 
+Mermaid 渲染的 DOM 结构通常如下：
+svg
+  g.edgePaths
+    path.edgePath (这个 path 是实际的线，可能有 style 属性)
+  g.nodes
+    g.node
+*/
+
+/* 1. 默认状态：所有元素正常 */
+
+/* 2. 交互激活状态：所有元素变淡（默认） */
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .node:not(.active),
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .cluster:not(.active) {
+    opacity: 0.1 !important;
     transition: opacity 0.2s;
 }
 
+/* 针对连线：选中 .edgePaths 下的所有非 active 的直接子元素进行 dim */
+/* 这样无论子元素是 path 还是 g，只要没加 active 都会变淡 */
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePaths > :not(.active) {
+    opacity: 0.1 !important;
+    transition: opacity 0.2s;
+}
+
+/* 3. 激活状态下的高亮元素：保持不透明度 */
 .modal.mod-relationship-diagram .mermaid svg.interaction-active .node.active,
-.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePath.active {
-    opacity: 1;
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .cluster.active,
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePaths > .active {
+    opacity: 1 !important;
 }
 
-.modal.mod-relationship-diagram .mermaid svg.interaction-active .node.active rect,
-.modal.mod-relationship-diagram .mermaid svg.interaction-active .node.active polygon,
-.modal.mod-relationship-diagram .mermaid svg.interaction-active .node.active circle {
+/* 4. 高亮样式：给连线加粗变色 */
+/* 情况 A: .edgePaths > path.active (直接是 path) */
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePaths > path.active,
+/* 情况 B: .edgePaths > g.active path (是 group，里面的 path) */
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePaths > .active path,
+/* 情况 C: 手动给内部 path 加了 active */
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePaths path.active {
     stroke: var(--interactive-accent) !important;
-    stroke-width: 3px !important;
-    filter: drop-shadow(0 0 5px var(--interactive-accent));
-}
-
-.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePath.active path {
-    stroke: var(--interactive-accent) !important;
-    stroke-width: 3px !important;
+    stroke-width: 4px !important;
+    opacity: 1 !important;
     filter: drop-shadow(0 0 3px var(--interactive-accent));
+}
+
+/* 补充：连线箭头的高亮 (如果 marker 在 edgePath 内) */
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePaths .active marker path {
+    fill: var(--interactive-accent) !important;
+    stroke: var(--interactive-accent) !important;
+    opacity: 1 !important;
 }
 
 .modal.mod-relationship-diagram .mermaid .node {

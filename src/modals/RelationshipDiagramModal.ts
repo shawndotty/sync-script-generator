@@ -1,4 +1,11 @@
-import { App, Modal, Setting, Notice, MarkdownRenderer } from "obsidian";
+import {
+	App,
+	Modal,
+	Setting,
+	Notice,
+	MarkdownRenderer,
+	Component,
+} from "obsidian";
 import { t } from "../lang/helpers";
 import { RelationshipGraph } from "../models/relationship";
 
@@ -8,6 +15,7 @@ export class RelationshipDiagramModal extends Modal {
 	private titleText: string;
 	private targetFileName: string;
 	private targetFolder: string;
+	private rendererComponent: Component;
 
 	constructor(
 		app: App,
@@ -24,6 +32,7 @@ export class RelationshipDiagramModal extends Modal {
 		this.targetFileName =
 			options?.defaultFileName ||
 			`Relations-${new Date().toISOString().slice(0, 10)}`;
+		this.rendererComponent = new Component();
 	}
 
 	onOpen() {
@@ -39,7 +48,7 @@ export class RelationshipDiagramModal extends Modal {
 			this.mermaidText,
 			mdContainer,
 			"",
-			this as any,
+			this.rendererComponent,
 		).then(() => {
 			this.attachMermaidInteraction(mdContainer);
 		});
@@ -101,7 +110,7 @@ export class RelationshipDiagramModal extends Modal {
 						this.mermaidText,
 						mdContainer,
 						"",
-						this as any,
+						this.rendererComponent,
 					);
 				});
 			});
@@ -109,6 +118,9 @@ export class RelationshipDiagramModal extends Modal {
 
 	onClose() {
 		this.contentEl.empty();
+		if (this.rendererComponent) {
+			this.rendererComponent.unload();
+		}
 	}
 
 	private attachMermaidInteraction(container: HTMLElement) {
@@ -128,7 +140,8 @@ export class RelationshipDiagramModal extends Modal {
 
 	private setupInteractiveSvg(svg: HTMLElement) {
 		const nodes = svg.querySelectorAll(".node");
-		const edges = svg.querySelectorAll(".edgePaths .edgePath");
+		const edges = svg.querySelectorAll(".edgePaths path");
+
 		// 存储节点ID到边索引的映射
 		// Mermaid 生成的 edge id 通常不直观，需要根据 path 坐标或附加属性判定
 		// 简单方案：点击/悬停时，dim 所有元素，然后 restore 目标及其邻居
@@ -154,9 +167,11 @@ export class RelationshipDiagramModal extends Modal {
 		if (!targetId) return;
 
 		// 反向查找：根据 DOM ID 还原原始 Graph Node ID
-		const originalNode = this.graph.nodes.find(
-			(n) => sanitizeId(n.id) === targetId,
+		const originalNode = this.graph.nodes.find((n) =>
+			targetId.includes(sanitizeId(n.id)),
 		);
+
+		console.dir(originalNode);
 
 		if (!originalNode) {
 			return;
@@ -167,6 +182,8 @@ export class RelationshipDiagramModal extends Modal {
 			(e) => e.from === originalNode.id || e.to === originalNode.id,
 		);
 
+		console.dir(relatedEdges);
+
 		// 收集相关联的节点 ID（原始 ID）
 		const relatedNodeIds = new Set<string>();
 		relatedEdges.forEach((e) => {
@@ -174,19 +191,21 @@ export class RelationshipDiagramModal extends Modal {
 			else relatedNodeIds.add(e.from);
 		});
 
+		console.dir(relatedNodeIds);
+
 		// 将原始 ID 转换为 DOM ID
 		const relatedDomIds = new Set<string>();
 		relatedNodeIds.forEach((nid) => {
 			relatedDomIds.add(sanitizeId(nid));
 		});
 
-		// 高亮关联的节点
-		const allNodes = svg.querySelectorAll(".node");
-		allNodes.forEach((node) => {
-			if (relatedDomIds.has(node.id)) {
-				node.classList.add("active");
-			}
-		});
+		// 高亮关联的节点（本次修改：移除高亮邻居节点，只高亮当前节点）
+		// const allNodes = svg.querySelectorAll(".node");
+		// allNodes.forEach((node) => {
+		// 	if (relatedDomIds.has(node.id)) {
+		// 		node.classList.add("active");
+		// 	}
+		// });
 
 		// 高亮关联的边：基于索引匹配
 		// 1. 计算关联边在 graph.edges 中的索引
@@ -197,24 +216,24 @@ export class RelationshipDiagramModal extends Modal {
 			}
 		});
 
-		// 2. 找到 DOM 中的所有 edgePath
-		// 注意：Mermaid 渲染的 edgePath 顺序通常与定义的顺序一致
-		// 但如果使用了 subgraph，可能会影响 DOM 结构顺序？
-		// 实测 flowchart LR 中 edgePaths 都在一个 <g class="edgePaths"> 容器内，顺序通常是添加顺序。
-		// 唯一的变数是 invisible link (~~~) 是否生成 path。
-		// 在 Mermaid 10+ 中，~~~ 通常不会生成 visible path，或者生成 opacity:0 的 path。
-		// 我们在 mermaid.ts 中把 invisible link 放在了最后。
-		// 所以前面的 edgePath 应该一一对应 graph.edges。
+		console.dir(edgeIndices);
 
-		const allEdgePaths = svg.querySelectorAll(".edgePaths .edgePath");
+		// 2. 找到 DOM 中的所有 edge 元素
+		// Mermaid 的 edge 通常直接位于 .edgePaths 容器下，可能是 path 或 g
+		// 不依赖特定的 class (如 .edgePath)，而是直接取子元素，这样更稳健且顺序对应更准确
+		const edgeContainer = svg.querySelector(".edgePaths");
+		if (edgeContainer) {
+			const edgeElements = Array.from(edgeContainer.children);
 
-		allEdgePaths.forEach((path, index) => {
-			// graph.edges 的长度应该 <= allEdgePaths.length
-			// 如果有隐形边生成了 path，它会在最后。
-			if (edgeIndices.has(index)) {
-				path.classList.add("active");
-			}
-		});
+			edgeElements.forEach((el, index) => {
+				if (edgeIndices.has(index)) {
+					el.classList.add("active");
+					// 如果是 group，也给内部 path 加 active，以防 CSS 选择器需要
+					const innerPath = el.querySelector("path");
+					if (innerPath) innerPath.classList.add("active");
+				}
+			});
+		}
 	}
 
 	private resetHighlight(svg: HTMLElement) {
