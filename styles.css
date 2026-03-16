@@ -347,9 +347,13 @@
     width: 900px;
 }
 
+.modal.mod-relationship-diagram .relationship-mermaid-container {
+    display: flex;
+    justify-content: center;
+}
+
 .modal.mod-relationship-diagram .mermaid {
     display: flex;
-    flex-direction: row;
     align-items: center;
 }
 
