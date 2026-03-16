@@ -1094,4 +1094,13 @@ export default {
 	USER_EMAIL_ROOT_BASEROW_TITLE: "User Email",
 	USER_EMAIL_ROOT_BASEROW_DESC: "Baserow user email",
 	USER_EMAIL_ROOT_BASEROW_EXAMPLE: "user@example.com",
+	actions_viewDiagram: "View Diagram",
+	"actions.viewDiagram": "View Diagram",
+	"diagram.title.sync": "Sync Relations",
+	"diagram.title.fetch": "Fetch Relations",
+	"diagram.export": "Export as Markdown",
+	"diagram.copy": "Copy mermaid",
+	"diagram.refresh": "Refresh",
+	"diagram.sections.vault": "Obsidian Vault",
+	"diagram.sections.remote": "Remote DB",
 };

@@ -26,6 +26,9 @@ import { FetchPresetSaveModal } from "../modals/FetchPresetSaveModal";
 import SyncScriptGeneratorPlugin from "../main";
 import { t } from "../lang/helpers";
 import { ObjectEditModal } from "../modals/ObjectEditModal";
+import { buildFetchGraphFromState } from "../models/relationship";
+import { graphToMermaid } from "../utils/mermaid";
+import { RelationshipDiagramModal } from "../modals/RelationshipDiagramModal";
 
 export class FetchGeneratorView extends ItemView {
 	platform: Platform = "Airtable";
@@ -200,6 +203,12 @@ export class FetchGeneratorView extends ItemView {
 			.setIcon("save")
 			.setTooltip(t("FETCH_GENERATOR_VIEW_BTN_SAVE_PRESET"))
 			.onClick(() => this.openPresetSaveModal());
+
+		new ButtonComponent(actionBar)
+			.setButtonText(t("actions.viewDiagram"))
+			.setIcon("git-branch")
+			.setTooltip(t("actions.viewDiagram"))
+			.onClick(() => this.openRelationshipDiagram());
 
 		new ButtonComponent(actionBar)
 			.setButtonText(t("FETCH_GENERATOR_VIEW_BTN_GENERATE"))
@@ -407,6 +416,25 @@ export class FetchGeneratorView extends ItemView {
 				});
 			});
 		}
+	}
+
+	openRelationshipDiagram() {
+		const graph = buildFetchGraphFromState(
+			this.platform,
+			this.rootSettings,
+			this.folderSettings,
+		);
+		if (graph.nodes.length === 0 || graph.edges.length === 0) {
+			new Notice(t("FETCH_GENERATOR_VIEW_DESC_PLACEHOLDER"));
+			return;
+		}
+		const mermaid = graphToMermaid(graph, { platformLabel: true });
+		const defaultFolder = this.plugin.settings.fetchTemplateFolder || "";
+		const title = t("diagram.title.fetch");
+		new RelationshipDiagramModal(this.app, title, mermaid, {
+			defaultFolder,
+			defaultFileName: `Fetch-Relations-${this.platform}`,
+		}).open();
 	}
 
 	renderOption(

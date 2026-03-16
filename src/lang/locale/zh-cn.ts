@@ -975,4 +975,12 @@ export default {
 	USER_EMAIL_ROOT_BASEROW_TITLE: "用户邮箱",
 	USER_EMAIL_ROOT_BASEROW_DESC: "Baserow的用户邮箱",
 	USER_EMAIL_ROOT_BASEROW_EXAMPLE: "user@example.com",
+	"actions.viewDiagram": "查看关系图",
+	"diagram.title.sync": "同步关系图",
+	"diagram.title.fetch": "拉取关系图",
+	"diagram.export": "导出为 Markdown",
+	"diagram.copy": "复制 mermaid",
+	"diagram.refresh": "刷新",
+	"diagram.sections.vault": "Obsidian Vault",
+	"diagram.sections.remote": "Remote DB",
 };

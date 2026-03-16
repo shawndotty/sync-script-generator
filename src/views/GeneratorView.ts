@@ -24,6 +24,9 @@ import { PresetLoadModal } from "../modals/PresetLoadModal";
 import { PresetSaveModal } from "../modals/PresetSaveModal";
 import SyncScriptGeneratorPlugin from "../main";
 import { t } from "../lang/helpers";
+import { buildSyncGraphFromState } from "../models/relationship";
+import { graphToMermaid } from "../utils/mermaid";
+import { RelationshipDiagramModal } from "../modals/RelationshipDiagramModal";
 
 export class GeneratorView extends ItemView {
 	platform: Platform = "Airtable";
@@ -197,6 +200,12 @@ export class GeneratorView extends ItemView {
 			.setIcon("save")
 			.setTooltip(t("GENERATOR_VIEW_BTN_SAVE_PRESET"))
 			.onClick(() => this.openPresetSaveModal());
+
+		new ButtonComponent(actionBar)
+			.setButtonText(t("actions.viewDiagram"))
+			.setIcon("git-branch")
+			.setTooltip(t("actions.viewDiagram"))
+			.onClick(() => this.openRelationshipDiagram());
 
 		new ButtonComponent(actionBar)
 			.setButtonText(t("GENERATOR_VIEW_BTN_GENERATE"))
@@ -509,6 +518,26 @@ export class GeneratorView extends ItemView {
 				);
 			});
 		}
+	}
+
+	openRelationshipDiagram() {
+		console.log(this.platform, this.rootSettings, this.folderSettings);
+		const graph = buildSyncGraphFromState(
+			this.platform,
+			this.rootSettings,
+			this.folderSettings,
+		);
+		if (graph.nodes.length === 0 || graph.edges.length === 0) {
+			new Notice(t("GENERATOR_VIEW_NOTICE_NO_PLATFORM"));
+			return;
+		}
+		const mermaid = graphToMermaid(graph, { platformLabel: true });
+		const defaultFolder = this.plugin.settings.syncTemplateFolder || "";
+		const title = t("diagram.title.sync");
+		new RelationshipDiagramModal(this.app, title, mermaid, {
+			defaultFolder,
+			defaultFileName: `Sync-Relations-${this.platform}`,
+		}).open();
 	}
 
 	renderOption(
