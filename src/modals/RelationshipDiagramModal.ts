@@ -48,6 +48,19 @@ export class RelationshipDiagramModal extends Modal {
 				text.inputEl.style.width = "100%";
 			})
 			.addButton((btn) => {
+				btn.setButtonText(t("SCRIPT_PREVIEW_BTN_MAXIMIZE")).onClick(
+					() => {
+						if (this.modalEl.hasClass("is-maximized")) {
+							this.modalEl.removeClass("is-maximized");
+							btn.setButtonText(t("SCRIPT_PREVIEW_BTN_MAXIMIZE"));
+						} else {
+							this.modalEl.addClass("is-maximized");
+							btn.setButtonText(t("SCRIPT_PREVIEW_BTN_RESTORE"));
+						}
+					},
+				);
+			})
+			.addButton((btn) => {
 				btn.setButtonText(t("diagram.copy")).onClick(async () => {
 					await navigator.clipboard.writeText(this.mermaidText);
 					new Notice(t("SCRIPT_PREVIEW_NOTICE_COPIED"));
