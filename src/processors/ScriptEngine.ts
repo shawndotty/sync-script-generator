@@ -142,6 +142,12 @@ export class ScriptEngine {
 				userID: pick({
 					Ding: "dingUserIDForSync",
 				}),
+				email: pick({
+					Baserow: "baserowUserEmailForSync",
+				}),
+				password: pick({
+					Baserow: "baserowUserPasswordForSync",
+				}),
 			};
 
 			const mappedVar = varMapping[opt.name];

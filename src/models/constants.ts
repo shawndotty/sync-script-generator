@@ -41,6 +41,30 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		example: t("API_KEY_ROOT_NOCODB_EXAMPLE"),
 	},
 	{
+		name: "email",
+		group: "",
+		title: t("USER_EMAIL_ROOT_BASEROW_TITLE"),
+		platforms: ["Baserow"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("USER_EMAIL_ROOT_BASEROW_DESC"),
+		example: t("USER_EMAIL_ROOT_BASEROW_EXAMPLE"),
+	},
+	{
+		name: "password",
+		group: "",
+		title: t("USER_PASSWORD_ROOT_BASEROW_TITLE"),
+		platforms: ["Baserow"],
+		level: "Root",
+		required: true,
+		defaultValue: "无",
+		valueType: "string",
+		description: t("USER_PASSWORD_ROOT_BASEROW_DESC"),
+		example: t("USER_PASSWORD_ROOT_BASEROW_EXAMPLE"),
+	},
+	{
 		name: "apiKey",
 		group: "",
 		title: t("API_KEY_ROOT_BASEROW_TITLE"),
@@ -52,6 +76,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		description: t("API_KEY_ROOT_BASEROW_DESC"),
 		example: t("API_KEY_ROOT_BASEROW_EXAMPLE"),
 	},
+
 	{
 		name: "apiKey",
 		group: "",

@@ -1086,4 +1086,10 @@ export default {
 	DEFAULT_WORKSPACE_ID_ROOT_NOCODB_DESC:
 		"When syncing to NocoDB, the default workspace ID is used.  \nIf you are using a local deployment, you do not need to set the workspace ID.",
 	DEFAULT_WORKSPACE_ID_ROOT_NOCODB_EXAMPLE: "123456",
+	USER_PASSWORD_ROOT_BASEROW_TITLE: "User password",
+	USER_PASSWORD_ROOT_BASEROW_DESC: "Baserow user password",
+	USER_PASSWORD_ROOT_BASEROW_EXAMPLE: "123456",
+	USER_EMAIL_ROOT_BASEROW_TITLE: "User Email",
+	USER_EMAIL_ROOT_BASEROW_DESC: "Baserow user email",
+	USER_EMAIL_ROOT_BASEROW_EXAMPLE: "user@example.com",
 };
