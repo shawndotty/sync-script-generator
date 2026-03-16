@@ -364,6 +364,37 @@
     align-items: center;
 }
 
+/* Mermaid Interaction Styles */
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .node,
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePath,
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .cluster {
+    opacity: 0.1;
+    transition: opacity 0.2s;
+}
+
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .node.active,
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePath.active {
+    opacity: 1;
+}
+
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .node.active rect,
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .node.active polygon,
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .node.active circle {
+    stroke: var(--interactive-accent) !important;
+    stroke-width: 3px !important;
+    filter: drop-shadow(0 0 5px var(--interactive-accent));
+}
+
+.modal.mod-relationship-diagram .mermaid svg.interaction-active .edgePath.active path {
+    stroke: var(--interactive-accent) !important;
+    stroke-width: 3px !important;
+    filter: drop-shadow(0 0 3px var(--interactive-accent));
+}
+
+.modal.mod-relationship-diagram .mermaid .node {
+    cursor: pointer;
+}
+
 /* Settings Tabs */
 .sync-generator-container .settings-tabs,
 .modal.mod-preset-manager .settings-tabs {

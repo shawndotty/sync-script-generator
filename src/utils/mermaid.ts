@@ -69,9 +69,8 @@ export function graphToMermaid(
 			lines.push(`  ${remoteId} --> ${folderId}`);
 			edgeCount++;
 		} else if (e.direction === "both") {
-			lines.push(`  ${folderId} --> ${remoteId}`);
-			edgeCount++;
-			lines.push(`  ${remoteId} --> ${folderId}`);
+			// 默认模式下使用双向箭头，避免两条线的视觉干扰
+			lines.push(`  ${folderId} <--> ${remoteId}`);
 			edgeCount++;
 		} else {
 			lines.push(`  ${folderId} --> ${remoteId}`);
@@ -88,6 +87,10 @@ export function graphToMermaid(
 		lines.push(`  ${layoutFrom} --> ${layoutTo}`);
 		lines.push(`  linkStyle ${edgeCount} stroke:transparent,opacity:0;`);
 	}
+
+	// 添加交互样式类
+	lines.push("  classDef highlight stroke:#00E676,stroke-width:3px;");
+	lines.push("  classDef dim opacity:0.2;");
 
 	return ["```mermaid", ...lines, "```"].join("\n");
 }

@@ -36,7 +36,9 @@ export class RelationshipDiagramModal extends Modal {
 			mdContainer,
 			"",
 			this as any,
-		);
+		).then(() => {
+			this.attachMermaidInteraction(mdContainer);
+		});
 
 		const toolbar = new Setting(this.contentEl);
 		toolbar.infoEl.hide();
@@ -103,5 +105,81 @@ export class RelationshipDiagramModal extends Modal {
 
 	onClose() {
 		this.contentEl.empty();
+	}
+
+	private attachMermaidInteraction(container: HTMLElement) {
+		// 监听容器内的点击/悬停事件，实现高亮效果
+		// 由于 MarkdownRenderer 异步渲染，这里设置一个轮询检测 SVG 是否生成
+		const checkSvg = setInterval(() => {
+			const svg = container.querySelector("svg");
+			if (svg) {
+				clearInterval(checkSvg);
+				this.setupInteractiveSvg(svg as unknown as HTMLElement);
+			}
+		}, 100);
+
+		// 5秒后停止检测，防止死循环
+		setTimeout(() => clearInterval(checkSvg), 5000);
+	}
+
+	private setupInteractiveSvg(svg: HTMLElement) {
+		const nodes = svg.querySelectorAll(".node");
+		const edges = svg.querySelectorAll(".edgePaths .edgePath");
+		// 存储节点ID到边索引的映射
+		// Mermaid 生成的 edge id 通常不直观，需要根据 path 坐标或附加属性判定
+		// 简单方案：点击/悬停时，dim 所有元素，然后 restore 目标及其邻居
+
+		// 为每个节点添加事件
+		nodes.forEach((node) => {
+			const nodeId = node.id; // Mermaid 生成的 dom id
+
+			node.addEventListener("mouseenter", () => {
+				this.highlightRelated(svg, node as HTMLElement);
+			});
+			node.addEventListener("mouseleave", () => {
+				this.resetHighlight(svg);
+			});
+		});
+	}
+
+	private highlightRelated(svg: HTMLElement, targetNode: HTMLElement) {
+		svg.classList.add("interaction-active");
+		targetNode.classList.add("active");
+
+		// Mermaid SVG 结构中，edgePaths 位于 .edgePaths 组，且 id 通常形如 L_start_end_index
+		// 尝试根据 id 匹配相关边
+		// 节点 ID: 例如 folder_0____IOTO
+		// 边 ID: L_folder_0____IOTO_remote_Airtable_1234_0 (示例)
+		// 因此可以简单查找包含节点 ID 的边路径
+
+		const targetId = targetNode.id;
+		if (!targetId) return;
+
+		const edges = svg.querySelectorAll(".edgePaths .edgePath");
+		edges.forEach((edge) => {
+			if (edge.id.includes(targetId)) {
+				edge.classList.add("active");
+				// 尝试高亮另一端的节点
+				// 从 edge id 中解析出另一端 id 比较困难，因为 id 可能包含下划线
+				// 但我们可以反过来遍历所有节点，看该边是否包含其 id
+				const allNodes = svg.querySelectorAll(".node");
+				allNodes.forEach((otherNode) => {
+					if (
+						otherNode.id &&
+						otherNode.id !== targetId &&
+						edge.id.includes(otherNode.id)
+					) {
+						otherNode.classList.add("active");
+					}
+				});
+			}
+		});
+	}
+
+	private resetHighlight(svg: HTMLElement) {
+		svg.classList.remove("interaction-active");
+		svg.querySelectorAll(".active").forEach((el) =>
+			el.classList.remove("active"),
+		);
 	}
 }
