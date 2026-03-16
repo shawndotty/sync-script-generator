@@ -118,6 +118,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		"WPS",
 		"Ding",
 		"Baserow",
+		"NocoDB",
 	];
 
 	constructor(app: App, plugin: SyncScriptGeneratorPlugin) {
