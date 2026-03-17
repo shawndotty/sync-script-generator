@@ -168,6 +168,7 @@ export function buildSyncGraphFromState(
 			type: "folder",
 			label: folderPath || "/",
 		};
+
 		ensure(graph.nodes, fNode, (a, b) => a.id === b.id);
 
 		if (isSeparate) {

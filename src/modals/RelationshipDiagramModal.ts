@@ -237,12 +237,12 @@ export class RelationshipDiagramModal extends Modal {
 		svg.classList.add("interaction-active");
 		targetNode.classList.add("active");
 
-		const targetId = targetNode.id;
+		const targetId = extractId(targetNode.id);
 		if (!targetId) return;
 
 		// 反向查找：根据 DOM ID 还原原始 Graph Node ID
-		const originalNode = this.graph.nodes.find((n) =>
-			targetId.includes(sanitizeId(n.id)),
+		const originalNode = this.graph.nodes.find(
+			(n) => targetId === sanitizeId(n.id),
 		);
 
 		if (!originalNode) {
@@ -271,8 +271,8 @@ export class RelationshipDiagramModal extends Modal {
 		const allNodes = svg.querySelectorAll(".node");
 		allNodes.forEach((node) => {
 			// 如果 node.id 包含 relatedDomIds 中的任意一个 id，则添加 active 类
-			const shouldActive = Array.from(relatedDomIds).some((id) =>
-				node.id.includes(id),
+			const shouldActive = Array.from(relatedDomIds).some(
+				(id) => extractId(node.id) === id,
 			);
 			if (shouldActive) {
 				node.classList.add("active");
@@ -315,5 +315,9 @@ export class RelationshipDiagramModal extends Modal {
 }
 
 function sanitizeId(s: string): string {
-	return s.replace(/[^a-zA-Z0-9_]/g, "_");
+	return s.replace(/[^a-zA-Z0-9_\u4e00-\u9fa5]/g, "_");
+}
+
+function extractId(s: string): string {
+	return s.match(/flowchart-(.*?)-/)?.[1] || "";
 }
