@@ -979,6 +979,8 @@ export default {
 	"diagram.export": "匯出為 Markdown",
 	"diagram.copy": "複製 mermaid",
 	"diagram.refresh": "重新整理",
-	"diagram.sections.vault": "Obsidian Vault",
-	"diagram.sections.remote": "Remote DB",
+	"diagram.sections.vault": "Obsidian庫",
+	"diagram.sections.remote": "遠端資料庫",
+	GENERATOR_VIEW_NOTICE_NO_RELATIONSHIP: "未發現任何關係。請檢查你的配置。",
+	FETCH_GENERATOR_VIEW_NO_RELATIONSHIP: "未發現任何關係。請檢查你的配置。",
 };

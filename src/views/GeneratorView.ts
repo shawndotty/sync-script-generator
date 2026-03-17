@@ -526,8 +526,9 @@ export class GeneratorView extends ItemView {
 			this.rootSettings,
 			this.folderSettings,
 		);
+		console.dir(graph);
 		if (graph.nodes.length === 0 || graph.edges.length === 0) {
-			new Notice(t("GENERATOR_VIEW_NOTICE_NO_PLATFORM"));
+			new Notice(t("GENERATOR_VIEW_NOTICE_NO_RELATIONSHIP"));
 			return;
 		}
 		const mermaid = graphToMermaid(graph, { platformLabel: true });

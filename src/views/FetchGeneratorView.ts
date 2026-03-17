@@ -425,7 +425,7 @@ export class FetchGeneratorView extends ItemView {
 			this.folderSettings,
 		);
 		if (graph.nodes.length === 0 || graph.edges.length === 0) {
-			new Notice(t("FETCH_GENERATOR_VIEW_DESC_PLACEHOLDER"));
+			new Notice(t("FETCH_GENERATOR_VIEW_NO_RELATIONSHIP"));
 			return;
 		}
 		const mermaid = graphToMermaid(graph, { platformLabel: true });

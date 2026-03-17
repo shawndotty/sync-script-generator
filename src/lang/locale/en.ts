@@ -1103,4 +1103,8 @@ export default {
 	"diagram.refresh": "Refresh",
 	"diagram.sections.vault": "Obsidian Vault",
 	"diagram.sections.remote": "Remote DB",
+	GENERATOR_VIEW_NOTICE_NO_RELATIONSHIP:
+		"No relationship found. Please check your configuration.",
+	FETCH_GENERATOR_VIEW_NO_RELATIONSHIP:
+		"No relationship found. Please check your configuration.",
 };
