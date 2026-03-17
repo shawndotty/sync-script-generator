@@ -343,8 +343,20 @@
 /* Relationship Diagram Modal */
 
 .modal.mod-relationship-diagram {
+    display: flex;
+    flex-direction: column;
     max-width: 900px;
     width: 900px;
+    height: 700px;
+}
+
+
+.modal.mod-relationship-diagram .modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    overflow: hidden;
 }
 
 .modal.mod-relationship-diagram.is-maximized {
@@ -357,11 +369,12 @@
 .modal.mod-relationship-diagram .relationship-mermaid-container {
     display: flex;
     justify-content: center;
-}
-
-.modal.mod-relationship-diagram .mermaid {
-    display: flex;
-    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    overflow: auto;
+    margin-bottom: 10px;
 }
 
 /* Mermaid Interaction Styles */
