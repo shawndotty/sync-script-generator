@@ -16,6 +16,9 @@ export class RelationshipDiagramModal extends Modal {
 	private targetFileName: string;
 	private targetFolder: string;
 	private rendererComponent: Component;
+	private currentScale = 1;
+	private svgElement: SVGSVGElement | null = null;
+	private baseViewBox: SVGRect | null = null;
 
 	constructor(
 		app: App,
@@ -63,6 +66,30 @@ export class RelationshipDiagramModal extends Modal {
 				text.inputEl.style.width = "100%";
 			})
 			.addButton((btn) => {
+				btn.setIcon("zoom-in")
+					.setTooltip(
+						t("SCRIPT_PREVIEW_BTN_MAXIMIZE") === "最大化"
+							? "放大"
+							: "Zoom In",
+					)
+					.onClick(() => {
+						this.currentScale *= 1.2;
+						this.updateSvgTransform();
+					});
+			})
+			.addButton((btn) => {
+				btn.setIcon("zoom-out")
+					.setTooltip(
+						t("SCRIPT_PREVIEW_BTN_MAXIMIZE") === "最大化"
+							? "缩小"
+							: "Zoom Out",
+					)
+					.onClick(() => {
+						this.currentScale /= 1.2;
+						this.updateSvgTransform();
+					});
+			})
+			.addButton((btn) => {
 				btn.setButtonText(t("SCRIPT_PREVIEW_BTN_MAXIMIZE")).onClick(
 					() => {
 						if (this.modalEl.hasClass("is-maximized")) {
@@ -72,6 +99,7 @@ export class RelationshipDiagramModal extends Modal {
 							this.modalEl.addClass("is-maximized");
 							btn.setButtonText(t("SCRIPT_PREVIEW_BTN_RESTORE"));
 						}
+						setTimeout(() => this.fitToContainer(mdContainer), 300);
 					},
 				);
 			})
@@ -130,12 +158,58 @@ export class RelationshipDiagramModal extends Modal {
 			const svg = container.querySelector("svg");
 			if (svg) {
 				clearInterval(checkSvg);
+				this.svgElement = svg;
+				if (svg.viewBox && svg.viewBox.baseVal) {
+					this.baseViewBox = svg.viewBox.baseVal;
+				} else {
+					const b = svg.getBBox();
+					this.baseViewBox = {
+						x: b.x,
+						y: b.y,
+						width: b.width,
+						height: b.height,
+					} as any;
+				}
+
+				// Remove fixed size to allow scaling
+				svg.removeAttribute("width");
+				svg.removeAttribute("height");
+				svg.style.maxWidth = "none";
+
+				// Initial Fit
+				this.fitToContainer(container);
+
 				this.setupInteractiveSvg(svg as unknown as HTMLElement);
 			}
 		}, 100);
 
 		// 5秒后停止检测，防止死循环
 		setTimeout(() => clearInterval(checkSvg), 5000);
+	}
+
+	private fitToContainer(container: HTMLElement) {
+		if (!this.svgElement || !this.baseViewBox) return;
+
+		const containerRect = container.getBoundingClientRect();
+		// Avoid zero size
+		if (containerRect.width === 0 || containerRect.height === 0) return;
+
+		const wRatio = (containerRect.width - 40) / this.baseViewBox.width;
+		const hRatio = (containerRect.height - 40) / this.baseViewBox.height;
+
+		// Use the smaller ratio to fit both dimensions
+		this.currentScale = Math.min(wRatio, hRatio);
+		this.updateSvgTransform();
+	}
+
+	private updateSvgTransform() {
+		if (!this.svgElement || !this.baseViewBox) return;
+
+		const newWidth = this.baseViewBox.width * this.currentScale;
+		const newHeight = this.baseViewBox.height * this.currentScale;
+
+		this.svgElement.style.width = `${newWidth}px`;
+		this.svgElement.style.height = `${newHeight}px`;
 	}
 
 	private setupInteractiveSvg(svg: HTMLElement) {
