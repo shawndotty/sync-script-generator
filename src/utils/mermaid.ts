@@ -17,9 +17,6 @@ export function graphToMermaid(
 	});
 	lines.push("  end");
 
-	const firstEdge = graph.edges.length > 0 ? graph.edges[0] : undefined;
-	const platformName = firstEdge?.platform ?? "Remote DB";
-	lines.push(`  subgraph Remote_DB[${escapeLabel(String(platformName))}]`);
 	const remoteNodes = graph.nodes.filter((n) => n.type === "remote");
 
 	// 将相同 baseID（或 downloadBaseID 等同“基座ID”）的节点分组到同一 subgraph
@@ -40,7 +37,7 @@ export function graphToMermaid(
 		const subId = "sg_" + sanitizeId(key);
 		// 标题加引号避免解析歧义，且 default 改为 Default Base
 		const title = key === "default" ? "Default Base" : key;
-		lines.push(`    subgraph ${subId} ["${escapeLabel(title)}"]`);
+		lines.push(`  subgraph ${subId} ["${escapeLabel(title)}"]`);
 		group.nodes.forEach((n) => {
 			const id = sanitizeId(n.id);
 			// label 形如 base/table，这里只显示最后一段（通常是 tableID）
@@ -49,11 +46,10 @@ export function graphToMermaid(
 			const lastSeg = segs[segs.length - 1];
 			const shortLabel = segs.length > 1 && lastSeg ? lastSeg : fullLabel;
 			const label = escapeLabel(shortLabel);
-			lines.push(`      ${id}["${label}"]`);
+			lines.push(`    ${id}["${label}"]`);
 		});
-		lines.push("    end");
+		lines.push("  end");
 	});
-	lines.push("  end");
 
 	let edgeCount = 0;
 	// 记录边索引与原始边的映射，以便后续交互
