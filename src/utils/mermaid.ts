@@ -131,10 +131,11 @@ function computeBaseGroupKey(platform: string, label: string): string {
 	// - Ding: baseID/tableID/viewID
 	// - Vika: tableID (无法再细分，直接用自身)
 	const segs = label.split("/");
-	if (platform === "NocoDB") {
-		// workspaceID/baseID/tableID => baseID 在第二段；若缺失或段数不足，归为默认
-		return segs.length >= 3 && segs[1] ? segs[1] : "default";
-	}
+	// if (platform === "NocoDB") {
+	// 	console.dir(segs);
+	// 	// workspaceID/baseID/tableID => baseID 在第二段；若缺失或段数不足，归为默认
+	// 	return segs.length >= 3 && segs[1] ? segs[1] : "default";
+	// }
 	if (platform === "Vika") {
 		// 无 Base 概念，保持按表分组
 		return label;

@@ -52,7 +52,7 @@ function pickRemoteLabelForSync(
 				.join("/");
 		case "NocoDB":
 			return [
-				root.defaultWorkspaceID,
+				// root.defaultWorkspaceID,
 				f.baseID || root.defaultBaseID,
 				f.tableID || root.defaultTableID,
 			]
