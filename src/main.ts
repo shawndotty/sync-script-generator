@@ -18,6 +18,7 @@ import { FetchGeneratorView } from "./views/FetchGeneratorView";
 import { FETCH_SCRIPT_GENERATOR_VIEW_TYPE } from "./models/constantsFetch";
 import { t } from "./lang/helpers";
 import { IotoSettingsService } from "services/ioto-settings-services";
+import { ObSyncMDBService } from "services/ob-sync-mdb-services";
 
 export default class SyncScriptGeneratorPlugin extends Plugin {
 	settings: SyncScriptGeneratorSettings;
@@ -169,6 +170,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 
 		if (!loadedData) {
 			const iotoSettingsService = new IotoSettingsService(this.app);
+			const obSyncMDBService = new ObSyncMDBService(this.app);
 
 			try {
 				// 统一获取 IOTO 设置，避免重复调用
@@ -179,6 +181,26 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 						const paths = {
 							syncTemplateFolder: `${base}/IOTO/Templates/Templater/MyIOTO/${t("SYNC_TEMPLATE_FOLDER_NAME")}`,
 							fetchTemplateFolder: `${base}/IOTO/Templates/Templater/MyIOTO/${t("FETCH_TEMPLATE_FOLDER_NAME")}`,
+						} as const;
+
+						(
+							Object.keys(paths) as Array<keyof typeof paths>
+						).forEach((key) => {
+							if (!this.settings[key]) {
+								this.settings[key] = paths[key];
+							}
+						});
+					}
+				}
+
+				// 统一获取 ObSyncMDB 设置，避免重复调用
+				if (obSyncMDBService.isAvailable()) {
+					const obSyncMDB = obSyncMDBService.getSettings();
+					const base = obSyncMDB?.templaterTemplatesFolder;
+					if (base) {
+						const paths = {
+							syncTemplateFolder: `${base}/OBSyncDB/Sync`,
+							fetchTemplateFolder: `${base}/OBSyncDB/Fetch`,
 						} as const;
 
 						(
