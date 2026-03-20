@@ -208,6 +208,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 							}
 						});
 					}
+					this.settings.syncPlatform = "obSyncWithMDB";
 				}
 			} catch (error) {
 				console.warn(
