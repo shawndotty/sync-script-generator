@@ -191,10 +191,7 @@ export default class SyncScriptGeneratorPlugin extends Plugin {
 							}
 						});
 					}
-				}
-
-				// 统一获取 ObSyncMDB 设置，避免重复调用
-				if (obSyncMDBService.isAvailable()) {
+				} else if (obSyncMDBService.isAvailable()) {
 					const obSyncMDB = obSyncMDBService.getSettings();
 					const base = obSyncMDB?.templaterTemplatesFolder;
 					if (base) {
