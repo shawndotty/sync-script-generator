@@ -2,7 +2,7 @@ import { App, FuzzySuggestModal, TFile } from "obsidian";
 
 export class ImportModal extends FuzzySuggestModal<TFile> {
 	onChoose: (file: TFile) => void;
-	private filterString: string[] = ["Templates", "Templater"];
+	private filterString: string[] = [];
 
 	constructor(
 		app: App,
@@ -20,7 +20,9 @@ export class ImportModal extends FuzzySuggestModal<TFile> {
 		return this.app.vault
 			.getFiles()
 			.filter((f) => f.extension === "md")
-			.filter((f) => this.filterString.every((s) => f.path.includes(s)));
+			.filter((f) =>
+				this.filterString.every((s) => f.basename.includes(s)),
+			);
 	}
 
 	getItemText(file: TFile): string {

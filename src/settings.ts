@@ -221,7 +221,9 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 							this.currentTabIndex = 0;
 							this.display();
 						},
-						["Templater", "Templates"],
+						"IOTO" === this.plugin.settings.syncPlatform
+							? ["Templater", "Templates"]
+							: ["OBSyncDB", "Sync"],
 					).open();
 				});
 			});
@@ -251,7 +253,9 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 							this.currentTabIndex = 0;
 							this.display();
 						},
-						["Templater", "Templates"],
+						"IOTO" === this.plugin.settings.syncPlatform
+							? ["Templater", "Templates"]
+							: ["OBSyncDB", "Fetch"],
 					).open();
 				});
 			});
@@ -323,13 +327,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 									this.currentTabIndex = 1;
 									this.display(); // Refresh to show updated value
 								},
-								[
-									platform,
-									"Sync",
-									this.plugin.settings.syncPlatform === "IOTO"
-										? "MyIOTO"
-										: "",
-								],
+								[platform, "Sync", "-TP-"],
 							).open();
 						});
 				})
@@ -400,13 +398,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 									this.currentTabIndex = 2;
 									this.display(); // Refresh to show updated value
 								},
-								[
-									platform,
-									"Fetch",
-									this.plugin.settings.syncPlatform === "IOTO"
-										? "MyIOTO"
-										: "",
-								],
+								[platform, "Fetch", "-TP-"],
 							).open();
 						});
 				})
