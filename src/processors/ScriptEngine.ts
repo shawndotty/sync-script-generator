@@ -32,6 +32,8 @@ export class ScriptEngine {
 				"baserowAPIKeyForSync",
 				"baserowBaseIDForSync",
 				"baserowTableIDForSync",
+				"baserowUserEmailForSync",
+				"baserowUserPasswordForSync",
 			],
 			NocoDB: [
 				"nocodbAPIKeyForSync",
