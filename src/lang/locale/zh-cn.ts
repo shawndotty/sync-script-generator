@@ -964,7 +964,7 @@ export default {
 	BASE_URL_ROOT_NOCODB_TITLE: "API地址",
 	BASE_URL_ROOT_NOCODB_DESC: "私有化部署的NocoDB的API地址",
 	BASE_URL_ROOT_NOCODB_EXAMPLE:
-		"当你使用私有化部署的NocoDB时，才需要设置\n根据你部署时的配置，写入对应的URL，比如：\n\nhttp://localhost/api/",
+		"当你使用私有化部署的NocoDB时，才需要设置\n根据你部署时的配置，写入对应的URL，比如：\n\nhttp://localhost:8080/",
 	DEFAULT_WORKSPACE_ID_ROOT_NOCODB_TITLE: "默认工作区 ID",
 	DEFAULT_WORKSPACE_ID_ROOT_NOCODB_DESC:
 		"同步到NocoDB时，默认使用的工作区ID。\n如果使用本地部署，可以不用设置工作区ID。",

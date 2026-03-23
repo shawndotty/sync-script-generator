@@ -1083,7 +1083,7 @@ export default {
 	BASE_URL_ROOT_NOCODB_TITLE: "API address",
 	BASE_URL_ROOT_NOCODB_DESC: "API address of the privately deployed NocoDB",
 	BASE_URL_ROOT_NOCODB_EXAMPLE:
-		"You only need to set this when using a self-hosted deployment of NocoDB.  \nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost/api/",
+		"You only need to set this when using a self-hosted deployment of NocoDB.  \nEnter the corresponding URL based on your deployment configuration, for example:\n\nhttp://localhost:8080/",
 	DEFAULT_WORKSPACE_ID_ROOT_NOCODB_TITLE: "Default Workspace ID",
 	DEFAULT_WORKSPACE_ID_ROOT_NOCODB_DESC:
 		"When syncing to NocoDB, the default workspace ID is used.  \nIf you are using a local deployment, you do not need to set the workspace ID.",
