@@ -760,7 +760,7 @@ export class GeneratorView extends ItemView {
 		new ImportModal(this.app, (file) => this.importTemplate(file), [
 			this.platform,
 			"Sync",
-			this.plugin.settings.syncPlatform === "IOTO" ? "MyIOTO" : "",
+			"-TP-",
 		]).open();
 	}
 

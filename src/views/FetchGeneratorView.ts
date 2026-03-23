@@ -603,7 +603,7 @@ export class FetchGeneratorView extends ItemView {
 		new ImportModal(this.app, (file) => this.importTemplate(file), [
 			this.platform,
 			"Fetch",
-			this.plugin.settings.syncPlatform === "IOTO" ? "MyIOTO" : "",
+			"-TP-",
 		]).open();
 	}
 
