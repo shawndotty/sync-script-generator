@@ -68,6 +68,7 @@ export class ScriptEngine {
 				"dingViewIDForSync",
 				"dingUserIDForSync",
 			],
+			Notion: ["notionAPIKeyForSync", "notionDataSourceIDForSync"],
 		};
 
 		const rootVars = platformRootVars[platform] || [];
@@ -94,6 +95,7 @@ export class ScriptEngine {
 					Baserow: "baserowAPIKeyForSync",
 					Vika: "vikaAPIKeyForSync",
 					NocoDB: "nocodbAPIKeyForSync",
+					Notion: "notionAPIKeyForSync",
 				}),
 				defaultWorkspaceID: pick({
 					NocoDB: "nocodbWorkspaceIDForSync",
@@ -141,6 +143,9 @@ export class ScriptEngine {
 				defaultSheetID: pick({
 					WPS: "wpsTableIDForSync",
 					Ding: "dingTableIDForSync",
+				}),
+				defaultDataSourceID: pick({
+					Notion: "notionDataSourceIDForSync",
 				}),
 				defaultViewID: pick({
 					Ding: "dingViewIDForSync",

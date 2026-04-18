@@ -122,6 +122,7 @@ export class GeneratorView extends ItemView {
 		});
 		const platforms: Platform[] = [
 			"Airtable",
+			"Notion",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -894,6 +895,7 @@ export class GeneratorView extends ItemView {
 			Ding: "defaultSyncTemplateDing",
 			Baserow: "defaultSyncTemplateBaserow",
 			NocoDB: "defaultSyncTemplateNocoDB",
+			Notion: "defaultSyncTemplateNotion",
 		};
 
 		const key = platformSettingsMap[this.platform];

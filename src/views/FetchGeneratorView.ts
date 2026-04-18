@@ -124,6 +124,7 @@ export class FetchGeneratorView extends ItemView {
 		});
 		const platforms: Platform[] = [
 			"Airtable",
+			"Notion",
 			"Feishu",
 			"Vika",
 			"Lark",
@@ -734,6 +735,7 @@ export class FetchGeneratorView extends ItemView {
 			Ding: "defaultFetchTemplateDing",
 			Baserow: "defaultFetchTemplateBaserow",
 			NocoDB: "defaultFetchTemplateNocoDB",
+			Notion: "defaultFetchTemplateNotion",
 		};
 
 		const key = platformSettingsMap[this.platform];

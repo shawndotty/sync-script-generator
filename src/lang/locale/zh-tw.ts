@@ -851,6 +851,7 @@ export default {
 	TABLE_ID_FOLDER_BASEROW_DESC:
 		"同步資料夾，在同步時使用的Baserow的tableID。\n\n不使用分離模式時，上傳和下載都會使用tableID。\n\n如果使用分離模式，只有在上傳時使用tableID。",
 	TABLE_ID_FOLDER_BASEROW_EXAMPLE: "4654",
+	TABLE_ID_FOLDER_BASEROW_TITLE: "資料表ID",
 	FETCH_API_URL_ROOT_BASEROW_TITLE: "API地址",
 	FETCH_API_URL_ROOT_BASEROW_DESC: "私有化部署的Baserow的API地址的根值",
 	FETCH_API_URL_ROOT_BASEROW_EXAMPLE:

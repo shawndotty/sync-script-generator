@@ -30,6 +30,8 @@ export interface SyncScriptGeneratorSettings {
 	defaultFetchTemplateBaserow: string;
 	defaultSyncTemplateNocoDB: string;
 	defaultFetchTemplateNocoDB: string;
+	defaultSyncTemplateNotion: string;
+	defaultFetchTemplateNotion: string;
 }
 
 export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
@@ -56,6 +58,8 @@ export const DEFAULT_SETTINGS: SyncScriptGeneratorSettings = {
 	defaultFetchTemplateBaserow: "",
 	defaultSyncTemplateNocoDB: "",
 	defaultFetchTemplateNocoDB: "",
+	defaultSyncTemplateNotion: "",
+	defaultFetchTemplateNotion: "",
 };
 
 export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
@@ -74,6 +78,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			| "defaultSyncTemplateDing"
 			| "defaultSyncTemplateBaserow"
 			| "defaultSyncTemplateNocoDB"
+			| "defaultSyncTemplateNotion"
 		>
 	> = {
 		Airtable: "defaultSyncTemplateAirtable",
@@ -84,6 +89,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		Ding: "defaultSyncTemplateDing",
 		Baserow: "defaultSyncTemplateBaserow",
 		NocoDB: "defaultSyncTemplateNocoDB",
+		Notion: "defaultSyncTemplateNotion",
 	};
 
 	private readonly fetchPlatformSettingsMap: Record<
@@ -98,6 +104,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 			| "defaultFetchTemplateDing"
 			| "defaultFetchTemplateBaserow"
 			| "defaultFetchTemplateNocoDB"
+			| "defaultFetchTemplateNotion"
 		>
 	> = {
 		Airtable: "defaultFetchTemplateAirtable",
@@ -108,6 +115,7 @@ export class SyncScriptGeneratorSettingTab extends PluginSettingTab {
 		Ding: "defaultFetchTemplateDing",
 		Baserow: "defaultFetchTemplateBaserow",
 		NocoDB: "defaultFetchTemplateNocoDB",
+		Notion: "defaultFetchTemplateNotion",
 	};
 
 	private readonly platforms: Platform[] = [

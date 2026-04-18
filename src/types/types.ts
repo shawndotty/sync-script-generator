@@ -22,7 +22,8 @@ export type Platform =
 	| "WPS"
 	| "Ding"
 	| "Baserow"
-	| "NocoDB";
+	| "NocoDB"
+	| "Notion";
 
 export interface SyncOption {
 	name: string;
