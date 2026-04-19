@@ -124,12 +124,12 @@ export class GeneratorView extends ItemView {
 			"Airtable",
 			"Notion",
 			"Feishu",
-			"Vika",
-			"Lark",
-			"WPS",
 			"Ding",
 			"Baserow",
+			"Vika",
+			"Lark",
 			"NocoDB",
+			"WPS",
 		];
 		platforms.forEach((p) => {
 			const label = this.platformListCollapsed ? p.charAt(0) : p;

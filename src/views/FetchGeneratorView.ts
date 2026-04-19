@@ -126,12 +126,12 @@ export class FetchGeneratorView extends ItemView {
 			"Airtable",
 			"Notion",
 			"Feishu",
-			"Vika",
-			"Lark",
-			"WPS",
 			"Ding",
 			"Baserow",
+			"Vika",
+			"Lark",
 			"NocoDB",
+			"WPS",
 		];
 
 		platforms.forEach((p) => {

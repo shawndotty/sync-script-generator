@@ -1108,44 +1108,57 @@ export default {
 	FETCH_GENERATOR_VIEW_NO_RELATIONSHIP:
 		"No relationship found. Please check your configuration.",
 	API_KEY_ROOT_NOTION_TITLE: "Notion API key",
-	API_KEY_ROOT_NOTION_DESC: "Notion API key",
-	API_KEY_ROOT_NOTION_EXAMPLE: "Notion API key",
+	API_KEY_ROOT_NOTION_DESC: "API key used for syncing with Notion",
+	API_KEY_ROOT_NOTION_EXAMPLE:
+		"ntn_XXXXXXXXXXXDNJvUam1WOnPMDXKGu9FAuLydaLMC9M2y5",
 	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_TITLE: "Default Notion data source ID",
-	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_DESC: "Default Notion data source ID",
-	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_EXAMPLE: "Default Notion data source ID",
+	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_DESC:
+		"The default data source ID used when syncing with Notion. If no specific settings are applied to a folder, all notes in Obsidian will be synced to this data source when syncing with Notion.",
+	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_EXAMPLE:
+		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
 	SYNC_CONTENT_TO_PAGE_BLOCKS_FOLDER_TITLE: "Sync the notes to a Notion page",
-	SYNC_CONTENT_TO_PAGE_BLOCKS_FOLDER_DESC: "Sync the notes to a Notion page",
+	SYNC_CONTENT_TO_PAGE_BLOCKS_FOLDER_DESC:
+		"If you enable this setting, when syncing with Notion, the content of Obsidian notes will be synced to the content of Notion pages.\n\nPlease note that since Notion pages are made up of blocks, building blocks is slower than simply writing to the database, so syncing to page content will be noticeably slower.",
 	PULL_CONTENT_FROM_PAGE_BLOCKS_FOLDER_TITLE:
 		"Obtain note content from Notion pages",
 	PULL_CONTENT_FROM_PAGE_BLOCKS_FOLDER_DESC:
-		"Obtain note content from Notion pages",
+		"If you enable this setting, content will be retrieved from Notion pages to Obsidian notes when syncing with Notion.\n\nPlease note that Notion blocks are very diverse, and not all block types are supported for display in Obsidian. Please ensure that only the most basic block types are used in Notion when syncing with Obsidian.",
 	KEEP_CONTENT_PROPERTY_FOLDER_TITLE:
 		"Retain the content field in the database",
 	KEEP_CONTENT_PROPERTY_FOLDER_DESC:
-		"Retain the content field in the database",
+		"If you enable this setting, when syncing with Notion, the content of notes in Obsidian will also be written into the content property of the Notion database.\n\nIt is important to note that the text property in Notion can store a maximum of 3,000 characters.\n\nIf your note content often exceeds this character limit, please do not enable this setting.",
 	SYNC_CONTENT_TO_PAGE_BLOCKS_VAULT_TITLE: "Sync the notes to a Notion page",
-	SYNC_CONTENT_TO_PAGE_BLOCKS_VAULT_DESC: "Sync the notes to a Notion page",
+	SYNC_CONTENT_TO_PAGE_BLOCKS_VAULT_DESC:
+		"If you enable this setting, when syncing with Notion, the content of Obsidian notes will be synced to the content of Notion pages.\n\nPlease note that since Notion pages are made up of blocks, building blocks is slower than simply writing to the database, so syncing to page content will be noticeably slower.",
 	PULL_CONTENT_FROM_PAGE_BLOCKS_VAULT_TITLE:
-		"Obtain note content from Notion pages",
+		"Get note content from Notion pages",
 	PULL_CONTENT_FROM_PAGE_BLOCKS_VAULT_DESC:
-		"Obtain note content from Notion pages",
+		"If you enable this setting, when syncing with Notion, content will be retrieved from Notion pages into Obsidian notes.\n\nPlease note that Notion blocks are very diverse, and not all block types are supported for display in Obsidian. Please ensure that only the most basic block types are used in Notion when syncing with Obsidian.",
 	KEEP_CONTENT_PROPERTY_VAULT_TITLE:
 		"Retain the content field in the database",
 	KEEP_CONTENT_PROPERTY_VAULT_DESC:
-		"Retain the content field in the database",
+		"If you enable this setting, when syncing with Notion, the content of Obsidian notes will be synced to the content of Notion pages.\n\nPlease note that since Notion pages are made up of blocks, building blocks is slower than simply writing to the database, so syncing to page content will be noticeably slower.",
 	DATA_SOURCE_ID_FOLDER_NOTION_TITLE: "Data Source ID",
-	DATA_SOURCE_ID_FOLDER_NOTION_DESC: "Data Source ID",
-	DATA_SOURCE_ID_FOLDER_NOTION_EXAMPLE: "Data Source ID",
+	DATA_SOURCE_ID_FOLDER_NOTION_DESC:
+		"Data source ID used when syncing with Notion",
+	DATA_SOURCE_ID_FOLDER_NOTION_EXAMPLE:
+		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
 	DOWNLOAD_DATA_SOURCE_ID_FOLDER_NOTION_TITLE: "Download Data Source ID",
-	DOWNLOAD_DATA_SOURCE_ID_FOLDER_NOTION_DESC: "Download Data Source ID",
-	DOWNLOAD_DATA_SOURCE_ID_FOLDER_NOTION_EXAMPLE: "Download Data Source ID",
+	DOWNLOAD_DATA_SOURCE_ID_FOLDER_NOTION_DESC:
+		"In classification mode, the download data source ID used for syncing with Notion",
+	DOWNLOAD_DATA_SOURCE_ID_FOLDER_NOTION_EXAMPLE:
+		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
 	FETCH_API_KEY_ROOT_NOTION_TITLE: "Notion API key",
-	FETCH_API_KEY_ROOT_NOTION_DESC: "Notion API key",
-	FETCH_API_KEY_ROOT_NOTION_EXAMPLE: "Notion API key",
+	FETCH_API_KEY_ROOT_NOTION_DESC:
+		"API key used when retrieving data from Notion",
+	FETCH_API_KEY_ROOT_NOTION_EXAMPLE: "c52d83fa-XXXX-4ea2-XXXX-096286721363",
 	FETCH_DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_TITLE: "Default Data Source ID",
-	FETCH_DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_DESC: "Default Data Source ID",
-	FETCH_DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_EXAMPLE: "Default Data Source ID",
-	FETCH_DATA_SOURCE_ID_FOLDER_TITLE: "Data Source ID",
-	FETCH_DATA_SOURCE_ID_FOLDER_DESC: "Data Source ID",
-	FETCH_DATA_SOURCE_ID_FOLDER_EXAMPLE: "Data Source ID",
+	FETCH_DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_DESC:
+		"The default data source ID used when retrieving data from Notion",
+	FETCH_DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_EXAMPLE:
+		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
+	FETCH_DATA_SOURCE_ID_FOLDER_TITLE: "数据源ID",
+	FETCH_DATA_SOURCE_ID_FOLDER_DESC:
+		"The data source ID used when retrieving data from Notion",
+	FETCH_DATA_SOURCE_ID_FOLDER_EXAMPLE: "c52d83fa-XXXX-4ea2-XXXX-096286721363",
 };

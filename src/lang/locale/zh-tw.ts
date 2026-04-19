@@ -984,4 +984,52 @@ export default {
 	"diagram.sections.remote": "遠端資料庫",
 	GENERATOR_VIEW_NOTICE_NO_RELATIONSHIP: "未發現任何關係。請檢查你的配置。",
 	FETCH_GENERATOR_VIEW_NO_RELATIONSHIP: "未發現任何關係。請檢查你的配置。",
+	API_KEY_ROOT_NOTION_TITLE: "Notion API密鑰",
+	API_KEY_ROOT_NOTION_DESC: "和Notion同步時使用的API密鑰",
+	API_KEY_ROOT_NOTION_EXAMPLE:
+		"ntn_XXXXXXXXXXXDNJvUam1WOnPMDXKGu9FAuLydaLMC9M2y5",
+	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_TITLE: "默認Notion數據源ID",
+	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_DESC:
+		"和Notion同步時使用的默認數據源ID，如果沒有對資料夾進行專屬設置，在與Notion同步時，Obsidian中所有的筆記都會同步到這個數據源中",
+	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_EXAMPLE:
+		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
+	SYNC_CONTENT_TO_PAGE_BLOCKS_FOLDER_TITLE: "把筆記內容同步到Notion的頁面",
+	SYNC_CONTENT_TO_PAGE_BLOCKS_FOLDER_DESC:
+		"如果開啟這個設定，與Notion同步時，會把Obsidian的筆記內容同步到Notion的頁面內容中。\n\n請注意，因為Notion的頁面是由Block（區塊）組成的，構建區塊會比單純寫入資料庫要慢，所以同步到頁面內容時，速度會明顯變慢。",
+	PULL_CONTENT_FROM_PAGE_BLOCKS_FOLDER_TITLE: "從Notion的頁面獲取筆記內容",
+	PULL_CONTENT_FROM_PAGE_BLOCKS_FOLDER_DESC:
+		"如果開啟這個設定，與Notion同步時，會從Notion的頁面中，獲取內容到Obsidian筆記。\n\n請注意，Notion的Block（區塊）非常豐富，不是所有的區塊都支援在Obsidian中顯示，請確保與Obsidian同步時，Notion中只使用最基本的區塊類型。",
+	KEEP_CONTENT_PROPERTY_FOLDER_TITLE: "在資料庫中保留內容欄位",
+	KEEP_CONTENT_PROPERTY_FOLDER_DESC:
+		"如果開啟這個設定，與Notion同步時，會把Obsidian中的筆記內容同時寫入到Notion資料庫的內容屬性中。\n\n這裡需要注意的是，Notion中的文本屬性，最多只能儲存3000個字元的內容。\n\n如果你的筆記內容往往都會超過這個字元限制，請不要開啟這個設定。",
+	SYNC_CONTENT_TO_PAGE_BLOCKS_VAULT_TITLE: "把筆記內容同步到Notion的頁面",
+	SYNC_CONTENT_TO_PAGE_BLOCKS_VAULT_DESC:
+		"如果開啟這個設定，與Notion同步時，會把Obsidian的筆記內容同步到Notion的頁面內容中。\n\n請注意，因為Notion的頁面是由Block（區塊）組成的，構建區塊會比單純寫入資料庫要慢，所以同步到頁面內容時，速度會明顯變慢。",
+	PULL_CONTENT_FROM_PAGE_BLOCKS_VAULT_TITLE: "從Notion的頁面獲取筆記內容",
+	PULL_CONTENT_FROM_PAGE_BLOCKS_VAULT_DESC:
+		"如果開啟這個設定，與Notion同步時，會從Notion的頁面中，獲取內容到Obsidian筆記。\n\n請注意，Notion的Block（區塊）非常豐富，不是所有的區塊都支援在Obsidian中顯示，請確保與Obsidian同步時，Notion中只使用最基本的區塊類型。",
+	KEEP_CONTENT_PROPERTY_VAULT_TITLE: "在資料庫中保留內容欄位",
+	KEEP_CONTENT_PROPERTY_VAULT_DESC:
+		"如果開啟這個設定，與Notion同步時，會把Obsidian的筆記內容同步到Notion的頁面內容中。\n\n請注意，因為Notion的頁面是由Block（區塊）組成的，構建區塊會比單純寫入資料庫要慢，所以同步到頁面內容時，速度會明顯變慢。",
+	DATA_SOURCE_ID_FOLDER_NOTION_TITLE: "數據源ID",
+	DATA_SOURCE_ID_FOLDER_NOTION_DESC: "和Notion同步時使用的數據源ID",
+	DATA_SOURCE_ID_FOLDER_NOTION_EXAMPLE:
+		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
+	DOWNLOAD_DATA_SOURCE_ID_FOLDER_NOTION_TITLE: "下載數據源ID",
+	DOWNLOAD_DATA_SOURCE_ID_FOLDER_NOTION_DESC:
+		"在分類模式下，和Notion同步時使用的下載數據源ID",
+	DOWNLOAD_DATA_SOURCE_ID_FOLDER_NOTION_EXAMPLE:
+		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
+	FETCH_API_KEY_ROOT_NOTION_TITLE: "Notion API 金鑰",
+	FETCH_API_KEY_ROOT_NOTION_DESC: "從Notion獲取數據時，使用的API密鑰",
+	FETCH_API_KEY_ROOT_NOTION_EXAMPLE:
+		"ntn_XXXXXXXXXXXDNJvUam1WOnPMDXKGu9FAuLydaLMC9M2y5",
+	FETCH_DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_TITLE: "預設資料來源ID",
+	FETCH_DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_DESC:
+		"從Notion獲取數據時，使用的默認數據源ID",
+	FETCH_DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_EXAMPLE:
+		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
+	FETCH_DATA_SOURCE_ID_FOLDER_TITLE: "數據源ID",
+	FETCH_DATA_SOURCE_ID_FOLDER_DESC: "從Notion獲取數據時，使用的數據源ID",
+	FETCH_DATA_SOURCE_ID_FOLDER_EXAMPLE: "c52d83fa-XXXX-4ea2-XXXX-096286721363",
 };
