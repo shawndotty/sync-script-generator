@@ -66,6 +66,7 @@ export class FetchScriptEngine {
 				"nocodbBaseIDForFetch",
 				"nocodbTableIDForFetch",
 			],
+			Notion: ["notionAPIKeyForFetch", "notionDataSourceForFetch"],
 		};
 
 		const rootVars = platformRootVars[platform] || [];
@@ -293,6 +294,7 @@ export class FetchScriptEngine {
 			if (
 				[
 					"Airtable",
+					"Notion",
 					"Feishu",
 					"Vika",
 					"Lark",

@@ -318,6 +318,7 @@ export class ScriptEngine {
 			if (
 				[
 					"Airtable",
+					"Notion",
 					"Feishu",
 					"Vika",
 					"Lark",
