@@ -93,6 +93,7 @@ export class FetchScriptEngine {
 					Baserow: "baserowAPIKeyForFetch",
 					NocoDB: "nocodbAPIKeyForFetch",
 					Vika: "vikaAPIKeyForFetch",
+					Notion: "notionAPIKeyForFetch",
 				}),
 				defaultBaseID: pick({
 					Airtable: "airtableBaseIDForFetch",
@@ -144,6 +145,9 @@ export class FetchScriptEngine {
 				}),
 				userID: pick({
 					Ding: "dingUserIDForFetch",
+				}),
+				defaultDataSourceID: pick({
+					Notion: "notionDataSourceIDForFetch",
 				}),
 			};
 			const mappedVar = varMapping[opt.name];
