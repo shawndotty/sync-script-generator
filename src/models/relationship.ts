@@ -43,6 +43,8 @@ function pickRemoteLabelForSync(
 			]
 				.filter(Boolean)
 				.join("/");
+		case "Notion":
+			return f.dataSourceID || root.defaultDataSourceID || "";
 		case "Baserow":
 			return [
 				f.baseID || root.defaultBaseID,
