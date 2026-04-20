@@ -80,6 +80,7 @@ export class PresetLoadModal extends Modal {
 			// Group presets by platform
 			const presetsByPlatform: Record<Platform, ConfigPreset[]> = {
 				Airtable: [],
+				Notion: [],
 				Feishu: [],
 				Vika: [],
 				Lark: [],

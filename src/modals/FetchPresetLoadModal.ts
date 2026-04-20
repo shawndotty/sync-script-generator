@@ -83,6 +83,7 @@ export class FetchPresetLoadModal extends Modal {
 			// Group presets by platform
 			const presetsByPlatform: Record<Platform, FetchConfigPreset[]> = {
 				Airtable: [],
+				Notion: [],
 				Feishu: [],
 				Vika: [],
 				Lark: [],
