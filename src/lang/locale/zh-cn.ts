@@ -994,6 +994,9 @@ export default {
 		"和Notion同步时使用的默认数据源ID，如果没有对文件夹进行专属设置，在于Notion同步时，Obsidian中所有的笔记都会同步到这个数据源中",
 	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_EXAMPLE:
 		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
+	API_KEY_FOLDER_TITLE: "Notion API秘钥",
+	API_KEY_FOLDER_DESC: "和Notion同步当前文件夹下的笔记时使用的API秘钥",
+	API_KEY_FOLDER_EXAMPLE: "ntn_XXXXXXXXXXXDNJvUam1WOnPMDXKGu9FAuLydaLMC9M2y5",
 	SYNC_CONTENT_TO_PAGE_BLOCKS_FOLDER_TITLE: "把笔记内容同步到Notion的页面",
 	SYNC_CONTENT_TO_PAGE_BLOCKS_FOLDER_DESC:
 		"如果开启这个设置，与Notion同步时，会把Obsidian的笔记内容同步到Notion的页面内容中。\n\n请注意，因为Notion的页面是由Block（区块）组成的，构建区块会比单纯写入数据库要慢，所以同步到页面内容时，速度会明显变慢。",

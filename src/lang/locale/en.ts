@@ -1116,6 +1116,9 @@ export default {
 		"The default data source ID used when syncing with Notion. If no specific settings are applied to a folder, all notes in Obsidian will be synced to this data source when syncing with Notion.",
 	DEFAULT_DATA_SOURCE_ID_ROOT_NOTION_EXAMPLE:
 		"c52d83fa-XXXX-4ea2-XXXX-096286721363",
+	API_KEY_FOLDER_TITLE: "Notion API key",
+	API_KEY_FOLDER_DESC: "API key used for syncing with Notion For This Folder",
+	API_KEY_FOLDER_EXAMPLE: "ntn_XXXXXXXXXXXDNJvUam1WOnPMDXKGu9FAuLydaLMC9M2y5",
 	SYNC_CONTENT_TO_PAGE_BLOCKS_FOLDER_TITLE: "Sync the notes to a Notion page",
 	SYNC_CONTENT_TO_PAGE_BLOCKS_FOLDER_DESC:
 		"If you enable this setting, when syncing with Notion, the content of Obsidian notes will be synced to the content of Notion pages.\n\nPlease note that since Notion pages are made up of blocks, building blocks is slower than simply writing to the database, so syncing to page content will be noticeably slower.",
