@@ -1,7 +1,7 @@
 {
 	"id": "sync-script-generator",
 	"name": "Sync Script Generator",
-	"version": "2.0.6.1",
+	"version": "2.0.7",
 	"minAppVersion": "0.15.0",
 	"description": "A plugin for Obsidian that generates sync scripts for IOTO and OB Sync With MDB",
 	"author": "Johnny Learns",
