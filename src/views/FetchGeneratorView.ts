@@ -296,11 +296,11 @@ export class FetchGeneratorView extends ItemView {
 			});
 			addButton.style.marginBottom = "20px";
 			addButton.onclick = () => {
-				this.folderSettings.push({ targetFolderPath: "" });
+				this.folderSettings.unshift({ targetFolderPath: "" });
 				this.renderMiddleColumn();
 			};
 
-			if (this.folderSettings.length > 4) {
+			if (this.folderSettings.length > 1) {
 				const toggleAllButton = folderActionsContainer.createEl(
 					"button",
 					{
@@ -337,9 +337,7 @@ export class FetchGeneratorView extends ItemView {
 
 				titleContainer.createEl("span", {
 					text:
-						`${t("FETCH_GENERATOR_VIEW_FOLDER_HEADER_PREFIX")} ${
-							index + 1
-						}` +
+						`${t("FETCH_GENERATOR_VIEW_FOLDER_HEADER_PREFIX")}` +
 						(folder.targetFolderPath
 							? `: ${folder.targetFolderPath}`
 							: ""),

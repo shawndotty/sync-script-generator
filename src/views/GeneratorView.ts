@@ -346,11 +346,11 @@ export class GeneratorView extends ItemView {
 			});
 			addButton.style.marginBottom = "20px";
 			addButton.onclick = () => {
-				this.folderSettings.push({ folderName: "" });
+				this.folderSettings.unshift({ folderName: "" });
 				this.renderMiddleColumn();
 			};
 
-			if (this.folderSettings.length > 4) {
+			if (this.folderSettings.length > 1) {
 				const toggleAllButton = folderActionsContainer.createEl(
 					"button",
 					{
@@ -387,7 +387,7 @@ export class GeneratorView extends ItemView {
 
 				titleContainer.createEl("span", {
 					text:
-						`${t("GENERATOR_VIEW_FOLDER_LABEL")} ${index + 1}` +
+						`${t("GENERATOR_VIEW_FOLDER_LABEL")}` +
 						(folder.folderName ? `: ${folder.folderName}` : ""),
 				});
 
