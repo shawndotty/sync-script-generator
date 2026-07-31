@@ -583,11 +583,11 @@ export default {
 	JUST_UPDATE_FROM_DB_FOLDER_DESC:
 		"是否在同步選項中僅顯示下載類的選項。\n\ntrue 為僅顯示下載項；\nfalse 為顯示下載和其他項。",
 	JUST_UPDATE_FROM_DB_FOLDER_EXAMPLE: "true",
-	JUST_UPDATE_FROM_DB_FOLDER_TITLE: "僅從顯示從數據庫下載到OB的選項",
+	JUST_UPDATE_FROM_DB_FOLDER_TITLE: "僅顯示從數據庫下載到OB的選項",
 	JUST_UPDATE_FROM_DB_VAULT_DESC:
 		"是否在同步選項中僅顯示下載選項。\n\ntrue 為僅顯示下載項；\nfalse 為顯示下載和其他項。",
 	JUST_UPDATE_FROM_DB_VAULT_EXAMPLE: "true",
-	JUST_UPDATE_FROM_DB_VAULT_TITLE: "僅從顯示從數據庫下載到OB的選項",
+	JUST_UPDATE_FROM_DB_VAULT_TITLE: "僅顯示從數據庫下載到OB的選項",
 	MAIN_CMD_OPEN_FETCH: "打開獲取腳本生成器",
 	MAIN_CMD_OPEN_SYNC: "打開同步腳本生成器",
 	MAIN_RIBBON_FETCH: "獲取腳本生成器",
