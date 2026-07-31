@@ -231,7 +231,7 @@ export class GeneratorView extends ItemView {
 
 		tabs.forEach((tab) => {
 			const tabBtn = tabsContainer.createEl("button", {
-				text: `${tabNames[tab]} ${t("GENERATOR_VIEW_SETTINGS_SUFFIX")}`,
+				text: `${tabNames[tab]}${t("GENERATOR_VIEW_SETTINGS_SUFFIX")}`,
 				cls: "settings-tab-btn",
 			});
 			if (this.activeTab === tab) tabBtn.addClass("is-active");

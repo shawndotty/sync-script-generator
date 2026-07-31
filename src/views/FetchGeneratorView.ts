@@ -234,7 +234,7 @@ export class FetchGeneratorView extends ItemView {
 
 		tabs.forEach((tab) => {
 			const tabBtn = tabsContainer.createEl("button", {
-				text: `${tabNames[tab]} ${t(
+				text: `${tabNames[tab]}${t(
 					"FETCH_GENERATOR_VIEW_SETTINGS_SUFFIX",
 				)}`,
 				cls: "settings-tab-btn",
