@@ -2261,7 +2261,7 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		],
 		level: "Folder",
 		required: false,
-		defaultValue: "false",
+		defaultValue: "true",
 		valueType: "boolean",
 		description: t("CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_DESC"),
 		example: t("CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_EXAMPLE"),
