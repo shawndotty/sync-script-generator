@@ -333,7 +333,7 @@ export default {
 		"Whether to use the extract chapter configuration in the sync folder to override the extract chapter configuration in the vault-level settings",
 	EXTRACT_SECTIONS_OVERRIDE_MODE_FOLDER_EXAMPLE: "true",
 	EXTRACT_SECTIONS_OVERRIDE_MODE_FOLDER_TITLE:
-		"Whether to extract chapter configuration in the vault-level settings",
+		"Whether to enable the extract chapter override mode",
 	EXTRACT_SECTIONS_VAULT_DESC:
 		"When synchronizing, the specified chapter content to be extracted.\n\nAttribute name: the title of the chapter.\nAttribute value: the field name in the multidimensional table where the corresponding chapter is to be stored.",
 	EXTRACT_SECTIONS_VAULT_EXAMPLE: "Summary",

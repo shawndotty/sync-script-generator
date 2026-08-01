@@ -293,7 +293,7 @@ export default {
 	EXTRACT_SECTIONS_OVERRIDE_MODE_FOLDER_DESC:
 		"是否使用同步文件夹下的提取章节的配置覆盖库级设置中的提取章节的配置",
 	EXTRACT_SECTIONS_OVERRIDE_MODE_FOLDER_EXAMPLE: "true",
-	EXTRACT_SECTIONS_OVERRIDE_MODE_FOLDER_TITLE: "是否库级设置中的提取章节配置",
+	EXTRACT_SECTIONS_OVERRIDE_MODE_FOLDER_TITLE: "是否开启提取章节的覆盖模式",
 	EXTRACT_SECTIONS_VAULT_DESC:
 		"在同步时，想要提取的指定章节内容。\n\n属性名，为章节的标题名。\n属性值，对应章节想要在多维表中存储的字段名。",
 	EXTRACT_SECTIONS_VAULT_EXAMPLE: '{\n总结: "Summary"\n}',
