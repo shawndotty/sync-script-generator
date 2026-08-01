@@ -73,6 +73,11 @@ export default {
 	CONTENT_APPEND_FIELDS_FOLDER_EXAMPLE:
 		"Key points extraction  \nSupplementary questions  \nBackground information",
 	CONTENT_APPEND_FIELDS_FOLDER_TITLE: "Additional content",
+	CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_DESC:
+		"If you set this option to true, the content append settings in vault settings will be ignored. \n\nIf you set this option to false, the content append settings in vault settings will be merged.",
+	CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_EXAMPLE: "false",
+	CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_TITLE:
+		"Enable content append fields override mode",
 	CONTENT_APPEND_FIELDS_VAULT_DESC:
 		"When synchronization is complete, the content of the specified fields from the multi-dimensional table will be appended to the end of the content in the note.\n\nIf multiple fields are specified, their contents will be merged in the order of the elements in the array, separated by line breaks.\n\nYou can set the name of any field that can return a text value.\n\nIf the field you specify does not exist in the database, an empty text will be returned.",
 	CONTENT_APPEND_FIELDS_VAULT_EXAMPLE:

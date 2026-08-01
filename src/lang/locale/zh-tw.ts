@@ -62,6 +62,11 @@ export default {
 		"在同步時，你可以指定在筆記的內容後面附加多維表中的指定欄位的內容。\n\n如果指定了多個欄位，這些欄位的內容，將按照陣列中的元素順序通過換行進行合併。\n\n你可以設定任意能返回文字值的欄位的名稱。\n\n當你指定的欄位在資料庫中不存在時，將返回空文字。",
 	CONTENT_APPEND_FIELDS_FOLDER_EXAMPLE: "要點提取\n問題補充\n背景資訊",
 	CONTENT_APPEND_FIELDS_FOLDER_TITLE: "附加內容",
+	CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_DESC:
+		"如果啟用此選項，將忽略在 Vault 設定中指定的附加內容欄位設定。\n\n如果停用此選項，將合併 Vault 設定中指定的附加內容欄位設定。",
+	CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_EXAMPLE: "false",
+	CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_TITLE:
+		"啟用附加內容欄位覆蓋模式",
 	CONTENT_APPEND_FIELDS_VAULT_DESC:
 		"在同步完成時，在筆記中內容後面附加多維表中的指定欄位的內容。\n\n如果指定了多個欄位，這些欄位的內容，將按照陣列中的元素順序通過換行進行合併。\n\n你可以設定任意能返回文字值的欄位的名稱。\n\n當你指定的欄位在資料庫中不存在時，將返回空文字。",
 	CONTENT_APPEND_FIELDS_VAULT_EXAMPLE: "要點提取\n問題補充\n背景資訊",

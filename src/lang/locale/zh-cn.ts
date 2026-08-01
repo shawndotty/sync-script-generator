@@ -63,6 +63,11 @@ export default {
 	CONTENT_APPEND_FIELDS_FOLDER_EXAMPLE:
 		'["要点提取", "问题补充", "背景信息"]',
 	CONTENT_APPEND_FIELDS_FOLDER_TITLE: "附加内容",
+	CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_DESC:
+		"如果启用此选项，将忽略在库级设置中指定的附加内容字段设置。\n\n如果禁用此选项，将合并库级设置中指定的附加内容字段设置。",
+	CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_EXAMPLE: "false",
+	CONTENT_APPEND_FIELDS_OVERRIDE_MODE_FOLDER_TITLE:
+		"启用附加内容字段覆盖模式",
 	CONTENT_APPEND_FIELDS_VAULT_DESC:
 		"在同步完成时，在笔记中内容后面附加多维表中的指定字段的内容。\n\n如果指定了多个字段，这些字段的内容，将按照数组中的元素顺序通过换行进行合并。\n\n你可以设置任意能返回文本值的字段的名称。\n\n当你指定的字段在数据库中不存在时，将返回空文本。",
 	CONTENT_APPEND_FIELDS_VAULT_EXAMPLE: '["要点提取", "问题补充", "背景信息"]',
