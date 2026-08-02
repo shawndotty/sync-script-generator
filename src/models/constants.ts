@@ -1726,33 +1726,6 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		description: t("ENABLE_UPDATE_FROM_DB_FOLDER_DESC"),
 		example: t("ENABLE_UPDATE_FROM_DB_FOLDER_EXAMPLE"),
 	},
-	{
-		name: "enableUpdatePropertiesFromDowloadTable",
-		group: "Basic",
-		groupOrder: 1,
-		title: t("ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_TITLE"),
-		platforms: [
-			"Airtable",
-			"Baserow",
-			"NocoDB",
-			"Feishu",
-			"Vika",
-			"Lark",
-			"WPS",
-			"Ding",
-			"Notion",
-		],
-		level: "Folder",
-		required: false,
-		defaultValue: "true",
-		valueType: "boolean",
-		description: t(
-			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_DESC",
-		),
-		example: t(
-			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_EXAMPLE",
-		),
-	},
 	// Extract Section
 	{
 		name: "extractSections",
@@ -2292,8 +2265,8 @@ export const SYNC_OPTIONS: SyncOption[] = [
 	{
 		name: "enableUpdatePropertiesFromDowloadTable",
 		group: "Advanced",
-		groupOrder: 2,
-		title: t("ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_VAULT_TITLE"),
+		groupOrder: 1,
+		title: t("ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_TITLE"),
 		platforms: [
 			"Airtable",
 			"Baserow",
@@ -2310,9 +2283,11 @@ export const SYNC_OPTIONS: SyncOption[] = [
 		defaultValue: "true",
 		valueType: "boolean",
 		description: t(
-			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_VAULT_DESC",
+			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_DESC",
 		),
-		example: t("ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_VAULT_EXAMPLE"),
+		example: t(
+			"ENABLE_UPDATE_PROPERTIES_FROM_DOWLOAD_TABLE_FOLDER_EXAMPLE",
+		),
 	},
 	{
 		name: "showDeleteOption",
